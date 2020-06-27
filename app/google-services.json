@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "475975064049",
+    "firebase_url": "https://bahasa-6a723.firebaseio.com",
+    "project_id": "bahasa-6a723",
+    "storage_bucket": "bahasa-6a723.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475975064049:android:0e71135f9fc382dbef4c50",
+        "android_client_info": {
+          "package_name": "com.application.bahasa.arab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475975064049-4i88n5dfuj7p4ag406oi9jnpq1ri2tuu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVrEUwHlqLpogoQ6262WiPt7OX6h_glcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475975064049-4i88n5dfuj7p4ag406oi9jnpq1ri2tuu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Bahasa Arab UNU NTB</string>
+    <string name="title">Title</string>
+    <string name="page">Halaman</string>
+    <string name="share">Bagikan</string>
+    <string name="share_text">Teori untuk %s ada di tautan %s </string>
+
+    <string name="semester">Semester</string>
+    <string name="theUnit">Unit</string>
+    <string name="additional">Tambahan</string>
+
+
+</resources>
