@@ -7,15 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelUnit;
 import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,14 +58,13 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
         final TextView titleUnit;
         final TextView pageUnit;
         final ImageButton shareUnit;
-        final AdView adViewUnit;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageCoverUnit = itemView.findViewById(R.id.image_coverUnit);
             titleUnit = itemView.findViewById(R.id.tv_item_titleUnit);
             pageUnit = itemView.findViewById(R.id.tv_item_pageUnit);
             shareUnit = itemView.findViewById(R.id.image_shareUnit);
-            adViewUnit = itemView.findViewById(R.id.adViewUnit);
+
         }
 
         public void bind(DataModelUnit dataModelUnit) {
@@ -86,8 +85,6 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
             });
 
             shareUnit.setOnClickListener(v -> callback.onShareClick(dataModelUnit));
-            AdRequest adRequest = new AdRequest.Builder().build();
-            adViewUnit.loadAd(adRequest);
         }
     }
 }

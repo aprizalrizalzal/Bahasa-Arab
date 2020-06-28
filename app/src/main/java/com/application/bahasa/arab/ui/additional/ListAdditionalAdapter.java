@@ -16,8 +16,6 @@ import com.application.bahasa.arab.data.DataModelAdditional;
 import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,14 +58,12 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
         final TextView titleAdditional;
         final TextView runTimeAdditional;
         final ImageButton shareAdditional;
-        final AdView adViewAdditional;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageCoverAdditional = itemView.findViewById(R.id.image_coverAdditional);
             titleAdditional = itemView.findViewById(R.id.tv_item_titleAdditional);
             runTimeAdditional = itemView.findViewById(R.id.tv_item_pageAdditional);
             shareAdditional = itemView.findViewById(R.id.image_shareAdditional);
-            adViewAdditional = itemView.findViewById(R.id.adViewAdditional);
         }
 
         public void bind(DataModelAdditional dataModelAdditional) {
@@ -88,8 +84,6 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
             });
 
             shareAdditional.setOnClickListener(v -> callback.onShareClick(dataModelAdditional));
-            AdRequest adRequest = new AdRequest.Builder().build();
-            adViewAdditional.loadAd(adRequest);
         }
     }
 }

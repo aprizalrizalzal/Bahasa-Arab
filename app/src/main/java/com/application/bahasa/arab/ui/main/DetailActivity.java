@@ -1,9 +1,12 @@
 package com.application.bahasa.arab.ui.main;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.application.bahasa.arab.R;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -19,11 +22,10 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        PDFView pdfView = (PDFView) findViewById(R.id.pdfViewUnit);
+        PDFView pdfView = (PDFView) findViewById(R.id.pdfViewDetail);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() !=null){
             getSupportActionBar().setTitle(getIntent().getStringExtra(EXTRA_TITLE));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -42,5 +44,25 @@ public class DetailActivity extends AppCompatActivity {
                         .load();
             }
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.searchView);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                return false;
+            }
+        });
+        return true;
     }
 }

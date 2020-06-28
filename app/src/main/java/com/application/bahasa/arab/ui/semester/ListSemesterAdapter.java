@@ -14,13 +14,11 @@ import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelSemester;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapter.ViewHolder> {
+public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapter.ViewHolder>{
 
     private final ListSemesterFragmentCallback callback;
     private ArrayList<DataModelSemester> dataModelSemesterArrayList = new ArrayList<>();
@@ -58,14 +56,12 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
         final TextView titleSemester;
         final TextView pageSemester;
         final ImageButton shareSemester;
-        final AdView adViewSemester;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageCoverSemester = itemView.findViewById(R.id.image_coverSemester);
             titleSemester = itemView.findViewById(R.id.tv_item_titleSemester);
             pageSemester = itemView.findViewById(R.id.tv_item_pageSemester);
             shareSemester = itemView.findViewById(R.id.image_shareSemester);
-            adViewSemester = itemView.findViewById(R.id.adViewSemester);
         }
 
         public void bind(DataModelSemester dataModelSemester) {
@@ -86,8 +82,6 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
             });*/
 
             shareSemester.setOnClickListener(v -> callback.onShareClick(dataModelSemester));
-            AdRequest adRequest = new AdRequest.Builder().build();
-            adViewSemester.loadAd(adRequest);
         }
     }
 }

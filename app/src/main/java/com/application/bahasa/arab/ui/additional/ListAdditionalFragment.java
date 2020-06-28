@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelAdditional;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.List;
 
 
@@ -33,9 +36,12 @@ public class ListAdditionalFragment extends Fragment implements ListAdditionalFr
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView rv_video = view.findViewById(R.id.rv_video);
+        RecyclerView rv_video = view.findViewById(R.id.rv_additional);
+        AdView adViewAdditional =view.findViewById(R.id.adViewAdditional);
 
         if (getActivity() !=null){
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adViewAdditional.loadAd(adRequest);
             ListAdditionalViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(ListAdditionalViewModel.class);
             List<DataModelAdditional> dataModelAdditionals = viewModel.dataModelAdditionalList();
 

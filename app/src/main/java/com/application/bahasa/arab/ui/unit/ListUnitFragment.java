@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelUnit;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
@@ -35,8 +37,12 @@ public class ListUnitFragment extends Fragment implements ListUnitFragmentCallba
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView rv_unit = view.findViewById(R.id.rv_unit);
+        AdView adViewUnit =view.findViewById(R.id.adViewUnit);
 
         if (getActivity() !=null){
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adViewUnit.loadAd(adRequest);
+
             ListUnitViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(ListUnitViewModel.class);
             List<DataModelUnit> dataModelTheories = viewModel.dataModelUnitList();
 

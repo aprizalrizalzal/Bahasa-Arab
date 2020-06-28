@@ -26,8 +26,7 @@
         <activity
             android:name=".ui.main.DetailActivity"
             android:parentActivityName=".ui.main.HomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.HomeActivity" />

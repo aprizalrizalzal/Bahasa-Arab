@@ -8,6 +8,12 @@
     <string name="semester">Semester</string>
     <string name="theUnit">Unit</string>
     <string name="additional">Tambahan</string>
+    <string name="first">First</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="last">Last</string>
+    <string name="stop">Stop</string>
+    <string name="searchPage">SearchPage</string>
 
 
 </resources>
