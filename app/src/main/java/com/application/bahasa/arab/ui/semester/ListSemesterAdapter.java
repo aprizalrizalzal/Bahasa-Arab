@@ -1,5 +1,6 @@
 package com.application.bahasa.arab.ui.semester;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelSemester;
+import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -74,12 +76,12 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
             titleSemester.setText(dataModelSemester.getSemesterTitle());
             pageSemester.setText(dataModelSemester.getSemesterPage());
 
-            /*itemView.setOnClickListener(v -> {
+            itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_TITLE, moviesEntity.getMoviesTitle());
-                intent.putExtra(DetailActivity.EXTRA_MOVIES,moviesEntity.getMoviesId());
+                intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
+                intent.putExtra(DetailActivity.EXTRA_OVERVIEW, dataModelSemester.getSemesterOverview());
                 itemView.getContext().startActivity(intent);
-            });*/
+            });
 
             shareSemester.setOnClickListener(v -> callback.onShareClick(dataModelSemester));
         }

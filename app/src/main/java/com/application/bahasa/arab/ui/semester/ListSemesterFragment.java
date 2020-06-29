@@ -58,7 +58,12 @@ public class ListSemesterFragment extends Fragment implements ListSemesterFragme
     public void onShareClick(DataModelSemester dataModelSemester) {
         if (getActivity() !=null){
             String mimeType = "text/plain";
-            ShareCompat.IntentBuilder.from(getActivity()).setType(mimeType).setChooserTitle("Share this theory now").setText(getResources().getString(R.string.share_text, dataModelSemester.getSemesterTitle(), dataModelSemester.getSemesterOverview())).startChooser();
+            ShareCompat.IntentBuilder
+                    .from(getActivity())
+                    .setType(mimeType)
+                    .setChooserTitle("Share now")
+                    .setText(getResources().getString(R.string.share_text, dataModelSemester.getSemesterTitle(), dataModelSemester.getSemesterLink()))
+                    .startChooser();
         }
     }
 }

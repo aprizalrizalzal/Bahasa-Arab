@@ -22,7 +22,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        PDFView pdfView = (PDFView) findViewById(R.id.pdfViewDetail);
+        PDFView pdfView = findViewById(R.id.pdfViewDetail);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,7 +59,6 @@ public class DetailActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-
                 return false;
             }
         });

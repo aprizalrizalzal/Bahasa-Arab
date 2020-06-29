@@ -46,14 +46,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="italic"
 
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/image_downloadAdditional"
             app:layout_constraintStart_toEndOf="@+id/card_cover"
             app:layout_constraintTop_toTopOf="@+id/card_cover"
             tools:text="@string/title" />
@@ -75,17 +74,32 @@
             tools:text="@string/page" />
 
         <ImageButton
+            android:id="@+id/image_downloadAdditional"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/share"
+
+            android:src="@drawable/ic_baseline_cloud_download_primary"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_titleAdditional"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_titleAdditional" />
+
+        <ImageButton
             android:id="@+id/image_shareAdditional"
-            android:layout_width="0dp"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/share"
 
             android:src="@drawable/ic_baseline_share_primary"
-            app:layout_constraintBottom_toBottomOf="@+id/card_cover"
+            app:layout_constraintBottom_toBottomOf="@+id/image_downloadAdditional"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_item_titleAdditional" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_pageAdditional" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
