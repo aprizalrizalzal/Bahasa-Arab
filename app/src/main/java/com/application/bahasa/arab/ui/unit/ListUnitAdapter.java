@@ -23,10 +23,13 @@ import java.util.List;
 public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHolder> {
 
     private final ListUnitFragmentCallback callback;
+    private final ListUnitFragmentCallDownload callDownload;
+
     private ArrayList<DataModelUnit> dataModelUnitArrayList = new ArrayList<>();
 
-    ListUnitAdapter(ListUnitFragmentCallback callback) {
+    ListUnitAdapter(ListUnitFragmentCallback callback, ListUnitFragmentCallDownload callDownload) {
         this.callback = callback;
+        this.callDownload = callDownload;
     }
 
     public void setDataModelUnitArrayList(List<DataModelUnit> dataModelUnit) {
@@ -55,14 +58,14 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageCoverUnit;
-        final TextView titleUnit;
-        final TextView pageUnit;
-        final ImageButton shareUnit;
+        final TextView titleUnit,pageUnit;
+        final ImageButton downloadUnit,shareUnit;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageCoverUnit = itemView.findViewById(R.id.image_coverUnit);
             titleUnit = itemView.findViewById(R.id.tv_item_titleUnit);
             pageUnit = itemView.findViewById(R.id.tv_item_pageUnit);
+            downloadUnit = itemView.findViewById(R.id.image_downloadUnit);
             shareUnit = itemView.findViewById(R.id.image_shareUnit);
 
         }
@@ -80,10 +83,12 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
                 intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelUnit.getUnitTitle());
+                intent.putExtra(DetailActivity.EXTRA_LINK, dataModelUnit.getUnitLink());
                 intent.putExtra(DetailActivity.EXTRA_OVERVIEW,dataModelUnit.getUnitOverview());
                 itemView.getContext().startActivity(intent);
             });
 
+            downloadUnit.setOnClickListener(v -> callDownload.onDownloadClick(dataModelUnit));
             shareUnit.setOnClickListener(v -> callback.onShareClick(dataModelUnit));
         }
     }

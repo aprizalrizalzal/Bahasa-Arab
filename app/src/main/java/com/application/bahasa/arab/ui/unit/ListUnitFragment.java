@@ -1,13 +1,24 @@
 package com.application.bahasa.arab.ui.unit;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +31,7 @@ import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
-public class ListUnitFragment extends Fragment implements ListUnitFragmentCallback {
+public class ListUnitFragment extends Fragment implements ListUnitFragmentCallback, ListUnitFragmentCallDownload {
 
     public ListUnitFragment() {
         // Required empty public constructor
@@ -46,7 +57,7 @@ public class ListUnitFragment extends Fragment implements ListUnitFragmentCallba
             ListUnitViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(ListUnitViewModel.class);
             List<DataModelUnit> dataModelTheories = viewModel.dataModelUnitList();
 
-            ListUnitAdapter adapter = new ListUnitAdapter(this);
+            ListUnitAdapter adapter = new ListUnitAdapter(this, this);
             adapter.setDataModelUnitArrayList(dataModelTheories);
 
             rv_unit.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -66,5 +77,53 @@ public class ListUnitFragment extends Fragment implements ListUnitFragmentCallba
                     .setText(getResources().getString(R.string.share_text, dataModelUnit.getUnitTitle(), dataModelUnit.getUnitLink()))
                     .startChooser();
         }
+    }
+
+    @Override
+    public void onDownloadClick(DataModelUnit dataModelUnit) {
+        if (getActivity() !=null){
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelUnit.getUnitLink()));
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationInExternalFilesDir(getActivity(), Environment.DIRECTORY_DOCUMENTS,dataModelUnit.getUnitTitle());
+            DownloadManager downloadManager = (DownloadManager)getActivity().getBaseContext().getSystemService(Context.DOWNLOAD_SERVICE);
+            request.setMimeType("application/pdf");
+            request.allowScanningByMediaScanner();
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
+            if (writableExternalStorage() && checkPermission() && haveNetwork()){
+                downloadManager.enqueue(request);
+                Toast.makeText(getContext(), "Download "+dataModelUnit.getUnitTitle(), Toast.LENGTH_SHORT).show();
+            }else if (!haveNetwork()){
+                Toast.makeText(getContext(),R.string.not_have_network, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private boolean writableExternalStorage(){
+        if (Environment.getExternalStorageState().equals(Environment.getExternalStorageState())) {
+            Log.i("state", "yes, it is writable!");
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private boolean checkPermission() {
+        int check = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return( check == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private boolean haveNetwork() {
+        boolean haveConnection =false;
+
+        if (getActivity() != null) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+            if (activeNetworkInfo !=null && activeNetworkInfo.isConnected()){
+                haveConnection=true;
+            }
+        }
+        return haveConnection;
     }
 }

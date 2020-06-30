@@ -4,7 +4,6 @@
     <string name="page">Halaman</string>
     <string name="share">Bagikan</string>
     <string name="share_text">Teori untuk %s ada di tautan %s </string>
-
     <string name="semester">Semester</string>
     <string name="theUnit">Unit</string>
     <string name="additional">Tambahan</string>
@@ -14,6 +13,8 @@
     <string name="last">Last</string>
     <string name="stop">Stop</string>
     <string name="searchPage">SearchPage</string>
-
+    <string name="setting">Pengaturan</string>
+    <string name="about">Tentang</string>
+    <string name="not_have_network">Koneksi jaringan tidak tersedia!</string>
 
 </resources>

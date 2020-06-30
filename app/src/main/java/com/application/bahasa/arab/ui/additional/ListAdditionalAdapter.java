@@ -21,12 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAdapter.ViewHolder> {
-    private final ListAdditionalFragmentCallback callback;
+    private final ListAdditionalFragmentCallShare callShare;
+    private final ListAdditionalFragmentCallDownload callDownload;
 
     private ArrayList<DataModelAdditional> dataModelAdditionalArrayList = new ArrayList<>();
 
-    ListAdditionalAdapter(ListAdditionalFragmentCallback callback) {
-        this.callback = callback;
+    ListAdditionalAdapter(ListAdditionalFragmentCallShare callShare, ListAdditionalFragmentCallDownload callDownload) {
+        this.callShare = callShare;
+        this.callDownload = callDownload;
     }
 
     public void setDataModelAdditionalArrayList(List<DataModelAdditional> dataModelAdditionals) {
@@ -55,14 +57,14 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageCoverAdditional;
-        final TextView titleAdditional;
-        final TextView runTimeAdditional;
-        final ImageButton shareAdditional;
+        final TextView titleAdditional, runTimeAdditional;
+        final ImageButton downloadAdditional,shareAdditional;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageCoverAdditional = itemView.findViewById(R.id.image_coverAdditional);
             titleAdditional = itemView.findViewById(R.id.tv_item_titleAdditional);
             runTimeAdditional = itemView.findViewById(R.id.tv_item_pageAdditional);
+            downloadAdditional = itemView.findViewById(R.id.image_downloadAdditional);
             shareAdditional = itemView.findViewById(R.id.image_shareAdditional);
         }
 
@@ -79,11 +81,13 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
                 intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelAdditional.getAdditionalTitle());
+                intent.putExtra(DetailActivity.EXTRA_LINK, dataModelAdditional.getAdditionalLink());
                 intent.putExtra(DetailActivity.EXTRA_OVERVIEW,dataModelAdditional.getAdditionalOverview());
                 itemView.getContext().startActivity(intent);
             });
 
-            shareAdditional.setOnClickListener(v -> callback.onShareClick(dataModelAdditional));
+            downloadAdditional.setOnClickListener(v -> callDownload.onDownloadClick(dataModelAdditional));
+            shareAdditional.setOnClickListener(v -> callShare.onShareClick(dataModelAdditional));
         }
     }
 }

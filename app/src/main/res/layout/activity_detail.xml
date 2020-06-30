@@ -5,7 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".ui.main.DetailActivity">
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3946611117968254/7058677532"
+
+        app:layout_constraintTop_toBottomOf="@id/action_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/action_bar"
@@ -29,7 +42,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@id/action_bar"/>
+        app:layout_constraintTop_toBottomOf="@+id/adViewDetail">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/progres_bar" />
+
+    </com.github.barteksc.pdfviewer.PDFView>
 
     <LinearLayout
         android:id="@+id/linearLayout"

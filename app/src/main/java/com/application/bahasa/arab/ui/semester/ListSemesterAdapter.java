@@ -23,10 +23,13 @@ import java.util.List;
 public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapter.ViewHolder>{
 
     private final ListSemesterFragmentCallback callback;
+    private final ListSemesterFragmentCallDownload callDownload;
+
     private ArrayList<DataModelSemester> dataModelSemesterArrayList = new ArrayList<>();
 
-    ListSemesterAdapter(ListSemesterFragmentCallback callback) {
+    ListSemesterAdapter(ListSemesterFragmentCallback callback, ListSemesterFragmentCallDownload callDownload) {
         this.callback = callback;
+        this.callDownload = callDownload;
     }
 
     public void setDataModelSemesterArrayList(List<DataModelSemester> dataModelSemesters) {
@@ -55,14 +58,14 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageCoverSemester;
-        final TextView titleSemester;
-        final TextView pageSemester;
-        final ImageButton shareSemester;
+        final TextView titleSemester,pageSemester;
+        final ImageButton downloadSemester,shareSemester;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageCoverSemester = itemView.findViewById(R.id.image_coverSemester);
             titleSemester = itemView.findViewById(R.id.tv_item_titleSemester);
             pageSemester = itemView.findViewById(R.id.tv_item_pageSemester);
+            downloadSemester = itemView.findViewById(R.id.image_downloadSemester);
             shareSemester = itemView.findViewById(R.id.image_shareSemester);
         }
 
@@ -79,10 +82,12 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
                 intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
+                intent.putExtra(DetailActivity.EXTRA_LINK, dataModelSemester.getSemesterLink());
                 intent.putExtra(DetailActivity.EXTRA_OVERVIEW, dataModelSemester.getSemesterOverview());
                 itemView.getContext().startActivity(intent);
             });
 
+            downloadSemester.setOnClickListener(v -> callDownload.onDownloadClick(dataModelSemester));
             shareSemester.setOnClickListener(v -> callback.onShareClick(dataModelSemester));
         }
     }
