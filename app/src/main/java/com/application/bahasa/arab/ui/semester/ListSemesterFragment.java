@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,8 @@ import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelSemester;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.util.List;
 
@@ -90,21 +91,27 @@ public class ListSemesterFragment extends Fragment implements ListSemesterFragme
             request.setMimeType("application/pdf");
             request.allowScanningByMediaScanner();
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
-            if (writableExternalStorage() && checkPermission() && haveNetwork()){
-                downloadManager.enqueue(request);
-                Toast.makeText(getContext(), "Download "+dataModelSemester.getSemesterTitle(), Toast.LENGTH_SHORT).show();
+            if (haveNetwork()){
+                PermissionListener permissionListener = new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        downloadManager.enqueue(request);
+                        Toast.makeText(getContext(), "Download "+dataModelSemester.getSemesterTitle(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(List<String> deniedPermissions) {
+                        Toast.makeText(getContext(), deniedPermissions.toString() +getString(R.string.denied_permission), Toast.LENGTH_SHORT).show();
+                    }
+                };
+                TedPermission.with(getActivity())
+                        .setPermissionListener(permissionListener)
+                        .setDeniedMessage(R.string.denied_message)
+                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .check();
             }else if (!haveNetwork()){
                 Toast.makeText(getContext(),R.string.not_have_network, Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-    private boolean writableExternalStorage(){
-        if (Environment.getExternalStorageState().equals(Environment.getExternalStorageState())) {
-            Log.i("state", "yes, it is writable!");
-            return true;
-        }else {
-            return false;
         }
     }
 

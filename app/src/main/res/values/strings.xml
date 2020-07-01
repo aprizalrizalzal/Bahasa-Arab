@@ -1,20 +1,23 @@
 <resources>
     <string name="app_name">Bahasa Arab UNU NTB</string>
-    <string name="title">Title</string>
+    <string name="title">Judul</string>
     <string name="page">Halaman</string>
     <string name="share">Bagikan</string>
     <string name="share_text">Teori untuk %s ada di tautan %s </string>
     <string name="semester">Semester</string>
     <string name="theUnit">Unit</string>
     <string name="additional">Tambahan</string>
-    <string name="first">First</string>
-    <string name="play">Play</string>
-    <string name="pause">Pause</string>
-    <string name="last">Last</string>
-    <string name="stop">Stop</string>
-    <string name="searchPage">SearchPage</string>
+    <string name="first">Sebelumnya</string>
+    <string name="play">Main</string>
+    <string name="pause">Jeda</string>
+    <string name="last">Selanjutnya</string>
+    <string name="stop">Berhenti</string>
+    <string name="searchPage">Cari Halaman</string>
     <string name="setting">Pengaturan</string>
     <string name="about">Tentang</string>
     <string name="not_have_network">Koneksi jaringan tidak tersedia!</string>
+    <string name="not_have_permission">Koneksi jaringan tidak tersedia!</string>
+    <string name="denied_permission">\n\nAnda sudah menolak izin dan saran saya untuk yang kedua kalinya ;-(</string>
+    <string name="denied_message">Sekali lagi jika ingin lanjut izinkan di \n[Setting] > [Permission] :-)</string>
 
 </resources>

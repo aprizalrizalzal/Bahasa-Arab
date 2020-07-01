@@ -16,7 +16,6 @@ import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.util.FitPolicy;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import java.io.File;
 
@@ -39,7 +38,6 @@ public class DetailActivity extends AppCompatActivity{
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        MobileAds.initialize(this,"ca-app-pub-3946611117968254~4667483765");
         AdRequest adRequest = new AdRequest.Builder().build();
         adViewUnit.loadAd(adRequest);
 

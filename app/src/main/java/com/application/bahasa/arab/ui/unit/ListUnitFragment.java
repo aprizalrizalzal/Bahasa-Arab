@@ -3,13 +3,11 @@ package com.application.bahasa.arab.ui.unit;
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ShareCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +25,8 @@ import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelUnit;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import java.util.List;
 
@@ -90,27 +89,28 @@ public class ListUnitFragment extends Fragment implements ListUnitFragmentCallba
             request.setMimeType("application/pdf");
             request.allowScanningByMediaScanner();
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
-            if (writableExternalStorage() && checkPermission() && haveNetwork()){
-                downloadManager.enqueue(request);
-                Toast.makeText(getContext(), "Download "+dataModelUnit.getUnitTitle(), Toast.LENGTH_SHORT).show();
+            if (haveNetwork()){
+                PermissionListener permissionListener = new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        downloadManager.enqueue(request);
+                        Toast.makeText(getContext(), "Download "+dataModelUnit.getUnitTitle(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(List<String> deniedPermissions) {
+                        Toast.makeText(getContext(), deniedPermissions.toString() +getString(R.string.denied_permission), Toast.LENGTH_SHORT).show();
+                    }
+                };
+                TedPermission.with(getActivity())
+                        .setPermissionListener(permissionListener)
+                        .setDeniedMessage(R.string.denied_message)
+                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .check();
             }else if (!haveNetwork()){
                 Toast.makeText(getContext(),R.string.not_have_network, Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private boolean writableExternalStorage(){
-        if (Environment.getExternalStorageState().equals(Environment.getExternalStorageState())) {
-            Log.i("state", "yes, it is writable!");
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-    private boolean checkPermission() {
-        int check = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        return( check == PackageManager.PERMISSION_GRANTED);
     }
 
     private boolean haveNetwork() {
