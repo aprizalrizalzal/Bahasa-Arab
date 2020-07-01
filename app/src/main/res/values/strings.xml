@@ -15,9 +15,8 @@
     <string name="searchPage">Cari Halaman</string>
     <string name="setting">Pengaturan</string>
     <string name="about">Tentang</string>
-    <string name="not_have_network">Koneksi jaringan tidak tersedia!</string>
-    <string name="not_have_permission">Koneksi jaringan tidak tersedia!</string>
-    <string name="denied_permission">\n\nAnda sudah menolak izin dan saran saya untuk yang kedua kalinya ;-(</string>
-    <string name="denied_message">Sekali lagi jika ingin lanjut izinkan di \n[Setting] > [Permission] :-)</string>
+    <string name="not_have_network">Koneksi jaringan PUTUS!</string>
+    <string name="denied_message">Sekali lagi jika ingin lanjut IZINKAN di \n[Setting] > [Permission]</string>
+    <string name="denied_permission">Anda sudah menolak IZIN dan SARAN yang saya berikan\n</string>
 
 </resources>

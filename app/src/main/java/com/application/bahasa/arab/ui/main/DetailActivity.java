@@ -50,7 +50,7 @@ public class DetailActivity extends AppCompatActivity{
             File path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
             if (detailTitle != null) {
                 progressBar.setVisibility(View.INVISIBLE);
-                pdfView.fromFile(new File(path,detailTitle))
+                pdfView.fromFile(new File(path, detailTitle))
                         .pageSnap(true)
                         .swipeHorizontal(true)
                         .enableSwipe(true)

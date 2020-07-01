@@ -1,12 +1,20 @@
 package com.application.bahasa.arab.ui.semester;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,20 +24,21 @@ import com.application.bahasa.arab.data.DataModelSemester;
 import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapter.ViewHolder>{
 
     private final ListSemesterFragmentCallback callback;
-    private final ListSemesterFragmentCallDownload callDownload;
 
     private ArrayList<DataModelSemester> dataModelSemesterArrayList = new ArrayList<>();
 
-    ListSemesterAdapter(ListSemesterFragmentCallback callback, ListSemesterFragmentCallDownload callDownload) {
+    ListSemesterAdapter(ListSemesterFragmentCallback callback) {
         this.callback = callback;
-        this.callDownload = callDownload;
     }
 
     public void setDataModelSemesterArrayList(List<DataModelSemester> dataModelSemesters) {
@@ -87,8 +96,56 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
                 itemView.getContext().startActivity(intent);
             });
 
-            downloadSemester.setOnClickListener(v -> callDownload.onDownloadClick(dataModelSemester));
-            shareSemester.setOnClickListener(v -> callback.onShareClick(dataModelSemester));
+            File file = new File(String.valueOf(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)),dataModelSemester.getSemesterTitle());
+            if (file.exists()){
+                downloadSemester.setVisibility(View.INVISIBLE);
+            }
+
+            downloadSemester.setOnClickListener(v -> {
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelSemester.getSemesterLink()));
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalFilesDir(v.getContext(), Environment.DIRECTORY_DOCUMENTS,dataModelSemester.getSemesterTitle());
+
+                DownloadManager downloadManager = (DownloadManager) v.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+                request.allowScanningByMediaScanner();
+                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
+
+                if (haveNetwork()){
+                    PermissionListener permissionListener = new PermissionListener() {
+                        @Override
+                        public void onPermissionGranted() {
+                            downloadManager.enqueue(request);
+                            downloadSemester.setVisibility(View.INVISIBLE);
+                            Toast.makeText(v.getContext(), "Download "+dataModelSemester.getSemesterTitle(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onPermissionDenied(List<String> deniedPermissions) {
+                            Toast.makeText(v.getContext(), v.getContext().getString(R.string.denied_permission) + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    };
+                    TedPermission.with(v.getContext())
+                            .setPermissionListener(permissionListener)
+                            .setDeniedMessage(R.string.denied_message)
+                            .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            .check();
+                }else if (!haveNetwork()){
+                    Toast.makeText(v.getContext(),R.string.not_have_network, Toast.LENGTH_SHORT).show();
+                }
+            });
+            shareSemester.setOnClickListener(v -> {
+                callback.onShareClick(dataModelSemester);
+                Toast.makeText(itemView.getContext(), "Share "+dataModelSemester.getSemesterTitle(), Toast.LENGTH_SHORT).show();
+            });
+        }
+        private boolean haveNetwork() {
+            boolean haveConnection =false;
+            ConnectivityManager connectivityManager = (ConnectivityManager) itemView.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            if (activeNetworkInfo !=null && activeNetworkInfo.isConnected()){
+                haveConnection=true;
+            }
+            return haveConnection;
         }
     }
 }
