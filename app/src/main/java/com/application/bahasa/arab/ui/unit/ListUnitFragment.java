@@ -20,7 +20,7 @@ import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
-public class ListUnitFragment extends Fragment implements ListUnitFragmentCallback{
+public class ListUnitFragment extends Fragment implements ListUnitFragmentCallShare {
 
     public ListUnitFragment() {
         // Required empty public constructor

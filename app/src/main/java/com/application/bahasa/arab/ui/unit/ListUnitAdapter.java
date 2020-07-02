@@ -33,11 +33,11 @@ import java.util.List;
 
 public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHolder> {
 
-    private final ListUnitFragmentCallback callback;
+    private final ListUnitFragmentCallShare callback;
 
     private ArrayList<DataModelUnit> dataModelUnitArrayList = new ArrayList<>();
 
-    ListUnitAdapter(ListUnitFragmentCallback callback) {
+    ListUnitAdapter(ListUnitFragmentCallShare callback) {
         this.callback = callback;
     }
 
@@ -92,8 +92,6 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
                 intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelUnit.getUnitTitle());
-                intent.putExtra(DetailActivity.EXTRA_LINK, dataModelUnit.getUnitLink());
-                intent.putExtra(DetailActivity.EXTRA_OVERVIEW,dataModelUnit.getUnitOverview());
                 itemView.getContext().startActivity(intent);
             });
 
@@ -115,12 +113,12 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
                         public void onPermissionGranted() {
                             downloadManager.enqueue(request);
                             downloadUnit.setVisibility(View.INVISIBLE);
-                            Toast.makeText(v.getContext(), "Download "+dataModelUnit.getUnitTitle(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(),v.getContext().getString(R.string.download_document)+dataModelUnit.getUnitTitle(), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onPermissionDenied(List<String> deniedPermissions) {
-                            Toast.makeText(v.getContext(),v.getContext().getString(R.string.denied_permission) + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(),v.getContext().getString(R.string.denied_permission), Toast.LENGTH_SHORT).show();
                         }
                     };
                     TedPermission.with(v.getContext())

@@ -91,8 +91,7 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
                 intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelAdditional.getAdditionalTitle());
-                intent.putExtra(DetailActivity.EXTRA_LINK, dataModelAdditional.getAdditionalLink());
-                intent.putExtra(DetailActivity.EXTRA_OVERVIEW, dataModelAdditional.getAdditionalOverview());
+                intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelAdditional.getAdditionalLinkMp3());
                 itemView.getContext().startActivity(intent);
             });
 
@@ -116,11 +115,11 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                         public void onPermissionGranted() {
                             downloadManager.enqueue(request);
                             downloadAdditional.setVisibility(View.INVISIBLE);
-                            Toast.makeText(v.getContext(), "Download "+dataModelAdditional.getAdditionalTitle(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(),v.getContext().getString(R.string.download_document)+dataModelAdditional.getAdditionalTitle(), Toast.LENGTH_SHORT).show();
                         }
                         @Override
                         public void onPermissionDenied(List<String> deniedPermissions) {
-                            Toast.makeText(v.getContext(), v.getContext().getString(R.string.denied_permission) +  deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(), v.getContext().getString(R.string.denied_permission), Toast.LENGTH_SHORT).show();
                         }
                     };
                     TedPermission.with(v.getContext())

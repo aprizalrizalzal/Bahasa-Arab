@@ -7,14 +7,16 @@ public class DataModelSemester {
     private String semesterPage;
     private String semesterCover;
     private String semesterLink;
+    private String semesterLinkMp3;
     private String semesterOverview;
 
-    public DataModelSemester(String semesterId, String semesterTitle, String semesterPage, String semesterCover, String semesterLink, String semesterOverview) {
+    public DataModelSemester(String semesterId, String semesterTitle, String semesterPage, String semesterCover, String semesterLink, String semesterLinkMp3, String semesterOverview) {
         this.semesterId = semesterId;
         this.semesterTitle = semesterTitle;
         this.semesterPage = semesterPage;
         this.semesterCover = semesterCover;
         this.semesterLink = semesterLink;
+        this.semesterLinkMp3 = semesterLinkMp3;
         this.semesterOverview = semesterOverview;
     }
 
@@ -48,12 +50,20 @@ public class DataModelSemester {
         return semesterCover;
     }
 
+    public void setSemesterLink(String semesterLink) {
+        this.semesterLink = semesterLink;
+    }
+
     public String getSemesterLink() {
         return semesterLink;
     }
 
-    public void setSemesterLink(String semesterLink) {
-        this.semesterLink = semesterLink;
+    public void setSemesterLinkMp3(String semesterLinkMp3) {
+        this.semesterLinkMp3 = semesterLinkMp3;
+    }
+
+    public String getSemesterLinkMp3() {
+        return semesterLinkMp3;
     }
 
     public void setSemesterCover(String semesterCover) {

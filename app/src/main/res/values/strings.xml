@@ -15,8 +15,10 @@
     <string name="searchPage">Cari Halaman</string>
     <string name="setting">Pengaturan</string>
     <string name="about">Tentang</string>
-    <string name="not_have_network">Koneksi jaringan PUTUS!</string>
-    <string name="denied_message">Sekali lagi jika ingin lanjut IZINKAN di \n[Setting] > [Permission]</string>
-    <string name="denied_permission">Anda sudah menolak IZIN dan SARAN yang saya berikan\n</string>
+    <string name="not_have_network">Periksa Koneksi Jaringan Internet Anda BOSQUE!</string>
+    <string name="denied_message">Jika Ingin Download File, Izinkan Penyimpanan di \n[Setting] > [Permission] BOSQUE</string>
+    <string name="denied_permission">Anda sudah menolak Izin Penyimpanan BOSQUE</string>
+    <string name="download_document">Download Document"</string>
+    <string name="download_audio">Download Audio</string>
 
 </resources>

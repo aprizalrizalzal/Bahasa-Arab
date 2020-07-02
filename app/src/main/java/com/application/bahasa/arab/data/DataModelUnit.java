@@ -7,14 +7,16 @@ public class DataModelUnit {
     private String unitPage;
     private String unitCover;
     private String unitLink;
+    private String unitLinkMp3;
     private String unitOverview;
 
-    public DataModelUnit(String unitId, String unitTitle, String unitPage, String unitCover, String unitLink, String unitOverview) {
+    public DataModelUnit(String unitId, String unitTitle, String unitPage, String unitCover, String unitLink, String unitLinkMp3, String unitOverview) {
         this.unitId = unitId;
         this.unitTitle = unitTitle;
         this.unitPage = unitPage;
         this.unitCover = unitCover;
         this.unitLink = unitLink;
+        this.unitLinkMp3 = unitLinkMp3;
         this.unitOverview = unitOverview;
     }
 
@@ -50,13 +52,22 @@ public class DataModelUnit {
         this.unitCover = unitCover;
     }
 
+    public void setUnitLink(String unitLink) {
+        this.unitLink = unitLink;
+    }
+
     public String getUnitLink() {
         return unitLink;
     }
 
-    public void setUnitLink(String unitLink) {
-        this.unitLink = unitLink;
+    public void setUnitLinkMp3(String unitLinkMp3) {
+        this.unitLinkMp3 = unitLinkMp3;
     }
+
+    public String getUnitLinkMp3() {
+        return unitLinkMp3;
+    }
+
 
     public String getUnitOverview() {
         return unitOverview;
