@@ -36,6 +36,8 @@ public class DetailActivity extends AppCompatActivity{
     public static final String EXTRA_TITLE = "extra_title";
     public static final String EXTRA_LINK_MP3 = "extra_link_mp3";
 
+    private MediaPlayer mediaPlayer;
+
     private ImageButton imageFirst, imagePlay, imagePause, imageLast, imageStop;
 
     @Override
@@ -54,7 +56,6 @@ public class DetailActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         if (getSupportActionBar() !=null){
             getSupportActionBar().setTitle(getIntent().getStringExtra(EXTRA_TITLE));
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -77,7 +78,16 @@ public class DetailActivity extends AppCompatActivity{
                         .pageFitPolicy(FitPolicy.BOTH)
                         .spacing(10)
                         .load();
+                imageFirst.setOnClickListener(v -> {
+                    pdfView.jumpTo(pdfView.getCurrentPage() -1, true);
+                    Toast.makeText(this,getString(R.string.first), Toast.LENGTH_SHORT).show();
 
+                });
+                imageLast.setOnClickListener(v -> {
+                    pdfView.jumpTo(pdfView.getCurrentPage() +1, true);
+                    Toast.makeText(this,getString(R.string.last), Toast.LENGTH_SHORT).show();
+
+                });
             }
         }
     }
@@ -106,14 +116,20 @@ public class DetailActivity extends AppCompatActivity{
                 File file = new File(String.valueOf(this.getExternalFilesDir(Environment.DIRECTORY_PODCASTS)),audioTitle);
                 if (file.exists()){
                     menuDownloadAudio.setVisible(false);
+                    imagePlay.setVisibility(View.VISIBLE);
                 }
 
-                MediaPlayer mediaPlayer = MediaPlayer.create(this, Uri.fromFile(file));
+                mediaPlayer = MediaPlayer.create(this, Uri.fromFile(file));
 
                 imagePlay.setOnClickListener(v ->{
                     imagePlay.setVisibility(View.INVISIBLE);
-                    mediaPlayer.start();
-                    imagePause.setVisibility(View.VISIBLE);
+                    if (mediaPlayer !=null){
+                        mediaPlayer.start();
+                        imagePause.setVisibility(View.VISIBLE);
+                        imageStop.setVisibility(View.VISIBLE);
+                    }else{
+                        Toast.makeText(this,"Silahkan Keluar dan Kembali Lagi", Toast.LENGTH_SHORT).show();
+                    }
                 });
 
                 imagePause.setOnClickListener(v ->{
@@ -127,6 +143,7 @@ public class DetailActivity extends AppCompatActivity{
                     mediaPlayer.stop();
                     imagePause.setVisibility(View.INVISIBLE);
                 });
+
             }
         }
 
@@ -152,6 +169,7 @@ public class DetailActivity extends AppCompatActivity{
                             public void onPermissionGranted() {
                                 downloadManager.enqueue(request);
                                 menuDownloadAudio.setVisible(false);
+                                imagePlay.setVisibility(View.VISIBLE);
 
                             }
                             @Override
@@ -175,8 +193,8 @@ public class DetailActivity extends AppCompatActivity{
             return true;
         });
 
-        MenuItem menuItem = menu.findItem(R.id.searchView);
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        MenuItem menuSearch = menu.findItem(R.id.searchView);
+        SearchView searchView = (SearchView) menuSearch.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {

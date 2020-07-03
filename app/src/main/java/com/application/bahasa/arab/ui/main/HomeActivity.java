@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
         SectionPagerAdapter sectionPagerAdapter = new SectionPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionPagerAdapter);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -41,8 +41,8 @@ public class HomeActivity extends AppCompatActivity {
         MenuItem menuDownloadAudio = menu.findItem(R.id.menuDownloadAudio);
         menuDownloadAudio.setVisible(false);
 
-        MenuItem menuItem = menu.findItem(R.id.searchView);
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        MenuItem menuSearch = menu.findItem(R.id.searchView);
+        SearchView searchView = (SearchView) menuSearch.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

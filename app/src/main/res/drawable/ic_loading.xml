@@ -10,7 +10,7 @@
 
     <item
         android:bottom="10dp"
-        android:drawable="@drawable/ic_baseline_refresh_primary"
+        android:drawable="@drawable/ic_baseline_refresh"
         android:left="10dp"
         android:right="10dp"
         android:top="10dp" />

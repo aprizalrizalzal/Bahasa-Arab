@@ -9,13 +9,12 @@
 
     <ImageView
         android:id="@+id/img_ss"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="128dp"
         android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/icon_al_arabia" />
+        android:src="@drawable/bahasa_arab" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

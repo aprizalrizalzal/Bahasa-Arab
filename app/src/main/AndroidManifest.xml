@@ -14,9 +14,9 @@
 
     <application
         android:allowBackup="false"
-        android:icon="@drawable/icon_al_arabia"
+        android:icon="@drawable/logo_bahasa_arab"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo_bahasa_arab"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">

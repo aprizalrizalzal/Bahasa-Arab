@@ -34,7 +34,6 @@ import java.util.List;
 public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHolder> {
 
     private final ListUnitFragmentCallShare callback;
-
     private ArrayList<DataModelUnit> dataModelUnitArrayList = new ArrayList<>();
 
     ListUnitAdapter(ListUnitFragmentCallShare callback) {
@@ -80,7 +79,6 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
         }
 
         public void bind(DataModelUnit dataModelUnit) {
-
             Glide.with(itemView.getContext())
                     .load(dataModelUnit.getUnitCover())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
@@ -98,6 +96,9 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
             File file = new File(String.valueOf(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)),dataModelUnit.getUnitTitle());
             if (file.exists()){
                 downloadUnit.setVisibility(View.INVISIBLE);
+            }else {
+
+                downloadUnit.setVisibility(View.VISIBLE);
             }
 
             downloadUnit.setOnClickListener(v -> {
@@ -135,6 +136,7 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
                 Toast.makeText(itemView.getContext(), "Share "+dataModelUnit.getUnitTitle(), Toast.LENGTH_SHORT).show();
             });
         }
+
         private boolean haveNetwork() {
             boolean haveConnection =false;
             ConnectivityManager connectivityManager = (ConnectivityManager) itemView.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);

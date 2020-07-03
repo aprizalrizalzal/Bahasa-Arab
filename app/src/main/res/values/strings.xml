@@ -3,22 +3,23 @@
     <string name="title">Judul</string>
     <string name="page">Halaman</string>
     <string name="share">Bagikan</string>
-    <string name="share_text">Teori untuk %s ada di tautan %s </string>
+    <string name="share_text">Teori untuk %s ada di tautan %s</string>
     <string name="semester">Semester</string>
     <string name="theUnit">Unit</string>
     <string name="additional">Tambahan</string>
-    <string name="first">Sebelumnya</string>
-    <string name="play">Main</string>
-    <string name="pause">Jeda</string>
-    <string name="last">Selanjutnya</string>
-    <string name="stop">Berhenti</string>
+    <string name="first">Sebelumnya </string>
+    <string name="play">Main </string>
+    <string name="pause">Jeda </string>
+    <string name="last">Selanjutnya </string>
+    <string name="stop">Berhenti </string>
     <string name="searchPage">Cari Halaman</string>
     <string name="setting">Pengaturan</string>
     <string name="about">Tentang</string>
     <string name="not_have_network">Periksa Koneksi Jaringan Internet Anda BOSQUE!</string>
     <string name="denied_message">Jika Ingin Download File, Izinkan Penyimpanan di \n[Setting] > [Permission] BOSQUE</string>
     <string name="denied_permission">Anda sudah menolak Izin Penyimpanan BOSQUE</string>
-    <string name="download_document">Download Document"</string>
-    <string name="download_audio">Download Audio</string>
+    <string name="download_document">Download Documents\n</string>
+    <string name="download_audio">Download Audio\n</string>
+    <string name="logo">Logo</string>
 
 </resources>

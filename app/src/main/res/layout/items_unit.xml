@@ -65,7 +65,7 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@android:color/darker_gray"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="@+id/image_shareUnit"
             app:layout_constraintEnd_toStartOf="@+id/image_shareUnit"
@@ -82,9 +82,22 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/share"
 
-            android:src="@drawable/ic_baseline_cloud_download_primary"
+            android:src="@drawable/ic_baseline_cloud_download"
             app:layout_constraintBottom_toBottomOf="@+id/tv_item_titleUnit"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_titleUnit" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/progress_bar"
+            android:visibility="invisible"
+
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_titleUnit"
+            app:layout_constraintStart_toEndOf="@+id/tv_item_titleUnit"
             app:layout_constraintTop_toTopOf="@+id/tv_item_titleUnit" />
 
         <ImageButton
@@ -96,7 +109,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/share"
 
-            android:src="@drawable/ic_baseline_share_primary"
+            android:src="@drawable/ic_baseline_share"
             app:layout_constraintBottom_toBottomOf="@+id/image_downloadUnit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_pageUnit" />

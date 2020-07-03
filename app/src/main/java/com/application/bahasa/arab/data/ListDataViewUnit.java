@@ -36,7 +36,7 @@ public class ListDataViewUnit {
                 "Unit Empat",
                 "Halaman 69/92",
                 "https://firebasestorage.googleapis.com/v0/b/bahasa-6a723.appspot.com/o/bahasa-arab%2Fcover%2F4.jpg?alt=media&token=a9eee453-1e94-4adc-83bf-877c416c6134",
-                "hhttps://firebasestorage.googleapis.com/v0/b/bahasa-6a723.appspot.com/o/bahasa-arab%2Fcontent%2Funit-empat.pdf?alt=media&token=aa513cbc-4469-4aa2-a650-4ca0d26e9f9b",
+                "https://firebasestorage.googleapis.com/v0/b/bahasa-6a723.appspot.com/o/bahasa-arab%2Fcontent%2Funit-empat.pdf?alt=media&token=aa513cbc-4469-4aa2-a650-4ca0d26e9f9b",
                 "",
                 "unit-empat.pdf"));
         dataModelUnitArrayList.add(new DataModelUnit(

@@ -12,15 +12,16 @@
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_color_up"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="@color/colorPrimary"
+        android:theme="@style/AppTheme"
         app:layout_constraintTop_toTopOf="parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        app:titleTextColor="@android:color/darker_gray"
+        app:popupTheme="@style/AppTheme" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adViewDetail"
@@ -58,7 +59,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@drawable/bg_color_down"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
 
         app:layout_constraintBottom_toBottomOf="parent" />
@@ -67,8 +68,8 @@
         android:id="@+id/btnFirst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_first_play_white"
-        android:layout_margin="8dp"
+        android:src="@drawable/ic_baseline_first_play"
+        android:layout_margin="32dp"
         android:background="@android:color/transparent"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +81,8 @@
         android:id="@+id/btnPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_baseline_play_circle_outline_white"
+        android:visibility="invisible"
+        android:background="@drawable/ic_baseline_play_circle_outline"
         android:layout_margin="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        android:background="@drawable/ic_baseline_pause_circle_outline_white"
+        android:background="@drawable/ic_baseline_pause_circle_outline"
         android:layout_margin="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -107,8 +109,8 @@
         android:id="@+id/btnLast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_baseline_last_play_white"
-        android:layout_margin="8dp"
+        android:background="@drawable/ic_baseline_last_play"
+        android:layout_margin="32dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnPlay"
@@ -119,7 +121,7 @@
         android:id="@+id/btnStop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_baseline_stop_white"
+        android:background="@drawable/ic_baseline_stop"
         android:visibility="invisible"
         android:layout_margin="8dp"
 

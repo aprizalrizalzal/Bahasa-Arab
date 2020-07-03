@@ -11,10 +11,11 @@ android {
 
         defaultConfig {
             applicationId "com.application.bahasa.arab"
-            minSdkVersion 23
+            minSdkVersion 21
             targetSdkVersion 30
             versionCode 1
-            versionName "1.0"
+            versionName "1.1."
+            versionNameSuffix = 'Beta'
 
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
             vectorDrawables.useSupportLibrary = true
@@ -49,5 +50,7 @@ android {
         implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
         implementation 'com.google.android.gms:play-services-ads:19.2.0'
         implementation 'gun0912.ted:tedpermission:2.2.3'
+
+        implementation 'com.google.android.play:core:1.7.3'
 
     }
