@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.application.bahasa.arab.R;
+import com.application.bahasa.arab.ui.HomeTabActivity;
 
 public class SplashActivity extends Activity {
 
@@ -21,7 +22,7 @@ public class SplashActivity extends Activity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                    startActivity(new Intent(SplashActivity.this, HomeTabActivity.class));
                     finish();
                 }
             }

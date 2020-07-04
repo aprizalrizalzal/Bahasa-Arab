@@ -22,8 +22,9 @@ import com.google.android.gms.ads.AdView;
 import java.util.List;
 
 
-public class ListAdditionalFragment extends Fragment implements ListAdditionalFragmentCallShare {
+public class ListAdditionalFragment extends Fragment implements ListAdditionalFragmentCallback {
 
+    private ListAdditionalAdapter adapter = new ListAdditionalAdapter(this);
     public ListAdditionalFragment() {
         // Required empty public constructor
     }
@@ -46,7 +47,6 @@ public class ListAdditionalFragment extends Fragment implements ListAdditionalFr
             ListAdditionalViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(ListAdditionalViewModel.class);
             List<DataModelAdditional> dataModelAdditionals = viewModel.dataModelAdditionalList();
 
-            ListAdditionalAdapter adapter = new ListAdditionalAdapter(this);
             adapter.setDataModelAdditionalArrayList(dataModelAdditionals);
 
             rv_video.setLayoutManager(new LinearLayoutManager(getContext()));

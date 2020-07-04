@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelUnit;
-import com.application.bahasa.arab.ui.main.DetailActivity;
+import com.application.bahasa.arab.ui.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.gun0912.tedpermission.PermissionListener;
@@ -29,21 +31,28 @@ import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHolder> {
+public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHolder> implements Filterable {
 
-    private final ListUnitFragmentCallShare callback;
+    private final ListUnitFragmentCallback callback;
     private ArrayList<DataModelUnit> dataModelUnitArrayList = new ArrayList<>();
+    private ArrayList<DataModelUnit> getDataModelUnitArrayList = new ArrayList<>();
 
-    ListUnitAdapter(ListUnitFragmentCallShare callback) {
+
+    ListUnitAdapter(ListUnitFragmentCallback callback) {
         this.callback = callback;
     }
 
     public void setDataModelUnitArrayList(List<DataModelUnit> dataModelUnit) {
         if (dataModelUnitArrayList == null)return;
-            dataModelUnitArrayList.clear();
-            dataModelUnitArrayList.addAll(dataModelUnit);
+        dataModelUnitArrayList.clear();
+        dataModelUnitArrayList.addAll(dataModelUnit);
+
+        if (getDataModelUnitArrayList == null)return;
+        getDataModelUnitArrayList.clear();
+        getDataModelUnitArrayList.addAll(dataModelUnit);
     }
 
     @NonNull
@@ -63,6 +72,38 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
     public int getItemCount() {
         return dataModelUnitArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            ArrayList<DataModelUnit> filterData = new ArrayList<>();
+            if (charSequence.toString().isEmpty()){
+                filterData.addAll(getDataModelUnitArrayList);
+            }else {
+                for (DataModelUnit unit : getDataModelUnitArrayList){
+                    if (unit.getUnitTitle().toLowerCase().contains(charSequence.toString().toLowerCase())){
+                        filterData.add(unit);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filterData;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            dataModelUnitArrayList.clear();
+            dataModelUnitArrayList.addAll((Collection<? extends DataModelUnit>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageCoverUnit;

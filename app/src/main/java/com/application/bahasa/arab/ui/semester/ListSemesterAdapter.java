@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelSemester;
-import com.application.bahasa.arab.ui.main.DetailActivity;
+import com.application.bahasa.arab.ui.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.gun0912.tedpermission.PermissionListener;
@@ -29,22 +31,28 @@ import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapter.ViewHolder>{
+public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapter.ViewHolder> implements Filterable {
 
-    private final ListSemesterFragmentCallShare callback;
-
+    private final ListSemesterFragmentCallback callback;
     private ArrayList<DataModelSemester> dataModelSemesterArrayList = new ArrayList<>();
+    private ArrayList<DataModelSemester> getDataModelSemesterArrayList = new ArrayList<>();
 
-    ListSemesterAdapter(ListSemesterFragmentCallShare callback) {
+    public ListSemesterAdapter(ListSemesterFragmentCallback callback) {
         this.callback = callback;
     }
 
     public void setDataModelSemesterArrayList(List<DataModelSemester> dataModelSemesters) {
+
         if (dataModelSemesterArrayList == null)return;
-            dataModelSemesterArrayList.clear();
-            dataModelSemesterArrayList.addAll(dataModelSemesters);
+        dataModelSemesterArrayList.clear();
+        dataModelSemesterArrayList.addAll(dataModelSemesters);
+
+        if (getDataModelSemesterArrayList == null)return;
+        getDataModelSemesterArrayList.clear();
+        getDataModelSemesterArrayList.addAll(dataModelSemesters);
     }
 
     @NonNull
@@ -65,10 +73,44 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
         return dataModelSemesterArrayList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+
+            ArrayList<DataModelSemester> filterData = new ArrayList<>();
+            if (charSequence.toString().isEmpty()){
+                filterData.addAll(getDataModelSemesterArrayList);
+            }else {
+                for (DataModelSemester semester : getDataModelSemesterArrayList){
+                    if (semester.getSemesterTitle().toLowerCase().contains(charSequence.toString().toLowerCase())){
+                        filterData.add(semester);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filterData;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            dataModelSemesterArrayList.clear();
+            dataModelSemesterArrayList.addAll((Collection<? extends DataModelSemester>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageCoverSemester;
         final TextView titleSemester,pageSemester;
         final ImageButton downloadSemester,shareSemester;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageCoverSemester = itemView.findViewById(R.id.image_coverSemester);

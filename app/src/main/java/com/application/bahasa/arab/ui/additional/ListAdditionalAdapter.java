@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelAdditional;
-import com.application.bahasa.arab.ui.main.DetailActivity;
+import com.application.bahasa.arab.ui.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.gun0912.tedpermission.PermissionListener;
@@ -29,21 +31,27 @@ import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAdapter.ViewHolder> {
-    private final ListAdditionalFragmentCallShare callShare;
+public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAdapter.ViewHolder> implements Filterable {
 
+    private final ListAdditionalFragmentCallback callShare;
     private ArrayList<DataModelAdditional> dataModelAdditionalArrayList = new ArrayList<>();
+    private ArrayList<DataModelAdditional> getDataModelAdditionalArrayList = new ArrayList<>();
 
-    ListAdditionalAdapter(ListAdditionalFragmentCallShare callShare) {
+    ListAdditionalAdapter(ListAdditionalFragmentCallback callShare) {
         this.callShare = callShare;
     }
 
     public void setDataModelAdditionalArrayList(List<DataModelAdditional> dataModelAdditionals) {
         if (dataModelAdditionalArrayList == null)return;
-            dataModelAdditionalArrayList.clear();
-            dataModelAdditionalArrayList.addAll(dataModelAdditionals);
+        dataModelAdditionalArrayList.clear();
+        dataModelAdditionalArrayList.addAll(dataModelAdditionals);
+
+        if (getDataModelAdditionalArrayList == null)return;
+        getDataModelAdditionalArrayList.clear();
+        getDataModelAdditionalArrayList.addAll(dataModelAdditionals);
     }
 
     @NonNull
@@ -63,6 +71,39 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
     public int getItemCount() {
         return dataModelAdditionalArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            ArrayList<DataModelAdditional> filterData = new ArrayList<>();
+            if (charSequence.toString().isEmpty()){
+                filterData.addAll(getDataModelAdditionalArrayList);
+            }else {
+                for (DataModelAdditional additional : getDataModelAdditionalArrayList){
+                    if (additional.getAdditionalTitle().contains(charSequence.toString())){
+                        filterData.add(additional);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filterData;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            dataModelAdditionalArrayList.clear();
+            dataModelAdditionalArrayList.addAll((Collection<? extends DataModelAdditional>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageCoverAdditional;

@@ -20,7 +20,9 @@ import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
-public class ListSemesterFragment extends Fragment implements ListSemesterFragmentCallShare {
+public class ListSemesterFragment extends Fragment implements ListSemesterFragmentCallback {
+
+    private ListSemesterAdapter adapter = new ListSemesterAdapter(this);
 
     public ListSemesterFragment() {
         // Required empty public constructor
@@ -36,7 +38,7 @@ public class ListSemesterFragment extends Fragment implements ListSemesterFragme
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView rv_voice = view.findViewById(R.id.rv_semester);
+        RecyclerView rv_semester = view.findViewById(R.id.rv_semester);
         AdView adViewUnit =view.findViewById(R.id.adViewSemester);
 
         if (getActivity() !=null){
@@ -46,12 +48,11 @@ public class ListSemesterFragment extends Fragment implements ListSemesterFragme
             ListSemesterViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(ListSemesterViewModel.class);
             List<DataModelSemester> dataModelSemesters = viewModel.dataModelSemesters();
 
-            ListSemesterAdapter adapter = new ListSemesterAdapter(this);
             adapter.setDataModelSemesterArrayList(dataModelSemesters);
 
-            rv_voice.setLayoutManager(new LinearLayoutManager(getContext()));
-            rv_voice.setHasFixedSize(true);
-            rv_voice.setAdapter(adapter);
+            rv_semester.setLayoutManager(new LinearLayoutManager(getContext()));
+            rv_semester.setHasFixedSize(true);
+            rv_semester.setAdapter(adapter);
         }
     }
 

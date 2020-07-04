@@ -21,5 +21,10 @@
     <string name="download_document">Download Documents\n</string>
     <string name="download_audio">Download Audio\n</string>
     <string name="logo">Logo</string>
+    <string name="search">Search</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="example">Masih Dalam Pengembangan</string>
 
 </resources>

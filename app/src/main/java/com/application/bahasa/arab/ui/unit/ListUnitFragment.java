@@ -20,7 +20,9 @@ import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
-public class ListUnitFragment extends Fragment implements ListUnitFragmentCallShare {
+public class ListUnitFragment extends Fragment implements ListUnitFragmentCallback {
+
+    private ListUnitAdapter adapter = new ListUnitAdapter(this);
 
     public ListUnitFragment() {
         // Required empty public constructor
@@ -46,7 +48,6 @@ public class ListUnitFragment extends Fragment implements ListUnitFragmentCallSh
             ListUnitViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(ListUnitViewModel.class);
             List<DataModelUnit> dataModelTheories = viewModel.dataModelUnitList();
 
-            ListUnitAdapter adapter = new ListUnitAdapter(this);
             adapter.setDataModelUnitArrayList(dataModelTheories);
 
             rv_unit.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -4,12 +4,10 @@
     package="com.application.bahasa.arab">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -21,26 +19,29 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
+        <activity
+            android:name=".ui.HomeTabActivity"
+            android:label="@string/title_activity_tabbed"
+            android:theme="@style/AppTheme">
+
+        </activity>
         <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3946611117968254~4667483765"/>
+            android:value="ca-app-pub-3946611117968254~4667483765" />
 
         <activity
-            android:name=".ui.main.HomeActivity">
-        </activity>
-        <activity
-            android:name=".ui.main.DetailActivity"
-            android:parentActivityName=".ui.main.HomeActivity"
+            android:name=".ui.DetailActivity"
+            android:parentActivityName=".ui.HomeTabActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.main.HomeActivity" />
+                android:value=".ui.HomeTabActivity" />
         </activity>
-
         <activity android:name=".ui.main.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

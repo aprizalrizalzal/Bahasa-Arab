@@ -1,4 +1,4 @@
-package com.application.bahasa.arab.ui.main;
+package com.application.bahasa.arab.ui;
 
 import android.Manifest;
 import android.app.DownloadManager;
@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,8 +36,9 @@ public class DetailActivity extends AppCompatActivity{
     public static final String EXTRA_LINK_MP3 = "extra_link_mp3";
 
     private MediaPlayer mediaPlayer;
-
-    private ImageButton imageFirst, imagePlay, imagePause, imageLast, imageStop;
+    private ImageButton imagePlay;
+    private ImageButton imagePause;
+    private ImageButton imageStop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +46,10 @@ public class DetailActivity extends AppCompatActivity{
         setContentView(R.layout.activity_detail);
         AdView adViewUnit = findViewById(R.id.adViewDetail);
 
-        imageFirst = findViewById(R.id.btnFirst);
+        ImageButton imageFirst = findViewById(R.id.btnFirst);
         imagePlay = findViewById(R.id.btnPlay);
         imagePause = findViewById(R.id.btnPause);
-        imageLast = findViewById(R.id.btnLast);
+        ImageButton imageLast = findViewById(R.id.btnLast);
         imageStop = findViewById(R.id.btnStop);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -105,8 +105,6 @@ public class DetailActivity extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_more,menu);
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-
         MenuItem menuDownloadAudio = menu.findItem(R.id.menuDownloadAudio);
 
         Bundle fileExist = getIntent().getExtras();
@@ -147,7 +145,7 @@ public class DetailActivity extends AppCompatActivity{
             }
         }
 
-        menuDownloadAudio.setOnMenuItemClickListener(menuItem -> {
+        menuDownloadAudio.setOnMenuItemClickListener(v -> {
             menuDownloadAudio.setVisible(false);
 
             Bundle audio = getIntent().getExtras();
@@ -192,20 +190,6 @@ public class DetailActivity extends AppCompatActivity{
             }
             return true;
         });
-
-        MenuItem menuSearch = menu.findItem(R.id.searchView);
-        SearchView searchView = (SearchView) menuSearch.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 }

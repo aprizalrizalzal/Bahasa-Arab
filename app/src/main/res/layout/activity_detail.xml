@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".ui.main.DetailActivity">
+    tools:context=".ui.DetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/action_bar"
@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@android:color/darker_gray"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
         app:popupTheme="@style/AppTheme" />
 
         <com.google.android.gms.ads.AdView
@@ -55,13 +56,12 @@
 
     </com.github.barteksc.pdfviewer.PDFView>
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageButton
