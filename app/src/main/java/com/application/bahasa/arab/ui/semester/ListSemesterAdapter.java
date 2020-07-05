@@ -30,6 +30,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -131,12 +135,23 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
             titleSemester.setText(dataModelSemester.getSemesterTitle());
             pageSemester.setText(dataModelSemester.getSemesterPage());
 
-            itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
-                intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelSemester.getSemesterTitle());
-                itemView.getContext().startActivity(intent);
-            });
+            File file = new File(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),dataModelSemester.getSemesterTitle());
+            if (!file.exists()){
+                itemView.setOnClickListener(v -> Snackbar.make(v,v.getResources().getString( R.string.document_is_empty), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
+                        .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
+                        .show());
+                }else {
+                downloadSemester.setVisibility(View.INVISIBLE);
+                bookSemester.setVisibility(View.VISIBLE);
+                itemView.setOnClickListener(v -> {
+                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
+                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelSemester.getSemesterTitle());
+                    itemView.getContext().startActivity(intent);
+                });
+            }
 
             downloadSemester.setOnClickListener(v -> {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelSemester.getSemesterLink()));
@@ -152,11 +167,21 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
                         @Override
                         public void onPermissionGranted() {
                             downloadManager.enqueue(request);
+                            downloadSemester.setVisibility(View.INVISIBLE);
+                            bookSemester.setVisibility(View.VISIBLE);
                             Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ dataModelSemester.getSemesterTitle(), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null)
                                     .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
                                     .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
                                     .show();
+                            if (bookSemester.isShown()){
+                                itemView.setOnClickListener(v -> {
+                                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
+                                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelSemester.getSemesterTitle());
+                                    itemView.getContext().startActivity(intent);
+                                });
+                            }
                         }
 
                         @Override

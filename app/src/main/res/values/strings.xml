@@ -16,15 +16,13 @@
     <string name="setting">Pengaturan</string>
     <string name="about">Tentang</string>
     <string name="not_have_network">Periksa Koneksi Jaringan Internet Anda BOSQUE!</string>
-    <string name="denied_message">Jika Ingin Unduh File, Izinkan Penyimpanan di \n[Setting] > [Permission] BOSQUE!</string>
+    <string name="denied_message">Jika Ingin Unduh File, Atur Izin Penyimpanan di \n[Setting] > [Permission] BOSQUE!</string>
     <string name="denied_permission">Anda sudah menolak Izin Penyimpanan BOSQUE!</string>
     <string name="download_document">Unduh Dokument </string>
     <string name="download_success">Unduh Sukses </string>
     <string name="download_failed">Unduh Gagal </string>
     <string name="download_audio">Unduh Audio </string>
     <string name="title_activity_tabbed">TabbedActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
     <string name="example">Masih Dalam Pengembangan</string>
     <string name="search">Cari</string>
     <string name="book">Buku</string>

@@ -29,6 +29,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -129,12 +130,23 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
             titleAdditional.setText(dataModelAdditional.getAdditionalTitle());
             runTimeAdditional.setText(dataModelAdditional.getAdditionalPage());
 
-            itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelAdditional.getAdditionalTitle());
-                intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelAdditional.getAdditionalLinkMp3());
-                itemView.getContext().startActivity(intent);
-            });
+            File file = new File(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),dataModelAdditional.getAdditionalTitle());
+            if (!file.exists()){
+                itemView.setOnClickListener(v -> Snackbar.make(v,v.getResources().getString( R.string.document_is_empty), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
+                        .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
+                        .show());
+            }else {
+                downloadAdditional.setVisibility(View.INVISIBLE);
+                bookAdditional.setVisibility(View.VISIBLE);
+                itemView.setOnClickListener(v -> {
+                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelAdditional.getAdditionalTitle());
+                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelAdditional.getAdditionalLinkMp3());
+                    itemView.getContext().startActivity(intent);
+                });
+            }
 
             downloadAdditional.setOnClickListener(v -> {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelAdditional.getAdditionalLink()));
@@ -149,11 +161,21 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                         @Override
                         public void onPermissionGranted() {
                             downloadManager.enqueue(request);
+                            downloadAdditional.setVisibility(View.INVISIBLE);
+                            bookAdditional.setVisibility(View.VISIBLE);
                             Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ dataModelAdditional.getAdditionalTitle(), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null)
                                     .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
                                     .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
                                     .show();
+                            if (bookAdditional.isShown()){
+                                itemView.setOnClickListener(v -> {
+                                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelAdditional.getAdditionalTitle());
+                                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelAdditional.getAdditionalLinkMp3());
+                                    itemView.getContext().startActivity(intent);
+                                });
+                            }
                         }
                         @Override
                         public void onPermissionDenied(List<String> deniedPermissions) {
