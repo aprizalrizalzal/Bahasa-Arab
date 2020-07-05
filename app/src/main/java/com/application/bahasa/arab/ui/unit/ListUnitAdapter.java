@@ -3,7 +3,6 @@ package com.application.bahasa.arab.ui.unit;
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -23,14 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelUnit;
-import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -130,22 +127,6 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
             titleUnit.setText(dataModelUnit.getUnitTitle());
             pageUnit.setText(dataModelUnit.getUnitPage());
 
-            itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelUnit.getUnitTitle());
-                itemView.getContext().startActivity(intent);
-            });
-
-            File file = new File(String.valueOf(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)),dataModelUnit.getUnitTitle());
-
-            if (file.exists()){
-                downloadUnit.setVisibility(View.INVISIBLE);
-                bookUnit.setVisibility(View.VISIBLE);
-            }else {
-
-                downloadUnit.setVisibility(View.VISIBLE);
-            }
-
             downloadUnit.setOnClickListener(v -> {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelUnit.getUnitLink()));
                 request.allowScanningByMediaScanner();
@@ -160,7 +141,6 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
                         @Override
                         public void onPermissionGranted() {
                             downloadManager.enqueue(request);
-                            downloadUnit.setVisibility(View.INVISIBLE);
                             Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ dataModelUnit.getUnitTitle(), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null)
                                     .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))

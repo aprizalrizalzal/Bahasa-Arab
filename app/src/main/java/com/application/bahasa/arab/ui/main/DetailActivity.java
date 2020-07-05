@@ -70,7 +70,6 @@ public class DetailActivity extends AppCompatActivity{
             File path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
             if (detailTitle != null) {
                 progressBar.setVisibility(View.INVISIBLE);
-
                 pdfView.fromFile(new File(path, detailTitle))
                         .pageSnap(true)
                         .swipeHorizontal(true)
@@ -90,6 +89,8 @@ public class DetailActivity extends AppCompatActivity{
                     Toast.makeText(this,getString(R.string.last), Toast.LENGTH_SHORT).show();
 
                 });
+            }else {
+                progressBar.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -113,22 +114,17 @@ public class DetailActivity extends AppCompatActivity{
         if (fileExist !=null){
             String audioTitle = fileExist.getString(EXTRA_TITLE);
             if (audioTitle !=null){
-                File file = new File(String.valueOf(this.getExternalFilesDir(Environment.DIRECTORY_PODCASTS)),audioTitle);
-                if (file.exists()){
-                    menuDownloadAudio.setVisible(false);
-                    imagePlay.setVisibility(View.VISIBLE);
-                }
+                File file = getExternalFilesDir(Environment.DIRECTORY_PODCASTS);
 
-                mediaPlayer = MediaPlayer.create(this, Uri.fromFile(file));
-
+                mediaPlayer = MediaPlayer.create(this, Uri.fromFile(new File(file,audioTitle)));
                 imagePlay.setOnClickListener(v ->{
                     imagePlay.setVisibility(View.INVISIBLE);
                     if (mediaPlayer !=null){
                         mediaPlayer.start();
                         imagePause.setVisibility(View.VISIBLE);
                         imageStop.setVisibility(View.VISIBLE);
-                    }else{
-                        Toast.makeText(DetailActivity.this, "Silahkan Anda Keluar dan Masuk Kembali",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(DetailActivity.this, getString(R.string.media_is_empty),Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -162,11 +158,11 @@ public class DetailActivity extends AppCompatActivity{
                 String detailTitle = audio.getString(EXTRA_TITLE);
                 if (detailAudio !=null){
                     DownloadManager.Request request = new DownloadManager.Request(Uri.parse(detailAudio));
+                    request.allowScanningByMediaScanner();
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                     request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_PODCASTS,detailTitle);
 
                     DownloadManager downloadManager = (DownloadManager)this.getSystemService(Context.DOWNLOAD_SERVICE);
-                    request.allowScanningByMediaScanner();
                     request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
 
                     if (haveNetwork()){
@@ -174,8 +170,6 @@ public class DetailActivity extends AppCompatActivity{
                             @Override
                             public void onPermissionGranted() {
                                 downloadManager.enqueue(request);
-                                menuDownloadAudio.setVisible(false);
-                                imagePlay.setVisibility(View.VISIBLE);
                                 Toast.makeText(DetailActivity.this, getString(R.string.download_audio) +" "+ detailTitle,Toast.LENGTH_SHORT).show();
                             }
                             @Override

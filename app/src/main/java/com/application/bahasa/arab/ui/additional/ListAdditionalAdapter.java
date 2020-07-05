@@ -29,7 +29,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -129,7 +128,6 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                     .into(imageCoverAdditional);
             titleAdditional.setText(dataModelAdditional.getAdditionalTitle());
             runTimeAdditional.setText(dataModelAdditional.getAdditionalPage());
-
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
                 intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelAdditional.getAdditionalTitle());
@@ -137,20 +135,11 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                 itemView.getContext().startActivity(intent);
             });
 
-            File file = new File(String.valueOf(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)),dataModelAdditional.getAdditionalTitle());
-
-            if (file.exists()){
-                downloadAdditional.setVisibility(View.INVISIBLE);
-                bookAdditional.setVisibility(View.VISIBLE);
-            }
-
             downloadAdditional.setOnClickListener(v -> {
-
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelAdditional.getAdditionalLink()));
                 request.allowScanningByMediaScanner();
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setDestinationInExternalFilesDir(v.getContext(), Environment.DIRECTORY_DOCUMENTS,dataModelAdditional.getAdditionalTitle());
-
+                request.setDestinationInExternalFilesDir(v.getContext(),Environment.DIRECTORY_DOCUMENTS,dataModelAdditional.getAdditionalTitle());
                 DownloadManager downloadManager = (DownloadManager)v.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
                 request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
 
@@ -194,6 +183,7 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
             });
 
         }
+
         private boolean haveNetwork() {
             boolean haveConnection =false;
             ConnectivityManager connectivityManager = (ConnectivityManager) itemView.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
