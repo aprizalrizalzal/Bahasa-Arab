@@ -36,9 +36,9 @@ public class ListDataViewSemester {
                 "Semester Empat",
                 "Halaman 404",
                 "https://firebasestorage.googleapis.com/v0/b/bahasa-6a723.appspot.com/o/bahasa-arab%2Fcover%2Fs4.png?alt=media&token=de03c414-8172-4b62-8370-312e6f00a392",
+                "https://firebasestorage.googleapis.com/v0/b/bahasa-6a723.appspot.com/o/bahasa-arab%2F404.pdf?alt=media&token=d301a419-ef9f-4b2d-bb27-461942fbbb07",
                 "",
-                "",
-                "https://firebasestorage.googleapis.com/v0/b/bahasa-6a723.appspot.com/o/bahasa-arab%2F404.pdf?alt=media&token=d301a419-ef9f-4b2d-bb27-461942fbbb07"));
+                ""));
 
         return dataModelSemesterArrayList;
     }
