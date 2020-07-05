@@ -16,16 +16,16 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelAdditional;
-import com.application.bahasa.arab.ui.DetailActivity;
+import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -108,7 +108,7 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageCoverAdditional;
         final TextView titleAdditional, runTimeAdditional;
-        final ImageButton downloadAdditional, shareAdditional;
+        final ImageButton downloadAdditional, bookAdditional, shareAdditional;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -116,6 +116,7 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
             titleAdditional = itemView.findViewById(R.id.tv_item_titleAdditional);
             runTimeAdditional = itemView.findViewById(R.id.tv_item_pageAdditional);
             downloadAdditional = itemView.findViewById(R.id.image_downloadAdditional);
+            bookAdditional = itemView.findViewById(R.id.image_bookAdditional);
             shareAdditional = itemView.findViewById(R.id.image_shareAdditional);
         }
 
@@ -137,17 +138,20 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
             });
 
             File file = new File(String.valueOf(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)),dataModelAdditional.getAdditionalTitle());
+
             if (file.exists()){
                 downloadAdditional.setVisibility(View.INVISIBLE);
+                bookAdditional.setVisibility(View.VISIBLE);
             }
 
             downloadAdditional.setOnClickListener(v -> {
+
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelAdditional.getAdditionalLink()));
+                request.allowScanningByMediaScanner();
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 request.setDestinationInExternalFilesDir(v.getContext(), Environment.DIRECTORY_DOCUMENTS,dataModelAdditional.getAdditionalTitle());
 
                 DownloadManager downloadManager = (DownloadManager)v.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
-                request.allowScanningByMediaScanner();
                 request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
 
                 if (haveNetwork()){
@@ -155,12 +159,19 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                         @Override
                         public void onPermissionGranted() {
                             downloadManager.enqueue(request);
-                            downloadAdditional.setVisibility(View.INVISIBLE);
-                            Toast.makeText(v.getContext(),v.getContext().getString(R.string.download_document)+dataModelAdditional.getAdditionalTitle(), Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ dataModelAdditional.getAdditionalTitle(), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null)
+                                    .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
+                                    .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
+                                    .show();
                         }
                         @Override
                         public void onPermissionDenied(List<String> deniedPermissions) {
-                            Toast.makeText(v.getContext(), v.getContext().getString(R.string.denied_permission), Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, v.getResources().getString( R.string.denied_permission) , Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null)
+                                    .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
+                                    .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
+                                    .show();
                         }
                     };
                     TedPermission.with(v.getContext())
@@ -170,7 +181,11 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                             .check();
 
                 }else if (!haveNetwork()){
-                    Toast.makeText(v.getContext(),R.string.not_have_network, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(v, v.getResources().getString( R.string.not_have_network), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null)
+                            .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
+                            .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
+                            .show();
                 }
             });
 

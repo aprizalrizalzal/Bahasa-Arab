@@ -87,18 +87,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_item_titleUnit" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@+id/image_bookUnit"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:indeterminateDrawable="@drawable/progress_bar"
+            android:src="@drawable/ic_baseline_book_24"
+            android:background="@android:color/transparent"
             android:visibility="invisible"
 
             app:layout_constraintBottom_toBottomOf="@+id/tv_item_titleUnit"
             app:layout_constraintStart_toEndOf="@+id/tv_item_titleUnit"
-            app:layout_constraintTop_toTopOf="@+id/tv_item_titleUnit" />
+            app:layout_constraintTop_toTopOf="@+id/tv_item_titleUnit"
+            android:contentDescription="@string/book" />
 
         <ImageButton
             android:id="@+id/image_shareUnit"

@@ -41,5 +41,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_baseline_bubble_chart" />
+        android:src="@drawable/ic_baseline_add_circle" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

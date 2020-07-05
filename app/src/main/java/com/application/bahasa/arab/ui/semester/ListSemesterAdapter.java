@@ -23,9 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelSemester;
-import com.application.bahasa.arab.ui.DetailActivity;
+import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -109,7 +110,7 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageCoverSemester;
         final TextView titleSemester,pageSemester;
-        final ImageButton downloadSemester,shareSemester;
+        final ImageButton downloadSemester,bookSemester,shareSemester;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -117,6 +118,7 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
             titleSemester = itemView.findViewById(R.id.tv_item_titleSemester);
             pageSemester = itemView.findViewById(R.id.tv_item_pageSemester);
             downloadSemester = itemView.findViewById(R.id.image_downloadSemester);
+            bookSemester = itemView.findViewById(R.id.image_bookSemester);
             shareSemester = itemView.findViewById(R.id.image_shareSemester);
         }
 
@@ -137,17 +139,19 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
             });
 
             File file = new File(String.valueOf(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)),dataModelSemester.getSemesterTitle());
+
             if (file.exists()){
                 downloadSemester.setVisibility(View.INVISIBLE);
+                bookSemester.setVisibility(View.VISIBLE);
             }
 
             downloadSemester.setOnClickListener(v -> {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelSemester.getSemesterLink()));
+                request.allowScanningByMediaScanner();
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 request.setDestinationInExternalFilesDir(v.getContext(), Environment.DIRECTORY_DOCUMENTS,dataModelSemester.getSemesterTitle());
 
                 DownloadManager downloadManager = (DownloadManager) v.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
-                request.allowScanningByMediaScanner();
                 request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
 
                 if (haveNetwork()){
@@ -156,28 +160,43 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
                         public void onPermissionGranted() {
                             downloadManager.enqueue(request);
                             downloadSemester.setVisibility(View.INVISIBLE);
-                            Toast.makeText(v.getContext(),v.getContext().getString(R.string.download_document)+dataModelSemester.getSemesterTitle(), Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ dataModelSemester.getSemesterTitle(), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null)
+                                    .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
+                                    .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
+                                    .show();
                         }
 
                         @Override
                         public void onPermissionDenied(List<String> deniedPermissions) {
-                            Toast.makeText(v.getContext(), v.getContext().getString(R.string.denied_permission), Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, v.getResources().getString( R.string.denied_permission), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null)
+                                    .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
+                                    .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
+                                    .show();
                         }
                     };
+
                     TedPermission.with(v.getContext())
                             .setPermissionListener(permissionListener)
                             .setDeniedMessage(R.string.denied_message)
                             .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             .check();
                 }else if (!haveNetwork()){
-                    Toast.makeText(v.getContext(),R.string.not_have_network, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(v, v.getResources().getString( R.string.not_have_network) , Snackbar.LENGTH_LONG)
+                            .setAction("Action", null)
+                            .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
+                            .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
+                            .show();
                 }
             });
+
             shareSemester.setOnClickListener(v -> {
                 callback.onShareClick(dataModelSemester);
                 Toast.makeText(itemView.getContext(), "Share "+dataModelSemester.getSemesterTitle(), Toast.LENGTH_SHORT).show();
             });
         }
+
         private boolean haveNetwork() {
             boolean haveConnection =false;
             ConnectivityManager connectivityManager = (ConnectivityManager) itemView.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);

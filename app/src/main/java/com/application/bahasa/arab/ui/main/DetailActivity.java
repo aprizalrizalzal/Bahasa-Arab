@@ -1,4 +1,4 @@
-package com.application.bahasa.arab.ui;
+package com.application.bahasa.arab.ui.main;
 
 import android.Manifest;
 import android.app.DownloadManager;
@@ -78,11 +78,13 @@ public class DetailActivity extends AppCompatActivity{
                         .pageFitPolicy(FitPolicy.BOTH)
                         .spacing(10)
                         .load();
+
                 imageFirst.setOnClickListener(v -> {
                     pdfView.jumpTo(pdfView.getCurrentPage() -1, true);
                     Toast.makeText(this,getString(R.string.first), Toast.LENGTH_SHORT).show();
 
                 });
+
                 imageLast.setOnClickListener(v -> {
                     pdfView.jumpTo(pdfView.getCurrentPage() +1, true);
                     Toast.makeText(this,getString(R.string.last), Toast.LENGTH_SHORT).show();
@@ -126,7 +128,7 @@ public class DetailActivity extends AppCompatActivity{
                         imagePause.setVisibility(View.VISIBLE);
                         imageStop.setVisibility(View.VISIBLE);
                     }else{
-                        Toast.makeText(this,"Silahkan Keluar dan Kembali Lagi", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailActivity.this, "Silahkan Anda Keluar dan Masuk Kembali",Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -144,6 +146,12 @@ public class DetailActivity extends AppCompatActivity{
 
             }
         }
+
+        MenuItem menuAbout = menu.findItem(R.id.menuAbout);
+        menuAbout.setOnMenuItemClickListener(v -> {
+            Toast.makeText(DetailActivity.this, getString(R.string.example),Toast.LENGTH_SHORT).show();
+            return true;
+        });
 
         menuDownloadAudio.setOnMenuItemClickListener(v -> {
             menuDownloadAudio.setVisible(false);
@@ -168,12 +176,12 @@ public class DetailActivity extends AppCompatActivity{
                                 downloadManager.enqueue(request);
                                 menuDownloadAudio.setVisible(false);
                                 imagePlay.setVisibility(View.VISIBLE);
-
+                                Toast.makeText(DetailActivity.this, getString(R.string.download_audio) +" "+ detailTitle,Toast.LENGTH_SHORT).show();
                             }
                             @Override
                             public void onPermissionDenied(List<String> deniedPermissions) {
                                 menuDownloadAudio.setVisible(true);
-
+                                Toast.makeText(DetailActivity.this, getString(R.string.denied_permission),Toast.LENGTH_SHORT).show();
                             }
                         };
                         TedPermission.with(this)
@@ -183,7 +191,7 @@ public class DetailActivity extends AppCompatActivity{
                                 .check();
 
                     }else if (!haveNetwork()){
-                        Toast.makeText(this,R.string.not_have_network, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailActivity.this, getString(R.string.not_have_network),Toast.LENGTH_SHORT).show();
                         menuDownloadAudio.setVisible(true);
                     }
                 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -40,7 +41,7 @@ public class HomeTabActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, R.string.example, Snackbar.LENGTH_LONG)
+                Snackbar.make(view, view.getResources().getString(R.string.example), Snackbar.LENGTH_LONG)
                         .setAction("Action", null)
                         .setTextColor(getResources().getColor(R.color.browser_actions_text_color))
                         .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
@@ -58,6 +59,7 @@ public class HomeTabActivity extends AppCompatActivity {
         itemAbout.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(HomeTabActivity.this, getString(R.string.example),Toast.LENGTH_SHORT).show();
                 return false;
             }
         });

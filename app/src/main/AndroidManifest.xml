@@ -31,14 +31,14 @@
             android:value="ca-app-pub-3946611117968254~4667483765" />
 
         <activity
-            android:name=".ui.DetailActivity"
+            android:name=".ui.main.DetailActivity"
             android:parentActivityName=".ui.HomeTabActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.HomeTabActivity" />
         </activity>
-        <activity android:name=".ui.main.SplashActivity">
+        <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

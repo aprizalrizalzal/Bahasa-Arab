@@ -1,11 +1,10 @@
-package com.application.bahasa.arab.ui.main;
+package com.application.bahasa.arab.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.ui.HomeTabActivity;
 
 public class SplashActivity extends Activity {
 
