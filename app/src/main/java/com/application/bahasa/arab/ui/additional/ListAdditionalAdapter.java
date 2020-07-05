@@ -128,6 +128,7 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                     .into(imageCoverAdditional);
             titleAdditional.setText(dataModelAdditional.getAdditionalTitle());
             runTimeAdditional.setText(dataModelAdditional.getAdditionalPage());
+
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
                 intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelAdditional.getAdditionalTitle());

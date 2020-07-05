@@ -3,6 +3,7 @@ package com.application.bahasa.arab.ui.unit;
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelUnit;
+import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
@@ -126,6 +128,13 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
                     .into(imageCoverUnit);
             titleUnit.setText(dataModelUnit.getUnitTitle());
             pageUnit.setText(dataModelUnit.getUnitPage());
+
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelUnit.getUnitTitle());
+                intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelUnit.getUnitTitle());
+                itemView.getContext().startActivity(intent);
+            });
 
             downloadUnit.setOnClickListener(v -> {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelUnit.getUnitLink()));

@@ -3,6 +3,7 @@ package com.application.bahasa.arab.ui.semester;
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelSemester;
+import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
@@ -128,6 +130,13 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
                     .into(imageCoverSemester);
             titleSemester.setText(dataModelSemester.getSemesterTitle());
             pageSemester.setText(dataModelSemester.getSemesterPage());
+
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
+                intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelSemester.getSemesterTitle());
+                itemView.getContext().startActivity(intent);
+            });
 
             downloadSemester.setOnClickListener(v -> {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelSemester.getSemesterLink()));
