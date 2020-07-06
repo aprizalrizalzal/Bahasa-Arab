@@ -28,5 +28,6 @@
     <string name="book">Buku</string>
     <string name="document_is_empty">Dokument Masih Kosong, Silahkan Unduh Dulu</string>
     <string name="media_is_empty">Audio Masih Kosong, Silahkan Unduh Dulu</string>
+    <string name="search_pages">Cari Halaman</string>
 
 </resources>

@@ -7,13 +7,16 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.application.bahasa.arab.R;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.github.barteksc.pdfviewer.util.FitPolicy;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -35,6 +39,7 @@ public class DetailActivity extends AppCompatActivity{
     public static final String EXTRA_TITLE = "extra_title";
     public static final String EXTRA_LINK_MP3 = "extra_link_mp3";
 
+    private PDFView pdfView;
     private MediaPlayer mediaPlayer;
     private ImageButton imagePlay;
     private ImageButton imagePause;
@@ -61,7 +66,7 @@ public class DetailActivity extends AppCompatActivity{
         AdRequest adRequest = new AdRequest.Builder().build();
         adViewUnit.loadAd(adRequest);
 
-        PDFView pdfView = findViewById(R.id.pdfViewDetail);
+        pdfView = findViewById(R.id.pdfViewDetail);
         ProgressBar progressBar = findViewById(R.id.progressBar);
 
         Bundle document = getIntent().getExtras();
@@ -72,10 +77,11 @@ public class DetailActivity extends AppCompatActivity{
                 progressBar.setVisibility(View.INVISIBLE);
                 pdfView.fromFile(new File(path, detailTitle))
                         .pageSnap(true)
-                        .swipeHorizontal(true)
+                        .swipeHorizontal(false)
+                        .scrollHandle(new ScrollHandle(this))
                         .enableSwipe(true)
                         .pageFitPolicy(FitPolicy.BOTH)
-                        .spacing(10)
+                        .spacing(50)
                         .load();
 
                 imageFirst.setOnClickListener(v -> {
@@ -176,6 +182,7 @@ public class DetailActivity extends AppCompatActivity{
         getMenuInflater().inflate(R.menu.menu_more,menu);
         MenuItem menuDownloadAudio = menu.findItem(R.id.menuDownloadAudio);
         MenuItem menuAbout = menu.findItem(R.id.menuAbout);
+        MenuItem item = menu.findItem(R.id.searchView);
         menuAbout.setOnMenuItemClickListener(v -> {
             Toast.makeText(DetailActivity.this, getString(R.string.example),Toast.LENGTH_SHORT).show();
             return true;
@@ -225,6 +232,29 @@ public class DetailActivity extends AppCompatActivity{
             }*/
             return true;
         });
+
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setQueryHint(getString(R.string.search_pages));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)){
+                    pdfView.jumpTo(0,true);
+                }else if (TextUtils.isDigitsOnly(newText)){
+                    int search;
+                    search = Integer.parseInt(String.valueOf(newText));
+                    pdfView.jumpTo(search - 1,true);
+                }
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 }
