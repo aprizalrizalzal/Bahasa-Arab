@@ -15,6 +15,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -75,24 +76,24 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
     @Override
     public Filter getFilter() {
         return filter;
-    }
+        }
 
-    Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            ArrayList<DataModelAdditional> filterData = new ArrayList<>();
-            if (charSequence.toString().isEmpty()){
-                filterData.addAll(getDataModelAdditionalArrayList);
-            }else {
-                for (DataModelAdditional additional : getDataModelAdditionalArrayList){
-                    if (additional.getAdditionalTitle().contains(charSequence.toString())){
-                        filterData.add(additional);
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                ArrayList<DataModelAdditional> filterData = new ArrayList<>();
+                if (charSequence.toString().isEmpty()){
+                    filterData.addAll(getDataModelAdditionalArrayList);
+                }else {
+                    for (DataModelAdditional additional : getDataModelAdditionalArrayList){
+                        if (additional.getAdditionalTitle().contains(charSequence.toString())){
+                            filterData.add(additional);
+                        }
                     }
                 }
-            }
 
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filterData;
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filterData;
 
             return filterResults;
         }
@@ -201,10 +202,7 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                 }
             });
 
-            shareAdditional.setOnClickListener(v -> {
-                callShare.onShareClick(dataModelAdditional);
-            });
-
+            shareAdditional.setOnClickListener(v -> callShare.onShareClick(dataModelAdditional));
         }
 
         private boolean haveNetwork() {

@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.DataModelSemester;
+import com.application.bahasa.arab.ui.HomeTabActivity;
 import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -210,7 +211,6 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
 
             shareSemester.setOnClickListener(v -> {
                 callback.onShareClick(dataModelSemester);
-                Toast.makeText(itemView.getContext(), "Share "+dataModelSemester.getSemesterTitle(), Toast.LENGTH_SHORT).show();
             });
         }
 

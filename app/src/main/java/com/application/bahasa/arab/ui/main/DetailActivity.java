@@ -80,8 +80,8 @@ public class DetailActivity extends AppCompatActivity{
                         .swipeHorizontal(false)
                         .scrollHandle(new ScrollHandle(this))
                         .enableSwipe(true)
-                        .pageFitPolicy(FitPolicy.BOTH)
-                        .spacing(50)
+                        .pageFitPolicy(FitPolicy.HEIGHT)
+                        .spacing(640)
                         .load();
 
                 imageFirst.setOnClickListener(v -> {

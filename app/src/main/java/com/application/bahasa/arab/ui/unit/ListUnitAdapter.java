@@ -203,7 +203,6 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
             });
             shareUnit.setOnClickListener(v -> {
                 callback.onShareClick(dataModelUnit);
-                Toast.makeText(itemView.getContext(), "Share "+dataModelUnit.getUnitTitle(), Toast.LENGTH_SHORT).show();
             });
         }
 

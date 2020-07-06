@@ -1,6 +1,7 @@
 package com.application.bahasa.arab.ui.main;
 
 import android.content.Context;
+import android.widget.Filterable;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;

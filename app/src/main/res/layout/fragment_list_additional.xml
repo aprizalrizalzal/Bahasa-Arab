@@ -18,6 +18,7 @@
         app:layout_constraintBottom_toTopOf="@+id/adViewAdditional"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/items_additional">
+
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.gms.ads.AdView
