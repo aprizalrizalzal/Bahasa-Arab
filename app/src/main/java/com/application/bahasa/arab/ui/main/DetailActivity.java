@@ -54,7 +54,7 @@ public class DetailActivity extends AppCompatActivity{
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() !=null){
+        if (getSupportActionBar() !=null) {
             getSupportActionBar().setTitle(getIntent().getStringExtra(EXTRA_TITLE));
         }
 
@@ -93,6 +93,72 @@ public class DetailActivity extends AppCompatActivity{
                 progressBar.setVisibility(View.VISIBLE);
             }
         }
+
+        imagePlay.setOnClickListener(v ->{
+            playMedia();
+        });
+
+        imagePause.setOnClickListener(v ->{
+            pauseMedia();
+        });
+
+        imageStop.setOnClickListener(v ->{
+            stopMedia();
+        });
+
+    }
+
+    private void playMedia(){
+        if (mediaPlayer != null){
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    stopMedia();
+                }
+            });
+            imagePlay.setVisibility(View.INVISIBLE);
+            imagePause.setVisibility(View.VISIBLE);
+            imageStop.setVisibility(View.VISIBLE);
+        }else {
+            Bundle audio = getIntent().getExtras();
+            if (audio !=null){
+                String audioTitle = audio.getString(EXTRA_TITLE);
+                if (audioTitle !=null) {
+                    File file = getExternalFilesDir(Environment.DIRECTORY_PODCASTS);
+                    mediaPlayer = MediaPlayer.create(this, Uri.fromFile(new File(file, audioTitle)));
+                    if (mediaPlayer == null){
+                        Toast.makeText(DetailActivity.this, getString(R.string.media_is_empty),Toast.LENGTH_SHORT).show();
+                    }else {
+                        mediaPlayer.start();
+                        imagePlay.setVisibility(View.INVISIBLE);
+                        imagePause.setVisibility(View.VISIBLE);
+                        imageStop.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        }
+    }
+
+    private void pauseMedia(){
+        if (mediaPlayer != null){
+            mediaPlayer.pause();
+            imagePlay.setVisibility(View.VISIBLE);
+            imagePause.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    private void stopMedia(){
+        if (mediaPlayer != null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+            imageStop.setVisibility(View.INVISIBLE);
+            imagePause.setVisibility(View.INVISIBLE);
+            imagePlay.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private boolean haveNetwork() {
@@ -109,40 +175,6 @@ public class DetailActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_more,menu);
         MenuItem menuDownloadAudio = menu.findItem(R.id.menuDownloadAudio);
-
-        Bundle fileExist = getIntent().getExtras();
-        if (fileExist !=null){
-            String audioTitle = fileExist.getString(EXTRA_TITLE);
-            if (audioTitle !=null){
-                File file = getExternalFilesDir(Environment.DIRECTORY_PODCASTS);
-
-                mediaPlayer = MediaPlayer.create(this, Uri.fromFile(new File(file,audioTitle)));
-                imagePlay.setOnClickListener(v ->{
-                    imagePlay.setVisibility(View.INVISIBLE);
-                    if (mediaPlayer !=null){
-                        mediaPlayer.start();
-                        imagePause.setVisibility(View.VISIBLE);
-                        imageStop.setVisibility(View.VISIBLE);
-                    }else {
-                        Toast.makeText(DetailActivity.this, getString(R.string.media_is_empty),Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                imagePause.setOnClickListener(v ->{
-                    imagePlay.setVisibility(View.VISIBLE);
-                    mediaPlayer.pause();
-                    imagePause.setVisibility(View.INVISIBLE);
-                });
-
-                imageStop.setOnClickListener(v ->{
-                    imagePlay.setVisibility(View.VISIBLE);
-                    mediaPlayer.stop();
-                    imagePause.setVisibility(View.INVISIBLE);
-                });
-
-            }
-        }
-
         MenuItem menuAbout = menu.findItem(R.id.menuAbout);
         menuAbout.setOnMenuItemClickListener(v -> {
             Toast.makeText(DetailActivity.this, getString(R.string.example),Toast.LENGTH_SHORT).show();
@@ -150,9 +182,10 @@ public class DetailActivity extends AppCompatActivity{
         });
 
         menuDownloadAudio.setOnMenuItemClickListener(v -> {
+            Toast.makeText(DetailActivity.this, getString(R.string.example),Toast.LENGTH_SHORT).show();
             menuDownloadAudio.setVisible(false);
 
-            Bundle audio = getIntent().getExtras();
+            /*Bundle audio = getIntent().getExtras();
             if (audio !=null){
                 String detailAudio = audio.getString(EXTRA_LINK_MP3);
                 String detailTitle = audio.getString(EXTRA_TITLE);
@@ -169,8 +202,8 @@ public class DetailActivity extends AppCompatActivity{
                         PermissionListener permissionListener = new PermissionListener() {
                             @Override
                             public void onPermissionGranted() {
-                                downloadManager.enqueue(request);
-                                Toast.makeText(DetailActivity.this, getString(R.string.download_audio) +" "+ detailTitle,Toast.LENGTH_SHORT).show();
+                                *//*downloadManager.enqueue(request);
+                                Toast.makeText(DetailActivity.this, getString(R.string.download_audio) +" "+ detailTitle,Toast.LENGTH_SHORT).show();*//*
                             }
                             @Override
                             public void onPermissionDenied(List<String> deniedPermissions) {
@@ -189,7 +222,7 @@ public class DetailActivity extends AppCompatActivity{
                         menuDownloadAudio.setVisible(true);
                     }
                 }
-            }
+            }*/
             return true;
         });
         return super.onCreateOptionsMenu(menu);

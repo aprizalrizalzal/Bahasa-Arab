@@ -8,16 +8,14 @@ public class DataModelAdditional {
     private String additionalCover;
     private String additionalLink;
     private String additionalLinkMp3;
-    private String additionalOverview;
 
-    public DataModelAdditional(String additionalId, String additionalTitle, String additionalPage, String additionalCover, String additionalLink, String additionalLinkMp3, String additionalOverview) {
+    public DataModelAdditional(String additionalId, String additionalTitle, String additionalPage, String additionalCover, String additionalLink, String additionalLinkMp3) {
         this.additionalId = additionalId;
         this.additionalTitle = additionalTitle;
         this.additionalPage = additionalPage;
         this.additionalCover = additionalCover;
         this.additionalLink = additionalLink;
         this.additionalLinkMp3 = additionalLinkMp3;
-        this.additionalOverview = additionalOverview;
     }
 
     public String getAdditionalPage() {
@@ -64,13 +62,5 @@ public class DataModelAdditional {
 
     public void setAdditionalLinkMp3(String additionalLinkMp3) {
         this.additionalLinkMp3 = additionalLinkMp3;
-    }
-
-    public String getAdditionalOverview() {
-        return additionalOverview;
-    }
-
-    public void setAdditionalOverview(String additionalOverview) {
-        this.additionalOverview = additionalOverview;
     }
 }
