@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.application.bahasa.arab.R;
+import com.application.bahasa.arab.ui.sign.SignInActivity;
+import com.application.bahasa.arab.ui.sign.SignUpActivity;
 
 public class SplashActivity extends Activity {
 
@@ -21,7 +23,7 @@ public class SplashActivity extends Activity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    startActivity(new Intent(SplashActivity.this, HomeTabActivity.class));
+                    startActivity(new Intent(SplashActivity.this, SignInActivity.class));
                     finish();
                 }
             }

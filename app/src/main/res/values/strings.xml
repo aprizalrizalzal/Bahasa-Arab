@@ -30,5 +30,18 @@
     <string name="media_is_empty">Audio Masih Kosong, Silahkan Unduh Dulu</string>
     <string name="search_pages">Cari Halaman</string>
     <string name="search_list">Cari Materi</string>
+    <string name="studentName">Nama Mahasiswa</string>
+    <string name="studentIdNumber">Nomor Induk Mahasiswa</string>
+    <string name="eMail">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="confirmPassword">Konfirmasi Kata Sandi</string>
+    <string name="tvSignUp">Belum Punya Akun, Buat Sekarang</string>
+    <string name="tvSignIn">Sudah Punya Akun, Masuk Sekarang</string>
+    <string name="btnSignUp">Sign Up</string>
+    <string name="btnSignIn">Sign In</string>
+    <string name="tvTermsAndConditions">Syarat &amp; Ketentuan (Terms &amp; Conditions)</string>
+    <string name="showPassword">Tampilkan Kata Sandi</string>
+    <string name="signUp">Sign Up</string>
+    <string name="signIn">Sign In</string>
 
 </resources>

@@ -143,7 +143,7 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
                         .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
                         .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
                         .show());
-                }else {
+            }else {
                 downloadSemester.setVisibility(View.INVISIBLE);
                 bookSemester.setVisibility(View.VISIBLE);
                 itemView.setOnClickListener(v -> {
