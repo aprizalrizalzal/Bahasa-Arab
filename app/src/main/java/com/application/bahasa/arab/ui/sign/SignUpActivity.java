@@ -1,75 +1,96 @@
 package com.application.bahasa.arab.ui.sign;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.application.bahasa.arab.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText edtStudentName,edtStudentIdNumber,edtEmail,edtPassword,edtConfirmPassword;
-    private ImageButton btnShowPassword,btnHidePassword,btnShowConfirmPassword,btnHideConfirmPassword;
-    private Button btnSignUp,btnSignIn;
+    private FirebaseAuth auth;
+    private DatabaseReference reference;
+    private TextInputLayout tiStudentName,tiStudentIdNumber,tiEmail,tiPassword,tiConfirmPassword;
+    private String studentName,studentIdNumber,email,password;
+    private Button btnSignUp;
     private CheckBox checkBox;
-    private TextView tvTermsAndConditions,tvSignUpIn,tvSignInUp;
+    private TextView tvTermsAndConditions,tvSignUpIn;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_in);
 
-        edtStudentName = findViewById(R.id.edtStudentName);
-        edtStudentIdNumber = findViewById(R.id.edtStudentIdNumber);
-        edtEmail = findViewById(R.id.edtEmail);
-        edtPassword = findViewById(R.id.edtPassword);
-        edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
+        AdView adViewUnit = findViewById(R.id.adViewSign);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adViewUnit.loadAd(adRequest);
 
-        btnShowPassword = findViewById(R.id.showPassword);
-        btnHidePassword = findViewById(R.id.hidePassword);
-        btnShowConfirmPassword = findViewById(R.id.showConfirmPassword);
-        btnHideConfirmPassword = findViewById(R.id.hideConfirmPassword);
+        auth=FirebaseAuth.getInstance();
+
+        tiStudentName = findViewById(R.id.tiStudentName);
+        tiStudentIdNumber = findViewById(R.id.tiStudentIdNumber);
+        tiEmail = findViewById(R.id.tiEmail);
+        tiPassword = findViewById(R.id.tiPassword);
+        tiConfirmPassword = findViewById(R.id.tiConfirmPassword);
 
         btnSignUp = findViewById(R.id.btnSignUp);
-        btnSignIn = findViewById(R.id.btnSignIn);
 
         checkBox = findViewById(R.id.checkBok);
 
         tvTermsAndConditions = findViewById(R.id.tvTermsAndConditions);
         tvSignUpIn = findViewById(R.id.tvSignUpIn);
-        tvSignInUp = findViewById(R.id.tvSignInUp);
 
-        btnHidePassword.setOnClickListener(v -> {
-            btnHidePassword.setVisibility(View.INVISIBLE);
-            btnShowPassword.setVisibility(View.VISIBLE);
-            edtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        progressBar = findViewById(R.id.progressBar);
 
+        btnSignUp.setOnClickListener(v -> {
+            if (haveNetwork()){
+                studentSignUp();
+            }else {
+                Snackbar.make(btnSignUp, "Maaf, Tidak Ada Koneksi Internet ", Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
+                        .setAction("Action", null)
+                        .show();
+            }
         });
-        btnShowPassword.setOnClickListener(v -> {
-            btnHidePassword.setVisibility(View.VISIBLE);
-            btnShowPassword.setVisibility(View.INVISIBLE);
-            edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        btnSignUp.setEnabled(false);
+        checkBox.setOnClickListener(v -> {
+            if (checkBox.isChecked()){
+                btnSignUp.setEnabled(true);
+            }else {
+                btnSignUp.setEnabled(false);
+            }
         });
 
-        btnHideConfirmPassword.setOnClickListener(v -> {
-            btnHideConfirmPassword.setVisibility(View.INVISIBLE);
-            btnShowConfirmPassword.setVisibility(View.VISIBLE);
-            edtConfirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-
-        });
-        btnShowConfirmPassword.setOnClickListener(v -> {
-            btnHideConfirmPassword.setVisibility(View.VISIBLE);
-            btnShowConfirmPassword.setVisibility(View.INVISIBLE);
-            edtConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        tvTermsAndConditions.setOnClickListener(v -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://unu-ntb.ac.id/")));
         });
 
         tvSignUpIn.setOnClickListener(v -> {
@@ -77,4 +98,127 @@ public class SignUpActivity extends AppCompatActivity {
             finish();
         });
     }
+
+    private void studentSignUp(){
+        if (!validStudentName()|!validStudentIdNumber()|!validEmail()|!validPassword()|!validConfirmPassword()) {
+            return;
+        }
+        studentName = Objects.requireNonNull(tiStudentName.getEditText()).getText().toString().trim();
+        studentIdNumber = Objects.requireNonNull(tiStudentIdNumber.getEditText()).getText().toString().trim();
+        email = Objects.requireNonNull(tiEmail.getEditText()).getText().toString().trim();
+        password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();
+
+        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    FirebaseUser user = auth.getCurrentUser();
+                    assert user != null;
+                    String userId = user.getUid();
+                    reference= FirebaseDatabase.getInstance().getReference("User").child(userId);
+
+                    HashMap<String,String> hashMap = new HashMap<>();
+                    hashMap.put("id",userId);
+                    hashMap.put("studentName",studentName);
+                    hashMap.put("studentIdNumber",studentIdNumber);
+                    hashMap.put("phoneNumber","nothing");
+                    hashMap.put("profilePictureInTheURL","nothing");
+
+                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                startActivity(new Intent(SignUpActivity.this,SignInActivity.class));
+                                finish();
+                            }
+                        }
+                    });
+
+                }else {
+                    Toast.makeText(SignUpActivity.this,getText(R.string.failed),Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
+
+    private boolean haveNetwork() {
+        boolean haveConnection =false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) SignUpActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo !=null && activeNetworkInfo.isConnected()){
+            haveConnection=true;
+        }
+        return haveConnection;
+    }
+
+    private boolean validStudentName(){
+        String studentName = Objects.requireNonNull(tiStudentName.getEditText()).getText().toString().trim();
+        if (studentName.isEmpty()){
+            tiStudentName.setError(getText(R.string.notEmptyStudentName));
+            progressBar.setVisibility(View.INVISIBLE);
+            return false;
+        }else {
+            tiStudentName.setError(null);
+            progressBar.setVisibility(View.VISIBLE);
+            return true;
+        }
+    }
+
+    private boolean validStudentIdNumber(){
+        studentIdNumber = Objects.requireNonNull(tiStudentIdNumber.getEditText()).getText().toString().trim();
+        if (studentIdNumber.isEmpty()){
+            tiStudentIdNumber.setError(getText(R.string.notEmptyStudentIdNumber));
+            progressBar.setVisibility(View.INVISIBLE);
+            return false;
+        }else {
+            tiStudentIdNumber.setError(null);
+            progressBar.setVisibility(View.VISIBLE);
+            return true;
+        }
+    }
+    private boolean validEmail(){
+        email = Objects.requireNonNull(tiEmail.getEditText()).getText().toString().trim();
+        if (email.isEmpty()){
+            tiEmail.setError(getText(R.string.notEmptyEmail));
+            progressBar.setVisibility(View.INVISIBLE);
+            return false;
+        }else {
+            tiEmail.setError(null);
+            progressBar.setVisibility(View.VISIBLE);
+            return true;
+        }
+    }
+    private boolean validPassword(){
+        password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();
+        if (password.isEmpty()){
+            tiPassword.setError(getText(R.string.notEmptyPassword));
+            progressBar.setVisibility(View.INVISIBLE);
+            return false;
+        }else {
+            tiPassword.setError(null);
+            progressBar.setVisibility(View.VISIBLE);
+            return true;
+        }
+    }
+    private boolean validConfirmPassword(){
+        String confirmPassword = Objects.requireNonNull(tiConfirmPassword.getEditText()).getText().toString().trim();
+        password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();
+        if (confirmPassword.isEmpty()){
+            tiConfirmPassword.setError(getText(R.string.notEmptyConfirmPassword));
+            progressBar.setVisibility(View.INVISIBLE);
+            return false;
+        }
+        else if (!confirmPassword.equals(password)){
+            tiConfirmPassword.setError(getText(R.string.notEqualsConfirmPassword));
+            progressBar.setVisibility(View.INVISIBLE);
+            return false;
+        }
+        else {
+            tiConfirmPassword.setError(null);
+            progressBar.setVisibility(View.VISIBLE);
+            return true;
+        }
+    }
+
 }

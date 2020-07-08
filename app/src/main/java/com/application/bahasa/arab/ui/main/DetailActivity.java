@@ -49,7 +49,6 @@ public class DetailActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        AdView adViewUnit = findViewById(R.id.adViewDetail);
 
         ImageButton imageFirst = findViewById(R.id.btnFirst);
         imagePlay = findViewById(R.id.btnPlay);
@@ -63,18 +62,17 @@ public class DetailActivity extends AppCompatActivity{
             getSupportActionBar().setTitle(getIntent().getStringExtra(EXTRA_TITLE));
         }
 
+        AdView adViewUnit = findViewById(R.id.adViewDetail);
         AdRequest adRequest = new AdRequest.Builder().build();
         adViewUnit.loadAd(adRequest);
 
         pdfView = findViewById(R.id.pdfViewDetail);
-        ProgressBar progressBar = findViewById(R.id.progressBar);
 
         Bundle document = getIntent().getExtras();
         if (document != null) {
             String detailTitle = document.getString(EXTRA_TITLE);
             File path = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
             if (detailTitle != null) {
-                progressBar.setVisibility(View.INVISIBLE);
                 pdfView.fromFile(new File(path, detailTitle))
                         .pageSnap(true)
                         .swipeHorizontal(false)
@@ -95,8 +93,6 @@ public class DetailActivity extends AppCompatActivity{
                     Toast.makeText(this,getString(R.string.last), Toast.LENGTH_SHORT).show();
 
                 });
-            }else {
-                progressBar.setVisibility(View.VISIBLE);
             }
         }
 

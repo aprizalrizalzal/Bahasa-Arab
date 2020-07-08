@@ -35,13 +35,20 @@
     <string name="eMail">Email</string>
     <string name="password">Kata Sandi</string>
     <string name="confirmPassword">Konfirmasi Kata Sandi</string>
-    <string name="tvSignUp">Belum Punya Akun, Buat Sekarang</string>
-    <string name="tvSignIn">Sudah Punya Akun, Masuk Sekarang</string>
-    <string name="btnSignUp">Sign Up</string>
-    <string name="btnSignIn">Sign In</string>
-    <string name="tvTermsAndConditions">Syarat &amp; Ketentuan (Terms &amp; Conditions)</string>
+    <string name="tvSignUp">Belum Punya Akun, <u>Buat Sekarang</u></string>
+    <string name="tvSignIn">Sudah Punya Akun, <u>Masuk Sekarang</u></string>
+    <string name="btnSignUp">Daftar</string>
+    <string name="btnSignIn">Masuk</string>
+    <string name="tvTermsAndConditions"><u>Syarat &amp; Ketentuan (Terms &amp; Conditions)</u></string>
     <string name="showPassword">Tampilkan Kata Sandi</string>
-    <string name="signUp">Sign Up</string>
-    <string name="signIn">Sign In</string>
+    <string name="isWrong">Email dan Kata Sandi Anda Salah</string>
+    <string name="failed">Otentifikasi Gagal, Silahkan Coba Lagi</string>
+    <string name="notEmptyStudentName">Nama Mahasiswa Tidak Boleh Kosong</string>
+    <string name="notEmptyStudentIdNumber">Nomor Induk Mahasiswa Tidak Boleh Kosong</string>
+    <string name="notEmptyEmail">Email Tidak Boleh Kosong</string>
+    <string name="notEmptyPassword">Kata Sandi Tidak Boleh Kosong</string>
+    <string name="notEmptyConfirmPassword">Konfirmasi Kata Sandi Tidak Boleh Kosong</string>
+    <string name="notEqualsConfirmPassword">Konfirmasi Kata Sandi Salah</string>
+    <string name="signOut">Keluar</string>
 
 </resources>

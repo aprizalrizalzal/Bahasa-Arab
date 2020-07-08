@@ -13,6 +13,9 @@
         android:id="@+id/menuDownloadAudio"
         android:title="@string/download_audio"/>
     <item
+        android:id="@+id/menuSignOut"
+        android:title="@string/signOut"/>
+    <item
         android:id="@+id/menuAbout"
         android:title="@string/about"/>
 
