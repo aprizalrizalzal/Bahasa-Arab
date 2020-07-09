@@ -1,6 +1,9 @@
 package com.application.bahasa.arab.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,11 +16,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.ui.additional.ListAdditionalFragment;
+import com.application.bahasa.arab.ui.main.DetailProfileActivity;
 import com.application.bahasa.arab.ui.main.SectionsPagerAdapter;
 import com.application.bahasa.arab.ui.semester.ListSemesterFragment;
 import com.application.bahasa.arab.ui.sign.SignInActivity;
 import com.application.bahasa.arab.ui.unit.ListUnitFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -49,8 +54,16 @@ public class HomeTabActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            startActivity(new Intent(this, ChatTabActivity.class));
-            overridePendingTransition(R.anim.anim_slide_in_left,R.anim.anim_slide_out_left);
+            if (haveNetwork()){
+                startActivity(new Intent(this, ChatTabActivity.class));
+                overridePendingTransition(R.anim.anim_slide_in_left,R.anim.anim_slide_out_left);
+            }else {
+                Snackbar.make(view,getString( R.string.not_have_network), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .setTextColor(view.getResources().getColor(R.color.browser_actions_text_color))
+                        .setBackgroundTint(view.getResources().getColor(R.color.colorPrimary))
+                        .show();
+            }
         });
 
     }
@@ -78,7 +91,10 @@ public class HomeTabActivity extends AppCompatActivity {
         });
 
         MenuItem itemAbout = menu.findItem(R.id.menuSetting);
-        itemAbout.setVisible(false);
+        itemAbout.setOnMenuItemClickListener(item -> {
+            startActivity(new Intent(this, DetailProfileActivity.class));
+            return false;
+        });
 
         MenuItem itemSignOut = menu.findItem(R.id.menuSignOut);
         itemSignOut.setOnMenuItemClickListener(item -> {
@@ -90,5 +106,15 @@ public class HomeTabActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private boolean haveNetwork() {
+        boolean haveConnection =false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) HomeTabActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo !=null && activeNetworkInfo.isConnected()){
+            haveConnection=true;
+        }
+        return haveConnection;
     }
 }

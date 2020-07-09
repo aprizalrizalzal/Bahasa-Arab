@@ -2,67 +2,60 @@ package com.application.bahasa.arab.data.chats;
 
 public class DataModelProfile {
 
-    private String myId;
-    private String myEmail;
-    private String myPhoneNumber;
-    private String myStudentName;
-    private String myStudentIdNumber;
-    private String myProfilePictureInTheURL;
+    private String id;
+    private String phoneNumber;
+    private String studentName;
+    private String studentIdNumber;
+    private String profilePictureInTheURL;
 
-    public DataModelProfile(String myId, String myEmail, String myPhoneNumber, String myStudentName, String myStudentIdNumber, String myProfilePictureInTheURL) {
-        this.myId = myId;
-        this.myEmail = myEmail;
-        this.myPhoneNumber = myPhoneNumber;
-        this.myStudentName = myStudentName;
-        this.myStudentIdNumber = myStudentIdNumber;
-        this.myProfilePictureInTheURL = myProfilePictureInTheURL;
+    public DataModelProfile(String id, String phoneNumber, String studentName, String studentIdNumber, String profilePictureInTheURL) {
+        this.id = id;
+        this.phoneNumber = phoneNumber;
+        this.studentName = studentName;
+        this.studentIdNumber = studentIdNumber;
+        this.profilePictureInTheURL = profilePictureInTheURL;
     }
 
-    public String getMyId() {
-        return myId;
+    public DataModelProfile() {
     }
 
-    public void setMyId(String myId) {
-        this.myId = myId;
+    public String getId() {
+        return id;
     }
 
-    public String getMyEmail() {
-        return myEmail;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setMyEmail(String myEmail) {
-        this.myEmail = myEmail;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public String getMyPhoneNumber() {
-        return myPhoneNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public void setMyPhoneNumber(String myPhoneNumber) {
-        this.myPhoneNumber = myPhoneNumber;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public String getMyStudentName() {
-        return myStudentName;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
-    public void setMyStudentName(String myStudentName) {
-        this.myStudentName = myStudentName;
+    public String getStudentIdNumber() {
+        return studentIdNumber;
     }
 
-    public String getMyStudentIdNumber() {
-        return myStudentIdNumber;
+    public void setStudentIdNumber(String studentIdNumber) {
+        this.studentIdNumber = studentIdNumber;
     }
 
-    public void setMyStudentIdNumber(String myStudentIdNumber) {
-        this.myStudentIdNumber = myStudentIdNumber;
+    public String getProfilePictureInTheURL() {
+        return profilePictureInTheURL;
     }
 
-    public String getMyProfilePictureInTheURL() {
-        return myProfilePictureInTheURL;
-    }
-
-    public void setMyProfilePictureInTheURL(String myProfilePictureInTheURL) {
-        this.myProfilePictureInTheURL = myProfilePictureInTheURL;
+    public void setProfilePictureInTheURL(String profilePictureInTheURL) {
+        this.profilePictureInTheURL = profilePictureInTheURL;
     }
 }

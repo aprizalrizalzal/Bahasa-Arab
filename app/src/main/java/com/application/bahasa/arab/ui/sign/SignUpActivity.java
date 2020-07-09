@@ -103,14 +103,14 @@ public class SignUpActivity extends AppCompatActivity {
                 FirebaseUser user = auth.getCurrentUser();
                 assert user != null;
                 String userId = user.getUid();
-                reference= FirebaseDatabase.getInstance().getReference("User").child(userId);
+                reference= FirebaseDatabase.getInstance().getReference(getString(R.string.user)).child(userId);
 
                 HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put("id",userId);
-                hashMap.put("studentName",studentName);
-                hashMap.put("studentIdNumber",studentIdNumber);
-                hashMap.put("phoneNumber","nothing");
-                hashMap.put("profilePictureInTheURL","nothing");
+                hashMap.put(getString(R.string.valId),userId);
+                hashMap.put(getString(R.string.valStudentName),studentName);
+                hashMap.put(getString(R.string.valStudentIdNumber),studentIdNumber);
+                hashMap.put(getString(R.string.valPhoneNumber),getString(R.string.nothing));
+                hashMap.put(getString(R.string.valProfilePictureInTheURL),getString(R.string.nothing));
 
                 reference.setValue(hashMap).addOnCompleteListener(taskReference -> {
                     if (taskReference.isSuccessful()){
@@ -137,7 +137,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validStudentName(){
-        String studentName = Objects.requireNonNull(tiStudentName.getEditText()).getText().toString().trim();
+        studentName = Objects.requireNonNull(tiStudentName.getEditText()).getText().toString().trim();
         if (studentName.isEmpty()){
             tiStudentName.setError(getText(R.string.notEmptyStudentName));
             progressBar.setVisibility(View.INVISIBLE);

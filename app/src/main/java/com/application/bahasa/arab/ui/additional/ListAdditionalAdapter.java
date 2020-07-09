@@ -179,7 +179,7 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                         }
                         @Override
                         public void onPermissionDenied(List<String> deniedPermissions) {
-                            Snackbar.make(v, v.getResources().getString( R.string.denied_permission) , Snackbar.LENGTH_LONG)
+                            Snackbar.make(v, v.getResources().getString( R.string.deniedPermission) , Snackbar.LENGTH_LONG)
                                     .setAction("Action", null)
                                     .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
                                     .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
