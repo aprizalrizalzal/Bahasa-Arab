@@ -13,7 +13,6 @@
     <string name="last">Selanjutnya </string>
     <string name="stop">Berhenti </string>
     <string name="searchPage">Cari Halaman</string>
-    <string name="setting">Pengaturan</string>
     <string name="about">Tentang</string>
     <string name="not_have_network">Periksa Koneksi Jaringan Internet Anda BOSQUE!</string>
     <string name="denied_message">Jika Ingin Unduh File, Atur Izin Penyimpanan di \n[Setting] > [Permission] BOSQUE!</string>
@@ -32,6 +31,7 @@
     <string name="search_list">Cari Materi</string>
     <string name="studentName">Nama Mahasiswa</string>
     <string name="studentIdNumber">Nomor Induk Mahasiswa</string>
+    <string name="phoneNumber">Nomor Ponsel</string>
     <string name="eMail">Email</string>
     <string name="password">Kata Sandi</string>
     <string name="confirmPassword">Konfirmasi Kata Sandi</string>
@@ -50,5 +50,10 @@
     <string name="notEmptyConfirmPassword">Konfirmasi Kata Sandi Tidak Boleh Kosong</string>
     <string name="notEqualsConfirmPassword">Konfirmasi Kata Sandi Salah</string>
     <string name="signOut">Keluar</string>
+    <string name="profile">Profil</string>
+    <string name="hiStudent">Hai Mahasiswa</string>
+    <string name="setting">Pengaturan</string>
+    <string name="chat">Obrolan</string>
+    <string name="contact">Kontak</string>
 
 </resources>

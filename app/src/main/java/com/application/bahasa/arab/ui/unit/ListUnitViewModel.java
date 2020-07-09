@@ -2,8 +2,8 @@ package com.application.bahasa.arab.ui.unit;
 
 import androidx.lifecycle.ViewModel;
 
-import com.application.bahasa.arab.data.DataModelUnit;
-import com.application.bahasa.arab.data.ListDataViewUnit;
+import com.application.bahasa.arab.data.home.DataModelUnit;
+import com.application.bahasa.arab.data.home.ListDataViewUnit;
 
 import java.util.List;
 

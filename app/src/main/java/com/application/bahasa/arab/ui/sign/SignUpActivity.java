@@ -13,17 +13,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.application.bahasa.arab.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +35,6 @@ public class SignUpActivity extends AppCompatActivity {
     private String studentName,studentIdNumber,email,password;
     private Button btnSignUp;
     private CheckBox checkBox;
-    private TextView tvTermsAndConditions,tvSignUpIn;
     private ProgressBar progressBar;
 
     @Override
@@ -64,8 +58,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         checkBox = findViewById(R.id.checkBok);
 
-        tvTermsAndConditions = findViewById(R.id.tvTermsAndConditions);
-        tvSignUpIn = findViewById(R.id.tvSignUpIn);
+        TextView tvTermsAndConditions = findViewById(R.id.tvTermsAndConditions);
+        TextView tvSignUpIn = findViewById(R.id.tvSignUpIn);
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -73,10 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
             if (haveNetwork()){
                 studentSignUp();
             }else {
-                Snackbar.make(btnSignUp, "Maaf, Tidak Ada Koneksi Internet ", Snackbar.LENGTH_LONG)
-                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
-                        .setAction("Action", null)
-                        .show();
+                Toast.makeText(this,getString(R.string.not_have_network),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -89,12 +80,11 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        tvTermsAndConditions.setOnClickListener(v -> {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://unu-ntb.ac.id/")));
-        });
+        tvTermsAndConditions.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://unu-ntb.ac.id/"))));
 
         tvSignUpIn.setOnClickListener(v -> {
             startActivity(new Intent(this,SignInActivity.class));
+            overridePendingTransition(R.anim.anim_slide_in_right,R.anim.anim_slide_out_right);
             finish();
         });
     }
@@ -108,36 +98,30 @@ public class SignUpActivity extends AppCompatActivity {
         email = Objects.requireNonNull(tiEmail.getEditText()).getText().toString().trim();
         password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();
 
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    FirebaseUser user = auth.getCurrentUser();
-                    assert user != null;
-                    String userId = user.getUid();
-                    reference= FirebaseDatabase.getInstance().getReference("User").child(userId);
+        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(taskCreate -> {
+            if (taskCreate.isSuccessful()){
+                FirebaseUser user = auth.getCurrentUser();
+                assert user != null;
+                String userId = user.getUid();
+                reference= FirebaseDatabase.getInstance().getReference("User").child(userId);
 
-                    HashMap<String,String> hashMap = new HashMap<>();
-                    hashMap.put("id",userId);
-                    hashMap.put("studentName",studentName);
-                    hashMap.put("studentIdNumber",studentIdNumber);
-                    hashMap.put("phoneNumber","nothing");
-                    hashMap.put("profilePictureInTheURL","nothing");
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put("id",userId);
+                hashMap.put("studentName",studentName);
+                hashMap.put("studentIdNumber",studentIdNumber);
+                hashMap.put("phoneNumber","nothing");
+                hashMap.put("profilePictureInTheURL","nothing");
 
-                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                startActivity(new Intent(SignUpActivity.this,SignInActivity.class));
-                                finish();
-                            }
-                        }
-                    });
+                reference.setValue(hashMap).addOnCompleteListener(taskReference -> {
+                    if (taskReference.isSuccessful()){
+                        startActivity(new Intent(SignUpActivity.this,SignInActivity.class));
+                        finish();
+                    }
+                });
 
-                }else {
-                    Toast.makeText(SignUpActivity.this,getText(R.string.failed),Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
+            }else {
+                Toast.makeText(SignUpActivity.this,getText(R.string.failed),Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }

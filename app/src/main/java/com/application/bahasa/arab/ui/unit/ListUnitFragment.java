@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.DataModelUnit;
+import com.application.bahasa.arab.data.home.DataModelUnit;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 

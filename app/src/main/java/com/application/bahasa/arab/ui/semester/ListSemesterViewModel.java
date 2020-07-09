@@ -2,8 +2,8 @@ package com.application.bahasa.arab.ui.semester;
 
 import androidx.lifecycle.ViewModel;
 
-import com.application.bahasa.arab.data.DataModelSemester;
-import com.application.bahasa.arab.data.ListDataViewSemester;
+import com.application.bahasa.arab.data.home.DataModelSemester;
+import com.application.bahasa.arab.data.home.ListDataViewSemester;
 
 import java.util.List;
 

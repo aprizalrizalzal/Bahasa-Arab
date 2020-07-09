@@ -16,15 +16,13 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.DataModelSemester;
-import com.application.bahasa.arab.ui.HomeTabActivity;
-import com.application.bahasa.arab.ui.main.DetailActivity;
+import com.application.bahasa.arab.data.home.DataModelSemester;
+import com.application.bahasa.arab.ui.main.DetailHomeActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,9 +30,6 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -147,9 +142,9 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
                 downloadSemester.setVisibility(View.INVISIBLE);
                 bookSemester.setVisibility(View.VISIBLE);
                 itemView.setOnClickListener(v -> {
-                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
-                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelSemester.getSemesterTitle());
+                    Intent intent = new Intent(itemView.getContext(), DetailHomeActivity.class);
+                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
+                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, dataModelSemester.getSemesterLinkMp3());
                     itemView.getContext().startActivity(intent);
                 });
             }
@@ -177,9 +172,9 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
                                     .show();
                             if (bookSemester.isShown()){
                                 itemView.setOnClickListener(v -> {
-                                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-                                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
-                                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelSemester.getSemesterTitle());
+                                    Intent intent = new Intent(itemView.getContext(), DetailHomeActivity.class);
+                                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
+                                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, dataModelSemester.getSemesterLinkMp3());
                                     itemView.getContext().startActivity(intent);
                                 });
                             }
@@ -209,9 +204,7 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
                 }
             });
 
-            shareSemester.setOnClickListener(v -> {
-                callback.onShareClick(dataModelSemester);
-            });
+            shareSemester.setOnClickListener(v -> callback.onShareClick(dataModelSemester));
         }
 
         private boolean haveNetwork() {

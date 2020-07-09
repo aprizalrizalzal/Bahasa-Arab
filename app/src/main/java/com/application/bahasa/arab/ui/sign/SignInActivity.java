@@ -12,18 +12,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.ui.HomeTabActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
@@ -31,11 +26,8 @@ import java.util.Objects;
 public class SignInActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    private TextView tvEmail,tvPassword;
     private TextInputLayout tiEmail,tiPassword;
     private String email,password;
-    private Button btnSignUp,btnSignIn;
-    private TextView tvTermsAndConditions,tvSignInUp;
     private ProgressBar progressBar;
 
     @Override
@@ -58,8 +50,6 @@ public class SignInActivity extends AppCompatActivity {
         tvStudentName.setVisibility(View.INVISIBLE);
         TextView tvStudentIdNumber = findViewById(R.id.tvStudentIdNumber);
         tvStudentIdNumber.setVisibility(View.GONE);
-        tvEmail = findViewById(R.id.tvEmail);
-        tvPassword = findViewById(R.id.tvPassword);
         TextView tvConfirmPassword = findViewById(R.id.tvConfirmPassword);
         tvConfirmPassword.setVisibility(View.GONE);
 
@@ -73,19 +63,19 @@ public class SignInActivity extends AppCompatActivity {
         tiConfirmPassword.setVisibility(View.GONE);
 
 
-        btnSignUp = findViewById(R.id.btnSignUp);
+        Button btnSignUp = findViewById(R.id.btnSignUp);
         btnSignUp.setVisibility(View.INVISIBLE);
-        btnSignIn = findViewById(R.id.btnSignIn);
+        Button btnSignIn = findViewById(R.id.btnSignIn);
         btnSignIn.setVisibility(View.VISIBLE);
 
         CheckBox checkBox = findViewById(R.id.checkBok);
         checkBox.setVisibility(View.GONE);
 
-        tvTermsAndConditions = findViewById(R.id.tvTermsAndConditions);
+        TextView tvTermsAndConditions = findViewById(R.id.tvTermsAndConditions);
         tvTermsAndConditions.setVisibility(View.GONE);
         TextView tvSignUpIn = findViewById(R.id.tvSignUpIn);
         tvSignUpIn.setVisibility(View.GONE);
-        tvSignInUp = findViewById(R.id.tvSignInUp);
+        TextView tvSignInUp = findViewById(R.id.tvSignInUp);
         tvSignInUp.setVisibility(View.VISIBLE);
 
         progressBar = findViewById(R.id.progressBar);
@@ -94,15 +84,13 @@ public class SignInActivity extends AppCompatActivity {
             if (haveNetwork()){
                 studentSignIn();
             }else {
-                Snackbar.make(btnSignUp, "Maaf, Tidak Ada Koneksi Internet ", Snackbar.LENGTH_LONG)
-                        .setBackgroundTint(getResources().getColor(R.color.colorPrimary))
-                        .setAction("Action", null)
-                        .show();
+                Toast.makeText(this,getString(R.string.not_have_network),Toast.LENGTH_SHORT).show();
             }
         });
 
         tvSignInUp.setOnClickListener(v -> {
             startActivity(new Intent(this,SignUpActivity.class));
+            overridePendingTransition(R.anim.anim_slide_in_left,R.anim.anim_slide_out_left);
             finish();
         });
     }
@@ -113,16 +101,13 @@ public class SignInActivity extends AppCompatActivity {
         email = Objects.requireNonNull(tiEmail.getEditText()).getText().toString().trim();
         password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();
 
-        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    startActivity(new Intent(getApplication(), HomeTabActivity.class));
-                    finish();
-                }else {
-                    Toast.makeText(SignInActivity.this, getText(R.string.isWrong) + " " + getText(R.string.failed), Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
+        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                startActivity(new Intent(getApplication(), HomeTabActivity.class));
+                finish();
+            }else {
+                Toast.makeText(SignInActivity.this, getText(R.string.isWrong) + " " + getText(R.string.failed), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }

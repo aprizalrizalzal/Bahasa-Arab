@@ -16,14 +16,13 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.DataModelUnit;
-import com.application.bahasa.arab.ui.main.DetailActivity;
+import com.application.bahasa.arab.data.home.DataModelUnit;
+import com.application.bahasa.arab.ui.main.DetailHomeActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
@@ -141,9 +140,9 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
                 downloadUnit.setVisibility(View.INVISIBLE);
                 bookUnit.setVisibility(View.VISIBLE);
                 itemView.setOnClickListener(v -> {
-                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelUnit.getUnitTitle());
-                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelUnit.getUnitTitle());
+                    Intent intent = new Intent(itemView.getContext(), DetailHomeActivity.class);
+                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, dataModelUnit.getUnitTitle());
+                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, dataModelUnit.getUnitLinkMp3());
                     itemView.getContext().startActivity(intent);
                 });
             }
@@ -171,9 +170,9 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
                                     .show();
                             if (bookUnit.isShown()){
                                 itemView.setOnClickListener(v -> {
-                                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
-                                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelUnit.getUnitTitle());
-                                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelUnit.getUnitTitle());
+                                    Intent intent = new Intent(itemView.getContext(), DetailHomeActivity.class);
+                                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, dataModelUnit.getUnitTitle());
+                                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, dataModelUnit.getUnitLinkMp3());
                                     itemView.getContext().startActivity(intent);
                                 });
                             }

@@ -2,13 +2,8 @@ package com.application.bahasa.arab.ui.semester;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.DataModelSemester;
-import com.application.bahasa.arab.ui.HomeTabActivity;
+import com.application.bahasa.arab.data.home.DataModelSemester;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
