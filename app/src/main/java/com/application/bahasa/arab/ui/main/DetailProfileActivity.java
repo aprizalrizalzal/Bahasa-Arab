@@ -3,6 +3,8 @@ package com.application.bahasa.arab.ui.main;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.data.chats.DataModelProfileOrContact;
 import com.bumptech.glide.Glide;
@@ -61,6 +64,17 @@ public class DetailProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_profile);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() !=null){
+            getSupportActionBar().setTitle(getString(R.string.profile));
+        }
+
+        AdView adViewUnit = findViewById(R.id.adViewProfile);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adViewUnit.loadAd(adRequest);
 
         storageReference = FirebaseStorage.getInstance().getReference(getString(R.string.valProfile));
 
@@ -131,10 +145,6 @@ public class DetailProfileActivity extends AppCompatActivity {
         });
 
         btnSave.setOnClickListener(v -> validProfile());
-
-        AdView adViewUnit = findViewById(R.id.adViewProfile);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adViewUnit.loadAd(adRequest);
     }
 
     private boolean haveNetwork() {

@@ -2,11 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
-    tools:context=".ui.main.DetailHomeActivity">
+    android:background="@color/colorAccent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/action_bar"
@@ -16,13 +14,13 @@
         android:theme="@style/AppTheme"
         app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:titleTextColor="@android:color/darker_gray"
-        app:layout_scrollFlags="scroll|enterAlways|snap"
-        app:popupTheme="@style/AppTheme" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@android:color/darker_gray"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:popupTheme="@style/AppTheme" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adViewDetail"
@@ -43,13 +41,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/action_bar">
-
-    </com.github.barteksc.pdfviewer.PDFView>
+        app:layout_constraintBottom_toTopOf="@+id/toolbarDown"
+        app:layout_constraintTop_toBottomOf="@+id/action_bar"/>
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/linearLayout"
+        android:id="@+id/toolbarDown"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/colorPrimary"
@@ -66,7 +62,7 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPlay"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/toolbarDown"
         android:contentDescription="@string/first" />
 
     <ImageButton
@@ -77,9 +73,9 @@
         android:layout_margin="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/toolbarDown"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/toolbarDown"
         android:contentDescription="@string/play" />
 
     <ImageButton
@@ -91,9 +87,9 @@
         android:layout_margin="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/toolbarDown"
+        app:layout_constraintStart_toStartOf="@+id/toolbarDown"
+        app:layout_constraintTop_toTopOf="@+id/toolbarDown"
         android:contentDescription="@string/pause" />
 
     <ImageButton
@@ -105,7 +101,7 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnPlay"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/toolbarDown"
         android:contentDescription="@string/last" />
 
     <ImageButton
@@ -118,8 +114,7 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnLast"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/toolbarDown"
         android:contentDescription="@string/stop" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
