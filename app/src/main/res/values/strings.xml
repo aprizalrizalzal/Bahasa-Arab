@@ -7,13 +7,16 @@
     <string name="studentName">Nama Mahasiswa</string>
     <string name="studentIdNumber">Nomor Induk Mahasiswa</string>
     <string name="eMail">Email</string>
+    <string name="notEmail">Email Anda Tidak Terdaftar</string>
     <string name="password">Kata Sandi</string>
     <string name="confirmPassword">Konfirmasi Kata Sandi</string>
     <string name="btnSignUp">Daftar</string>
     <string name="btnSignIn">Masuk</string>
+    <string name="send">Kirim</string>
     <string name="tvTermsAndConditions"><u>Syarat &amp; Ketentuan (Terms &amp; Conditions)</u></string>
-    <string name="tvSignIn">Sudah Punya Akun, <u>Masuk Sekarang BOSQUE!</u></string>
-    <string name="tvSignUp">Belum Punya Akun, <u>Buat Sekarang BOSQUE!</u></string>
+    <string name="tvSignIn">Sudah punya akun, <u>masuk aekarang</u></string>
+    <string name="forgotPassword"><u>Tidak ingat kata sandi?</u></string>
+    <string name="tvSignUp">Belum punya akun, <u>buat sekarang</u></string>
 
     <!-- HomeTabActivity -->
     <string name="homeTabActivity">Home Tab Activity</string>
@@ -28,7 +31,6 @@
     <string name="pause">Jeda </string>
     <string name="last">Selanjutnya </string>
     <string name="stop">Berhenti </string>
-    <string name="searchPage">Cari Halaman</string>
 
     <!-- DetailProfileActivity -->
     <string name="detailProfileActivity">Detail Profile Activity</string>
@@ -44,52 +46,50 @@
     <string name="chat">Obrolan</string>
     <string name="contact">Kontak</string>
 
+    <!-- ChatActivity -->
+    <string name="chatActivity">Chat Activity</string>
+
     <!-- ListFragment -->
     <string name="title">Judul</string>
     <string name="page">Halaman</string>
-    <string name="hiStudent">Hai Mahasiswa</string>
+    <string name="hiStudent">Hai mahasiswa</string>
 
     <!-- Menu -->
     <string name="search">Cari</string>
-    <string name="search_list">Cari Materi</string>
-    <string name="search_pages">Cari Halaman</string>
+    <string name="search_list">Cari materi</string>
+    <string name="search_pages">Cari halaman</string>
     <string name="setting">Pengaturan</string>
     <string name="signOut">Keluar</string>
-    <string name="about">Tentang</string>
 
     <!-- Notice -->
-    <string name="not_have_network">Periksa Koneksi Jaringan Internet Anda BOSQUE!</string>
-    <string name="document_is_empty">Dokument Masih Kosong, Silahkan Unduh Dulu BOSQUE!</string>
-    <string name="media_is_empty">Audio Masih Kosong, Silahkan Unduh Dulu BOSQUE!</string>
-    <string name="denied_message">Jika Ingin Unduh File, Atur Izin Penyimpanan di \n[Setting] > [Permission] BOSQUE!</string>
-    <string name="download_document">Unduh Dokument </string>
+    <string name="not_have_network">Periksa koneksi jaringan internet Anda BOSQUE!</string>
+    <string name="document_is_empty">Dokument masih kosong, Silahkan unduh dulu BOSQUE!</string>
+    <string name="media_is_empty">Audio masih kosong, silahkan unduh dulu BOSQUE!</string>
+    <string name="denied_message">Jika ingin unduh file, atur izin penyimpanan di \n[Setting] > [Permission] BOSQUE!</string>
+    <string name="download_document">Unduh dokument </string>
     <string name="book">Buku</string>
     <string name="share">Bagikan BOSQUE!</string>
     <string name="share_text">Teori untuk %s ada di tautan %s BOSQUE!</string>
-    <string name="download_audio">Unduh Audio </string>
-    <string name="notEmptyStudentName">Nama Mahasiswa Tidak Boleh Kosong BOSQUE!</string>
-    <string name="notEmptyStudentIdNumber">Nomor Induk Mahasiswa Tidak Boleh Kosong BOSQUE!</string>
-    <string name="notEmptyEmail">Email Tidak Boleh Kosong BOSQUE!</string>
-    <string name="notEmptyPassword">Kata Sandi Tidak Boleh Kosong BOSQUE!</string>
-    <string name="notEmptyConfirmPassword">Konfirmasi Kata Sandi Tidak Boleh Kosong BOSQUE!</string>
-    <string name="notEqualsConfirmPassword">Konfirmasi Kata Sandi Salah BOSQUE!</string>
-    <string name="isWrong">Email dan Kata Sandi Anda Salah BOSQUE!</string>
-    <string name="failed">Otentifikasi Gagal, Silahkan Coba Lagi BOSQUE!</string>
-    <string name="deniedPermission">Anda sudah menolak Izin Penyimpanan BOSQUE!</string>
-    <string name="downloadFailed">Unduh Gagal BOSQUE!</string>
-    <string name="downloadSuccess">Unduh Sukses BOSQUE!</string>
-    <string name="saveSuccess">Pembaruan Profil Sukses BOSQUE!</string>
+    <string name="download_audio">Unduh audio </string>
+    <string name="notEmpty">Tidak boleh kosong BOSQUE!</string>
+    <string name="notEqualsConfirm">Konfirmasi salah BOSQUE!</string>
+    <string name="isWrong">Email dan Kata sandi Anda salah!</string>
+    <string name="failed">Otentifikasi gagal, silahkan coba lagi BOSQUE!</string>
+    <string name="deniedPermission">Anda sudah menolak izin penyimpanan BOSQUE!</string>
+    <string name="saveSuccess">Pembaruan profil sukses BOSQUE!</string>
 
     <!-- Firebase Database User -->
-    <string name="user">User</string>
     <string name="valId">id</string>
     <string name="valStudentName">studentName</string>
     <string name="valStudentIdNumber">studentIdNumber</string>
     <string name="valPhoneNumber">phoneNumber</string>
     <string name="valProfilePictureInTheURL">profilePictureInTheURL</string>
-
-    <string name="nothing">nothing</string>
-    <string name="example">Masih Dalam Pengembangan BOSQUE!</string>
     <string name="valProfile">profile/user</string>
 
+    <string name="example">Masih dalam pengembangan BOSQUE!</string>
+    <string name="cekYourEmail">Silahkan cek Email Anda BOSQUE!</string>
+    <string name="edit">Edit</string>
+    <string name="save">Simpan</string>
+    <string name="back">Back</string>
+    <string name="date_online_offline">Date online/offline</string>
 </resources>

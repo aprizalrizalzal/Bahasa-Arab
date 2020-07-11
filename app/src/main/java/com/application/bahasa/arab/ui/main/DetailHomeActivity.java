@@ -154,14 +154,37 @@ public class DetailHomeActivity extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_more,menu);
-        MenuItem menuDownloadAudio = menu.findItem(R.id.menuDownloadAudio);
-        MenuItem menuAbout = menu.findItem(R.id.menuSetting);
-        MenuItem item = menu.findItem(R.id.searchView);
-        menuAbout.setOnMenuItemClickListener(v -> {
+
+        MenuItem menuSetting = menu.findItem(R.id.menuSetting);
+        menuSetting.setOnMenuItemClickListener(v -> {
             Toast.makeText(DetailHomeActivity.this, getString(R.string.example),Toast.LENGTH_SHORT).show();
             return true;
         });
 
+        MenuItem itemSearch = menu.findItem(R.id.searchView);
+        SearchView searchView = (SearchView) itemSearch.getActionView();
+        searchView.setQueryHint(getString(R.string.search_pages));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)){
+                    pdfView.jumpTo(0,true);
+                }else if (TextUtils.isDigitsOnly(newText)){
+                    int search;
+                    search = Integer.parseInt(String.valueOf(newText));
+                    pdfView.jumpTo(search - 1,true);
+                }
+                return false;
+            }
+        });
+
+        MenuItem menuDownloadAudio = menu.findItem(R.id.menuDownloadAudio);
         menuDownloadAudio.setOnMenuItemClickListener(v -> {
             Toast.makeText(DetailHomeActivity.this, getString(R.string.example),Toast.LENGTH_SHORT).show();
             menuDownloadAudio.setVisible(false);
@@ -207,27 +230,8 @@ public class DetailHomeActivity extends AppCompatActivity{
             return true;
         });
 
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setQueryHint(getString(R.string.search_pages));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (TextUtils.isEmpty(newText)){
-                    pdfView.jumpTo(0,true);
-                }else if (TextUtils.isDigitsOnly(newText)){
-                    int search;
-                    search = Integer.parseInt(String.valueOf(newText));
-                    pdfView.jumpTo(search - 1,true);
-                }
-                return false;
-            }
-        });
+        MenuItem itemProfile = menu.findItem(R.id.menuProfile);
+        itemProfile.setVisible(false);
 
         return super.onCreateOptionsMenu(menu);
     }

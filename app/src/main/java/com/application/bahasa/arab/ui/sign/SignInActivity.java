@@ -26,7 +26,9 @@ import java.util.Objects;
 public class SignInActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
+    private TextView tvPassword;
     private TextInputLayout tiEmail,tiPassword;
+    private TextView tvSignInUp,tvForgotPassword;
     private String email,password;
     private ProgressBar progressBar;
 
@@ -50,6 +52,7 @@ public class SignInActivity extends AppCompatActivity {
         tvStudentName.setVisibility(View.INVISIBLE);
         TextView tvStudentIdNumber = findViewById(R.id.tvStudentIdNumber);
         tvStudentIdNumber.setVisibility(View.GONE);
+        tvPassword = findViewById(R.id.tvPassword);
         TextView tvConfirmPassword = findViewById(R.id.tvConfirmPassword);
         tvConfirmPassword.setVisibility(View.GONE);
 
@@ -67,6 +70,7 @@ public class SignInActivity extends AppCompatActivity {
         btnSignUp.setVisibility(View.INVISIBLE);
         Button btnSignIn = findViewById(R.id.btnSignIn);
         btnSignIn.setVisibility(View.VISIBLE);
+        Button btnSend = findViewById(R.id.btnSend);
 
         CheckBox checkBox = findViewById(R.id.checkBok);
         checkBox.setVisibility(View.GONE);
@@ -75,8 +79,9 @@ public class SignInActivity extends AppCompatActivity {
         tvTermsAndConditions.setVisibility(View.GONE);
         TextView tvSignUpIn = findViewById(R.id.tvSignUpIn);
         tvSignUpIn.setVisibility(View.GONE);
-        TextView tvSignInUp = findViewById(R.id.tvSignInUp);
+        tvSignInUp = findViewById(R.id.tvSignInUp);
         tvSignInUp.setVisibility(View.VISIBLE);
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -88,10 +93,38 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
+        btnSend.setOnClickListener(v -> {
+            if (!validEmail()){
+                return;
+            }
+            email = Objects.requireNonNull(tiEmail.getEditText()).getText().toString().trim();
+            auth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(SignInActivity.this, R.string.cekYourEmail, Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }else {
+                            Toast.makeText(SignInActivity.this, getText(R.string.notEmail), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    });
+        });
+
         tvSignInUp.setOnClickListener(v -> {
             startActivity(new Intent(this,SignUpActivity.class));
             overridePendingTransition(R.anim.anim_slide_in_left,R.anim.anim_slide_out_left);
             finish();
+        });
+
+        tvForgotPassword.setOnClickListener(v -> {
+            tvPassword.setVisibility(View.GONE);
+            tiPassword.setVisibility(View.GONE);
+            tvForgotPassword.setVisibility(View.INVISIBLE);
+            tvSignInUp.setVisibility(View.VISIBLE);
+            btnSignIn.setVisibility(View.INVISIBLE);
+            btnSend.setVisibility(View.VISIBLE);
+            tvForgotPassword.setVisibility(View.INVISIBLE);
+            tvSignInUp.setVisibility(View.VISIBLE);
         });
     }
     private void studentSignIn(){
@@ -108,6 +141,8 @@ public class SignInActivity extends AppCompatActivity {
             }else {
                 Toast.makeText(SignInActivity.this, getText(R.string.isWrong) + " " + getText(R.string.failed), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
+                tvForgotPassword.setVisibility(View.VISIBLE);
+                tvSignInUp.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -123,7 +158,7 @@ public class SignInActivity extends AppCompatActivity {
     private boolean validEmail(){
         email = Objects.requireNonNull(tiEmail.getEditText()).getText().toString().trim();
         if (email.isEmpty()){
-            tiEmail.setError(getText(R.string.notEmptyEmail));
+            tiEmail.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {
@@ -135,7 +170,7 @@ public class SignInActivity extends AppCompatActivity {
     private boolean validPassword(){
         password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();
         if (password.isEmpty()){
-            tiPassword.setError(getText(R.string.notEmptyPassword));
+            tiPassword.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {

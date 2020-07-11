@@ -17,32 +17,38 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ui.main.ChatActivity"
+            android:label="@string/chatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Sign">
+        </activity>
+        <activity
             android:name=".ui.main.DetailProfileActivity"
             android:label="@string/detailProfileActivity"
-            android:theme="@style/AppTheme.Sign"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Sign" />
         <activity
             android:name=".ui.ChatTabActivity"
             android:label="@string/chatTabActivity"
-            android:theme="@style/AppTheme.Sign"/>
+            android:theme="@style/AppTheme.Sign" />
         <activity
             android:name=".ui.sign.SignUpActivity"
             android:label="@string/signActivity"
-            android:theme="@style/AppTheme.Sign"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Sign" />
         <activity
             android:name=".ui.sign.SignInActivity"
             android:label="@string/signActivity"
-            android:theme="@style/AppTheme.Sign"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Sign" />
         <activity
             android:name=".ui.HomeTabActivity"
             android:label="@string/homeTabActivity"
-            android:theme="@style/AppTheme" />
-        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+            android:theme="@style/AppTheme" /> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3946611117968254~4667483765" />
+
         <activity
             android:name=".ui.main.DetailHomeActivity"
             android:label="@string/detailHomeActivity"
@@ -55,8 +61,10 @@
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

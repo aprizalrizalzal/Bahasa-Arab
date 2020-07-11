@@ -66,8 +66,14 @@ public class ChatTabActivity extends AppCompatActivity {
             }
         });
 
-        MenuItem itemAbout = menu.findItem(R.id.menuSetting);
-        itemAbout.setOnMenuItemClickListener(item -> {
+        MenuItem menuSetting = menu.findItem(R.id.menuSetting);
+        menuSetting.setOnMenuItemClickListener(v -> {
+            Toast.makeText(ChatTabActivity.this, getString(R.string.example),Toast.LENGTH_SHORT).show();
+            return false;
+        });
+
+        MenuItem itemProfile = menu.findItem(R.id.menuProfile);
+        itemProfile.setOnMenuItemClickListener(item -> {
             startActivity(new Intent(this, DetailProfileActivity.class));
             return false;
         });

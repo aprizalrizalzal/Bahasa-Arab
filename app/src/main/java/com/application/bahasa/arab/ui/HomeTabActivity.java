@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeTabActivity extends AppCompatActivity {
 
+    private FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,7 @@ public class HomeTabActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             if (haveNetwork()){
                 startActivity(new Intent(this, ChatTabActivity.class));
@@ -90,9 +92,23 @@ public class HomeTabActivity extends AppCompatActivity {
             }
         });
 
-        MenuItem itemAbout = menu.findItem(R.id.menuSetting);
-        itemAbout.setOnMenuItemClickListener(item -> {
-            startActivity(new Intent(this, DetailProfileActivity.class));
+        MenuItem menuSetting = menu.findItem(R.id.menuSetting);
+        menuSetting.setOnMenuItemClickListener(v -> {
+            Toast.makeText(HomeTabActivity.this, getString(R.string.example),Toast.LENGTH_SHORT).show();
+            return false;
+        });
+
+        MenuItem itemProfile = menu.findItem(R.id.menuProfile);
+        itemProfile.setOnMenuItemClickListener(item -> {
+            if (haveNetwork()){
+                startActivity(new Intent(this, DetailProfileActivity.class));
+            }else {
+                Snackbar.make(fab,getString( R.string.not_have_network), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .setTextColor(fab.getResources().getColor(R.color.browser_actions_text_color))
+                        .setBackgroundTint(fab.getResources().getColor(R.color.colorPrimary))
+                        .show();
+            }
             return false;
         });
 

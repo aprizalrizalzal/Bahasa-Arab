@@ -12,13 +12,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.chats.DataModelProfile;
+import com.application.bahasa.arab.data.chats.DataModelProfileOrContact;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.ads.AdRequest;
@@ -50,7 +51,7 @@ public class DetailProfileActivity extends AppCompatActivity {
     private String studentName,studentIdNumber,phoneNumber;
     private ImageView imgPictureProfile;
     private static final int IMAGE_REQUEST = 1;
-    private ImageButton btnEdit,btnSave;
+    private Button btnEdit,btnSave;
     private ProgressBar progressBar;
 
     public DetailProfileActivity() {
@@ -80,14 +81,14 @@ public class DetailProfileActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference(getString(R.string.user)).child(user.getUid());
+        reference = FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                DataModelProfile profile = snapshot.getValue(DataModelProfile.class);
+                DataModelProfileOrContact profile = snapshot.getValue(DataModelProfileOrContact.class);
                 assert profile !=null;
-                if (profile.getProfilePictureInTheURL().equals(getString(R.string.nothing))) {
+                if (profile.getProfilePictureInTheURL().equals("nothing")) {
                     imgPictureProfile.setImageResource(R.drawable.ic_baseline_account_circle);
                 } else {
                     Glide.with(getApplicationContext())
@@ -175,7 +176,7 @@ public class DetailProfileActivity extends AppCompatActivity {
                     assert downloadUri != null;
                     String myUri = downloadUri.toString();
 
-                    reference = FirebaseDatabase.getInstance().getReference(getString(R.string.user)).child(user.getUid());
+                    reference = FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
                     HashMap<String, Object> map = new HashMap<>();
                     map.put(getString(R.string.valProfilePictureInTheURL), myUri);
                     reference.updateChildren(map);
@@ -214,7 +215,7 @@ public class DetailProfileActivity extends AppCompatActivity {
         studentIdNumber = Objects.requireNonNull(tiStudentIdNumber.getEditText()).getText().toString().trim();
         phoneNumber = Objects.requireNonNull(tiPhoneNumber.getEditText()).getText().toString().trim();
 
-        reference=FirebaseDatabase.getInstance().getReference(getString(R.string.user)).child(user.getUid());
+        reference=FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
 
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put(getString(R.string.valStudentName),studentName);
@@ -240,7 +241,7 @@ public class DetailProfileActivity extends AppCompatActivity {
     private boolean validStudentName(){
         studentName = Objects.requireNonNull(tiStudentName.getEditText()).getText().toString().trim();
         if (studentName.isEmpty()){
-            tiStudentName.setError(getText(R.string.notEmptyStudentName));
+            tiStudentName.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {
@@ -253,7 +254,7 @@ public class DetailProfileActivity extends AppCompatActivity {
     private boolean validStudentIdNumber(){
         studentIdNumber = Objects.requireNonNull(tiStudentIdNumber.getEditText()).getText().toString().trim();
         if (studentIdNumber.isEmpty()){
-            tiStudentIdNumber.setError(getText(R.string.notEmptyStudentIdNumber));
+            tiStudentIdNumber.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {
@@ -266,7 +267,7 @@ public class DetailProfileActivity extends AppCompatActivity {
     private boolean validPhoneNumber(){
         phoneNumber = Objects.requireNonNull(tiPhoneNumber.getEditText()).getText().toString().trim();
         if (phoneNumber.isEmpty()){
-            tiPhoneNumber.setError(getText(R.string.notEmptyStudentIdNumber));
+            tiPhoneNumber.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {

@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_splash"
+    android:background="@color/colorAccent"
     tools:context=".ui.SplashActivity">
 
     <ImageView
-        android:id="@+id/img_ss"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="128dp"

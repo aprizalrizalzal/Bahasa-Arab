@@ -12,9 +12,7 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.application.bahasa.arab.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -30,6 +28,7 @@ import java.util.Objects;
 public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
+    private FirebaseUser user;
     private DatabaseReference reference;
     private TextInputLayout tiStudentName,tiStudentIdNumber,tiEmail,tiPassword,tiConfirmPassword;
     private String studentName,studentIdNumber,email,password;
@@ -47,7 +46,6 @@ public class SignUpActivity extends AppCompatActivity {
         adViewUnit.loadAd(adRequest);
 
         auth=FirebaseAuth.getInstance();
-
         tiStudentName = findViewById(R.id.tiStudentName);
         tiStudentIdNumber = findViewById(R.id.tiStudentIdNumber);
         tiEmail = findViewById(R.id.tiEmail);
@@ -100,17 +98,17 @@ public class SignUpActivity extends AppCompatActivity {
 
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(taskCreate -> {
             if (taskCreate.isSuccessful()){
-                FirebaseUser user = auth.getCurrentUser();
+                user = auth.getCurrentUser();
                 assert user != null;
                 String userId = user.getUid();
-                reference= FirebaseDatabase.getInstance().getReference(getString(R.string.user)).child(userId);
+                reference= FirebaseDatabase.getInstance().getReference("User").child(userId);
 
                 HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put(getString(R.string.valId),userId);
                 hashMap.put(getString(R.string.valStudentName),studentName);
                 hashMap.put(getString(R.string.valStudentIdNumber),studentIdNumber);
-                hashMap.put(getString(R.string.valPhoneNumber),getString(R.string.nothing));
-                hashMap.put(getString(R.string.valProfilePictureInTheURL),getString(R.string.nothing));
+                hashMap.put(getString(R.string.valPhoneNumber),"nothing");
+                hashMap.put(getString(R.string.valProfilePictureInTheURL),"nothing");
 
                 reference.setValue(hashMap).addOnCompleteListener(taskReference -> {
                     if (taskReference.isSuccessful()){
@@ -118,7 +116,6 @@ public class SignUpActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-
             }else {
                 Toast.makeText(SignUpActivity.this,getText(R.string.failed),Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
@@ -139,7 +136,7 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean validStudentName(){
         studentName = Objects.requireNonNull(tiStudentName.getEditText()).getText().toString().trim();
         if (studentName.isEmpty()){
-            tiStudentName.setError(getText(R.string.notEmptyStudentName));
+            tiStudentName.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {
@@ -152,7 +149,7 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean validStudentIdNumber(){
         studentIdNumber = Objects.requireNonNull(tiStudentIdNumber.getEditText()).getText().toString().trim();
         if (studentIdNumber.isEmpty()){
-            tiStudentIdNumber.setError(getText(R.string.notEmptyStudentIdNumber));
+            tiStudentIdNumber.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {
@@ -164,7 +161,7 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean validEmail(){
         email = Objects.requireNonNull(tiEmail.getEditText()).getText().toString().trim();
         if (email.isEmpty()){
-            tiEmail.setError(getText(R.string.notEmptyEmail));
+            tiEmail.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {
@@ -176,7 +173,7 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean validPassword(){
         password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();
         if (password.isEmpty()){
-            tiPassword.setError(getText(R.string.notEmptyPassword));
+            tiPassword.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {
@@ -189,12 +186,12 @@ public class SignUpActivity extends AppCompatActivity {
         String confirmPassword = Objects.requireNonNull(tiConfirmPassword.getEditText()).getText().toString().trim();
         password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();
         if (confirmPassword.isEmpty()){
-            tiConfirmPassword.setError(getText(R.string.notEmptyConfirmPassword));
+            tiConfirmPassword.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
         else if (!confirmPassword.equals(password)){
-            tiConfirmPassword.setError(getText(R.string.notEqualsConfirmPassword));
+            tiConfirmPassword.setError(getText(R.string.notEqualsConfirm));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }

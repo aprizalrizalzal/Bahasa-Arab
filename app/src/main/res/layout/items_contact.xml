@@ -5,14 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.AppCompat.Button"
 
-    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginLeft="6dp"
-    android:layout_marginTop="3dp"
-    android:layout_marginRight="6dp"
-    android:layout_marginBottom="3dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginTop="1.5dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginBottom="1.5dp"
     app:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:ellipsize="end"
+            android:textStyle="bold"
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="16sp"
@@ -56,7 +56,7 @@
             tools:text="@string/studentName" />
 
         <TextView
-            android:id="@+id/tv_item_numberPhone"
+            android:id="@+id/tv_item_phoneNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -64,11 +64,11 @@
             android:maxLines="1"
             android:textColor="@android:color/darker_gray"
 
-            app:layout_constraintBottom_toBottomOf="@id/card_cover"
+            app:layout_constraintBottom_toBottomOf="@+id/card_cover"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/card_cover"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_titleContact"
-            tools:text="@string/phoneNumber" />
+            tools:text="@string/eMail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

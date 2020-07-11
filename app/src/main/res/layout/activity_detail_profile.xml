@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     tools:context=".ui.main.DetailProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,7 +73,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                android:drawableEnd="@drawable/ic_baseline_person"
                 android:hint="@string/profileStudentName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,7 +95,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                android:drawableEnd="@drawable/ic_baseline_label"
                 android:hint="@string/profileStudentIdNumber" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +117,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                android:drawableEnd="@drawable/ic_baseline_phone_android"
                 android:hint="@string/profilePhoneNumber" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,6 +126,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/studentName"
             android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             android:paddingStart="32dp"
             android:paddingEnd="32dp"
 
@@ -141,35 +140,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                android:drawableEnd="@drawable/ic_baseline_email"
                 android:hint="@string/profileEmail" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageButton
+        <Button
             android:id="@+id/btnEdit"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@drawable/bg_btn_sign"
             android:contentDescription="@string/studentName"
-            android:padding="16dp"
-            android:src="@drawable/ic_baseline_edit"
+            android:text="@string/edit"
 
-            app:layout_constraintEnd_toEndOf="@+id/profile"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/card_cover"
+            app:layout_constraintStart_toStartOf="@+id/card_cover"
             app:layout_constraintTop_toBottomOf="@+id/tiEmailProfile" />
 
-        <ImageButton
+        <Button
             android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@drawable/bg_btn_sign"
             android:contentDescription="@string/studentName"
-            android:padding="16dp"
-            android:src="@drawable/ic_baseline_save"
+            android:text="@string/save"
             android:visibility="invisible"
 
-            app:layout_constraintEnd_toEndOf="@+id/tiEmailProfile"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/card_cover"
+            app:layout_constraintStart_toStartOf="@+id/card_cover"
             app:layout_constraintTop_toBottomOf="@+id/tiEmailProfile" />
 
         <com.google.android.gms.ads.AdView
@@ -177,6 +173,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="16dp"
 
             app:adSize="BANNER"
             app:adUnitId="ca-app-pub-3946611117968254/7058677532"

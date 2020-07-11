@@ -16,6 +16,9 @@
         android:id="@+id/menuSetting"
         android:title="@string/setting"/>
     <item
+        android:id="@+id/menuProfile"
+        android:title="@string/profile"/>
+    <item
         android:id="@+id/menuSignOut"
         android:title="@string/signOut"/>
 

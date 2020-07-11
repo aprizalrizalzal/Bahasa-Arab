@@ -16,23 +16,20 @@ import com.application.bahasa.arab.R;
 
 public class ListChatFragment extends Fragment {
 
-    private ListChatViewModel mViewModel;
 
-    public static ListChatFragment newInstance() {
-        return new ListChatFragment();
+    public ListChatFragment() {
+        // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_list_chat, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ListChatViewModel.class);
-        // TODO: Use the ViewModel
+
     }
 
 }
