@@ -1,6 +1,6 @@
 package com.application.bahasa.arab.data.home;
 
-public class DataModelSemester {
+public class ModelSemester {
 
     private String semesterTitle;
     private String semesterPage;
@@ -8,7 +8,7 @@ public class DataModelSemester {
     private String semesterLink;
     private String semesterLinkMp3;
 
-    public DataModelSemester(String semesterTitle, String semesterPage, String semesterCover, String semesterLink, String semesterLinkMp3) {
+    public ModelSemester(String semesterTitle, String semesterPage, String semesterCover, String semesterLink, String semesterLinkMp3) {
         this.semesterTitle = semesterTitle;
         this.semesterPage = semesterPage;
         this.semesterCover = semesterCover;

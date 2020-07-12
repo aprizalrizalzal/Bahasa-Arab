@@ -30,6 +30,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/imageCoverChat"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:contentDescription="@string/app_name"
@@ -39,7 +40,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/tv_item_titleChat"
+            android:id="@+id/tvTitleChat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -55,6 +56,7 @@
             tools:text="@string/studentName" />
 
         <TextView
+            android:id="@+id/tvChat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -65,7 +67,7 @@
             app:layout_constraintBottom_toBottomOf="@id/card_cover"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/card_cover"
-            app:layout_constraintTop_toBottomOf="@+id/tv_item_titleChat"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleChat"
             tools:text="@string/hiStudent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

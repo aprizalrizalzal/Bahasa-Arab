@@ -27,11 +27,11 @@ import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private FirebaseAuth auth;
-    private FirebaseUser user;
-    private DatabaseReference reference;
-    private TextInputLayout tiStudentName,tiStudentIdNumber,tiEmail,tiPassword,tiConfirmPassword;
-    private String studentName,studentIdNumber,email,password;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference databaseReference;
+    private TextInputLayout tiUserName,tiEmail,tiPassword,tiConfirmPassword;
+    private String userName,email,password;
     private Button btnSignUp;
     private CheckBox checkBox;
     private ProgressBar progressBar;
@@ -45,20 +45,15 @@ public class SignUpActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         adViewUnit.loadAd(adRequest);
 
-        auth=FirebaseAuth.getInstance();
-        tiStudentName = findViewById(R.id.tiStudentName);
-        tiStudentIdNumber = findViewById(R.id.tiStudentIdNumber);
+        firebaseAuth=FirebaseAuth.getInstance();
+        tiUserName = findViewById(R.id.tiUserName);
         tiEmail = findViewById(R.id.tiEmail);
         tiPassword = findViewById(R.id.tiPassword);
         tiConfirmPassword = findViewById(R.id.tiConfirmPassword);
-
         btnSignUp = findViewById(R.id.btnSignUp);
-
         checkBox = findViewById(R.id.checkBok);
-
         TextView tvTermsAndConditions = findViewById(R.id.tvTermsAndConditions);
         TextView tvSignUpIn = findViewById(R.id.tvSignUpIn);
-
         progressBar = findViewById(R.id.progressBar);
 
         btnSignUp.setOnClickListener(v -> {
@@ -88,29 +83,27 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void studentSignUp(){
-        if (!validStudentName()|!validStudentIdNumber()|!validEmail()|!validPassword()|!validConfirmPassword()) {
+        if (!validUserName()|!validEmail()|!validPassword()|!validConfirmPassword()) {
             return;
         }
-        studentName = Objects.requireNonNull(tiStudentName.getEditText()).getText().toString().trim();
-        studentIdNumber = Objects.requireNonNull(tiStudentIdNumber.getEditText()).getText().toString().trim();
+        userName = Objects.requireNonNull(tiUserName.getEditText()).getText().toString().trim();
         email = Objects.requireNonNull(tiEmail.getEditText()).getText().toString().trim();
         password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();
 
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(taskCreate -> {
+        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(taskCreate -> {
             if (taskCreate.isSuccessful()){
-                user = auth.getCurrentUser();
-                assert user != null;
-                String userId = user.getUid();
-                reference= FirebaseDatabase.getInstance().getReference("User").child(userId);
+                firebaseUser = firebaseAuth.getCurrentUser();
+                assert firebaseUser != null;
+                String userId = firebaseUser.getUid();
+                databaseReference = FirebaseDatabase.getInstance().getReference("user").child(userId);
 
-                HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put(getString(R.string.valId),userId);
-                hashMap.put(getString(R.string.valStudentName),studentName);
-                hashMap.put(getString(R.string.valStudentIdNumber),studentIdNumber);
-                hashMap.put(getString(R.string.valPhoneNumber),"nothing");
-                hashMap.put(getString(R.string.valProfilePictureInTheURL),"nothing");
+                HashMap<String,String> user = new HashMap<>();
+                user.put("userId",userId);
+                user.put("userName",userName);
+                user.put("phoneNumber","nothing");
+                user.put("profilePicture","nothing");
 
-                reference.setValue(hashMap).addOnCompleteListener(taskReference -> {
+                databaseReference.setValue(user).addOnCompleteListener(taskReference -> {
                     if (taskReference.isSuccessful()){
                         startActivity(new Intent(SignUpActivity.this,SignInActivity.class));
                         finish();
@@ -133,31 +126,19 @@ public class SignUpActivity extends AppCompatActivity {
         return haveConnection;
     }
 
-    private boolean validStudentName(){
-        studentName = Objects.requireNonNull(tiStudentName.getEditText()).getText().toString().trim();
-        if (studentName.isEmpty()){
-            tiStudentName.setError(getText(R.string.notEmpty));
+    private boolean validUserName(){
+        userName = Objects.requireNonNull(tiUserName.getEditText()).getText().toString().trim();
+        if (userName.isEmpty()){
+            tiUserName.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {
-            tiStudentName.setError(null);
+            tiUserName.setError(null);
             progressBar.setVisibility(View.VISIBLE);
             return true;
         }
     }
 
-    private boolean validStudentIdNumber(){
-        studentIdNumber = Objects.requireNonNull(tiStudentIdNumber.getEditText()).getText().toString().trim();
-        if (studentIdNumber.isEmpty()){
-            tiStudentIdNumber.setError(getText(R.string.notEmpty));
-            progressBar.setVisibility(View.INVISIBLE);
-            return false;
-        }else {
-            tiStudentIdNumber.setError(null);
-            progressBar.setVisibility(View.VISIBLE);
-            return true;
-        }
-    }
     private boolean validEmail(){
         email = Objects.requireNonNull(tiEmail.getEditText()).getText().toString().trim();
         if (email.isEmpty()){
@@ -170,6 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
             return true;
         }
     }
+
     private boolean validPassword(){
         password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();
         if (password.isEmpty()){
@@ -182,6 +164,7 @@ public class SignUpActivity extends AppCompatActivity {
             return true;
         }
     }
+
     private boolean validConfirmPassword(){
         String confirmPassword = Objects.requireNonNull(tiConfirmPassword.getEditText()).getText().toString().trim();
         password = Objects.requireNonNull(tiPassword.getEditText()).getText().toString().trim();

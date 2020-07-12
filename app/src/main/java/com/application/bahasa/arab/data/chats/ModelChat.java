@@ -1,19 +1,19 @@
 package com.application.bahasa.arab.data.chats;
 
-public class DataModelChat {
+public class ModelChat {
     private String sender;
     private String receiver;
     private String message;
     private boolean readChats;
 
-    public DataModelChat(String sender, String receiver, String message, boolean readChats) {
+    public ModelChat(String sender, String receiver, String message, boolean readChats) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
         this.readChats = readChats;
     }
 
-    public DataModelChat() {
+    public ModelChat() {
     }
 
     public String getSender() {

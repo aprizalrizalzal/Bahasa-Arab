@@ -1,7 +1,7 @@
 package com.application.bahasa.arab.ui.semester;
 
-import com.application.bahasa.arab.data.home.DataModelSemester;
+import com.application.bahasa.arab.data.home.ModelSemester;
 
 public interface ListSemesterFragmentCallback {
-    void onShareClick(DataModelSemester dataModelSemester);
+    void onShareClick(ModelSemester modelSemester);
 }

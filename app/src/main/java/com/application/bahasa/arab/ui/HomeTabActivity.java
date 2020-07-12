@@ -16,7 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.application.bahasa.arab.R;
 import com.application.bahasa.arab.ui.additional.ListAdditionalFragment;
-import com.application.bahasa.arab.ui.main.DetailProfileActivity;
+import com.application.bahasa.arab.ui.main.ProfileActivity;
 import com.application.bahasa.arab.ui.main.SectionsPagerAdapter;
 import com.application.bahasa.arab.ui.semester.ListSemesterFragment;
 import com.application.bahasa.arab.ui.sign.SignInActivity;
@@ -41,7 +41,7 @@ public class HomeTabActivity extends AppCompatActivity {
         sectionsPagerAdapter.addFragment(new ListUnitFragment(),getString(R.string.theUnit));
         sectionsPagerAdapter.addFragment(new ListAdditionalFragment(),getString(R.string.additional));
 
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(sectionsPagerAdapter);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -101,7 +101,7 @@ public class HomeTabActivity extends AppCompatActivity {
         MenuItem itemProfile = menu.findItem(R.id.menuProfile);
         itemProfile.setOnMenuItemClickListener(item -> {
             if (haveNetwork()){
-                startActivity(new Intent(this, DetailProfileActivity.class));
+                startActivity(new Intent(this, ProfileActivity.class));
             }else {
                 Snackbar.make(fab,getString( R.string.not_have_network), Snackbar.LENGTH_LONG)
                         .setAction("Action", null)

@@ -12,10 +12,10 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.ui.main.DetailProfileActivity;
+import com.application.bahasa.arab.ui.main.ProfileActivity;
 import com.application.bahasa.arab.ui.main.SectionsPagerAdapter;
-import com.application.bahasa.arab.ui.main.chats.ListChatFragment;
-import com.application.bahasa.arab.ui.main.chats.ListContactFragment;
+import com.application.bahasa.arab.ui.chats.ListChatFragment;
+import com.application.bahasa.arab.ui.contact.ListContactFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class ChatTabActivity extends AppCompatActivity {
@@ -30,7 +30,7 @@ public class ChatTabActivity extends AppCompatActivity {
         sectionsPagerAdapter.addFragment(new ListContactFragment(),getString(R.string.contact));
         sectionsPagerAdapter.addFragment(new ListChatFragment(),getString(R.string.chat));
 
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(sectionsPagerAdapter);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -74,7 +74,7 @@ public class ChatTabActivity extends AppCompatActivity {
 
         MenuItem itemProfile = menu.findItem(R.id.menuProfile);
         itemProfile.setOnMenuItemClickListener(item -> {
-            startActivity(new Intent(this, DetailProfileActivity.class));
+            startActivity(new Intent(this, ProfileActivity.class));
             return false;
         });
 

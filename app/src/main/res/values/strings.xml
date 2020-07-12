@@ -78,14 +78,6 @@
     <string name="deniedPermission">Anda sudah menolak izin penyimpanan BOSQUE!</string>
     <string name="saveSuccess">Pembaruan profil sukses BOSQUE!</string>
 
-    <!-- Firebase Database User -->
-    <string name="valId">id</string>
-    <string name="valStudentName">studentName</string>
-    <string name="valStudentIdNumber">studentIdNumber</string>
-    <string name="valPhoneNumber">phoneNumber</string>
-    <string name="valProfilePictureInTheURL">profilePictureInTheURL</string>
-    <string name="valProfile">profile/user</string>
-
     <string name="example">Masih dalam pengembangan BOSQUE!</string>
     <string name="cekYourEmail">Silahkan cek Email Anda BOSQUE!</string>
     <string name="edit">Edit</string>

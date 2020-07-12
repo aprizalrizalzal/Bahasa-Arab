@@ -17,13 +17,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.main.ChatActivity"
+            android:name=".ui.main.MessageActivity"
             android:label="@string/chatActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Sign">
         </activity>
         <activity
-            android:name=".ui.main.DetailProfileActivity"
+            android:name=".ui.main.ProfileActivity"
             android:label="@string/detailProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Sign" />

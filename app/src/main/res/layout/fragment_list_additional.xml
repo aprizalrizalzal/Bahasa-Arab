@@ -10,7 +10,7 @@
     tools:ignore="ScrollViewCount">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_additional"
+        android:id="@+id/rvAdditional"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"

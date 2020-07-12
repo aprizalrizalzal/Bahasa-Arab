@@ -21,7 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.home.DataModelAdditional;
+import com.application.bahasa.arab.data.home.ModelAdditional;
 import com.application.bahasa.arab.ui.main.DetailHomeActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -37,21 +37,21 @@ import java.util.List;
 public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAdapter.ViewHolder> implements Filterable {
 
     private final ListAdditionalFragmentCallback callShare;
-    private ArrayList<DataModelAdditional> dataModelAdditionalArrayList = new ArrayList<>();
-    private ArrayList<DataModelAdditional> getDataModelAdditionalArrayList = new ArrayList<>();
+    private ArrayList<ModelAdditional> modelAdditionalArrayList = new ArrayList<>();
+    private ArrayList<ModelAdditional> getModelAdditionalArrayList = new ArrayList<>();
 
     ListAdditionalAdapter(ListAdditionalFragmentCallback callShare) {
         this.callShare = callShare;
     }
 
-    public void setDataModelAdditionalArrayList(List<DataModelAdditional> dataModelAdditionals) {
-        if (dataModelAdditionalArrayList == null)return;
-        dataModelAdditionalArrayList.clear();
-        dataModelAdditionalArrayList.addAll(dataModelAdditionals);
+    public void setModelAdditionalArrayList(List<ModelAdditional> modelAdditionals) {
+        if (modelAdditionalArrayList == null)return;
+        modelAdditionalArrayList.clear();
+        modelAdditionalArrayList.addAll(modelAdditionals);
 
-        if (getDataModelAdditionalArrayList == null)return;
-        getDataModelAdditionalArrayList.clear();
-        getDataModelAdditionalArrayList.addAll(dataModelAdditionals);
+        if (getModelAdditionalArrayList == null)return;
+        getModelAdditionalArrayList.clear();
+        getModelAdditionalArrayList.addAll(modelAdditionals);
     }
 
     @NonNull
@@ -63,13 +63,13 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        DataModelAdditional dataModelAdditional = dataModelAdditionalArrayList.get(position);
-        holder.bind(dataModelAdditional);
+        ModelAdditional modelAdditional = modelAdditionalArrayList.get(position);
+        holder.bind(modelAdditional);
     }
 
     @Override
     public int getItemCount() {
-        return dataModelAdditionalArrayList.size();
+        return modelAdditionalArrayList.size();
     }
 
     @Override
@@ -80,11 +80,11 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
         Filter filter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                ArrayList<DataModelAdditional> filterData = new ArrayList<>();
+                ArrayList<ModelAdditional> filterData = new ArrayList<>();
                 if (charSequence.toString().isEmpty()){
-                    filterData.addAll(getDataModelAdditionalArrayList);
+                    filterData.addAll(getModelAdditionalArrayList);
                 }else {
-                    for (DataModelAdditional additional : getDataModelAdditionalArrayList){
+                    for (ModelAdditional additional : getModelAdditionalArrayList){
                         if (additional.getAdditionalTitle().contains(charSequence.toString())){
                             filterData.add(additional);
                         }
@@ -99,8 +99,8 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            dataModelAdditionalArrayList.clear();
-            dataModelAdditionalArrayList.addAll((Collection<? extends DataModelAdditional>) filterResults.values);
+            modelAdditionalArrayList.clear();
+            modelAdditionalArrayList.addAll((Collection<? extends ModelAdditional>) filterResults.values);
             notifyDataSetChanged();
         }
     };
@@ -120,17 +120,17 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
             shareAdditional = itemView.findViewById(R.id.image_shareAdditional);
         }
 
-        public void bind(DataModelAdditional dataModelAdditional) {
+        public void bind(ModelAdditional modelAdditional) {
 
             Glide.with(itemView.getContext())
-                    .load(dataModelAdditional.getAdditionalCover())
+                    .load(modelAdditional.getAdditionalCover())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                     .error(R.drawable.ic_error)
                     .into(imageCoverAdditional);
-            titleAdditional.setText(dataModelAdditional.getAdditionalTitle());
-            runTimeAdditional.setText(dataModelAdditional.getAdditionalPage());
+            titleAdditional.setText(modelAdditional.getAdditionalTitle());
+            runTimeAdditional.setText(modelAdditional.getAdditionalPage());
 
-            File file = new File(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),dataModelAdditional.getAdditionalTitle());
+            File file = new File(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), modelAdditional.getAdditionalTitle());
             if (!file.exists()){
                 itemView.setOnClickListener(v -> Snackbar.make(v,v.getResources().getString( R.string.document_is_empty), Snackbar.LENGTH_LONG)
                         .setAction("Action", null)
@@ -142,17 +142,17 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                 bookAdditional.setVisibility(View.VISIBLE);
                 itemView.setOnClickListener(v -> {
                     Intent intent = new Intent(itemView.getContext(), DetailHomeActivity.class);
-                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, dataModelAdditional.getAdditionalTitle());
-                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, dataModelAdditional.getAdditionalLinkMp3());
+                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, modelAdditional.getAdditionalTitle());
+                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, modelAdditional.getAdditionalLinkMp3());
                     itemView.getContext().startActivity(intent);
                 });
             }
 
             downloadAdditional.setOnClickListener(v -> {
-                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelAdditional.getAdditionalLink()));
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(modelAdditional.getAdditionalLink()));
                 request.allowScanningByMediaScanner();
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setDestinationInExternalFilesDir(v.getContext(),Environment.DIRECTORY_DOCUMENTS,dataModelAdditional.getAdditionalTitle());
+                request.setDestinationInExternalFilesDir(v.getContext(),Environment.DIRECTORY_DOCUMENTS, modelAdditional.getAdditionalTitle());
                 DownloadManager downloadManager = (DownloadManager)v.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
                 request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
 
@@ -163,7 +163,7 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                             downloadManager.enqueue(request);
                             downloadAdditional.setVisibility(View.INVISIBLE);
                             bookAdditional.setVisibility(View.VISIBLE);
-                            Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ dataModelAdditional.getAdditionalTitle(), Snackbar.LENGTH_LONG)
+                            Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ modelAdditional.getAdditionalTitle(), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null)
                                     .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
                                     .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
@@ -171,8 +171,8 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                             if (bookAdditional.isShown()){
                                 itemView.setOnClickListener(v -> {
                                     Intent intent = new Intent(itemView.getContext(), DetailHomeActivity.class);
-                                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, dataModelAdditional.getAdditionalTitle());
-                                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, dataModelAdditional.getAdditionalLinkMp3());
+                                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, modelAdditional.getAdditionalTitle());
+                                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, modelAdditional.getAdditionalLinkMp3());
                                     itemView.getContext().startActivity(intent);
                                 });
                             }
@@ -201,7 +201,7 @@ public class ListAdditionalAdapter extends RecyclerView.Adapter<ListAdditionalAd
                 }
             });
 
-            shareAdditional.setOnClickListener(v -> callShare.onShareClick(dataModelAdditional));
+            shareAdditional.setOnClickListener(v -> callShare.onShareClick(modelAdditional));
         }
 
         private boolean haveNetwork() {

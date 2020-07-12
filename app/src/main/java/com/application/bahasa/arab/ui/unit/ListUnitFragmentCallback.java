@@ -1,7 +1,7 @@
 package com.application.bahasa.arab.ui.unit;
 
-import com.application.bahasa.arab.data.home.DataModelUnit;
+import com.application.bahasa.arab.data.home.ModelUnit;
 
 public interface ListUnitFragmentCallback {
-    void onShareClick(DataModelUnit dataModelUnit);
+    void onShareClick(ModelUnit modelUnit);
 }

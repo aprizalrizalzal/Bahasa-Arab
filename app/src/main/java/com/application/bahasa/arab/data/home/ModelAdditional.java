@@ -1,6 +1,6 @@
 package com.application.bahasa.arab.data.home;
 
-public class DataModelAdditional {
+public class ModelAdditional {
 
     private String additionalTitle;
     private String additionalPage;
@@ -8,7 +8,7 @@ public class DataModelAdditional {
     private String additionalLink;
     private String additionalLinkMp3;
 
-    public DataModelAdditional(String additionalTitle, String additionalPage, String additionalCover, String additionalLink, String additionalLinkMp3) {
+    public ModelAdditional(String additionalTitle, String additionalPage, String additionalCover, String additionalLink, String additionalLinkMp3) {
         this.additionalTitle = additionalTitle;
         this.additionalPage = additionalPage;
         this.additionalCover = additionalCover;

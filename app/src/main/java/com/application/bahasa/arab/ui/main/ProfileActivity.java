@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.chats.DataModelProfileOrContact;
+import com.application.bahasa.arab.data.chats.ModelContactList;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.ads.AdRequest;
@@ -42,22 +42,22 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class DetailProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private StorageReference storageReference;
     private StorageTask<UploadTask.TaskSnapshot> taskUpload;
-    private FirebaseUser user;
-    private DatabaseReference reference;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference databaseReference;
     private Uri uriImage;
-    private TextInputLayout tiStudentName,tiStudentIdNumber,tiPhoneNumber;
-    private TextView edtStudentName,edtStudentIdNumber,edtPhoneNumber,edtEmail;
-    private String studentName,studentIdNumber,phoneNumber;
-    private ImageView imgPictureProfile;
+    private TextInputLayout tiUserName,tiPhoneNumber;
+    private TextView edtUserName,edtPhoneNumber,edtEmail;
+    private String userName,phoneNumber;
+    private ImageView imgCoverProfile;
     private static final int IMAGE_REQUEST = 1;
     private Button btnEdit,btnSave;
     private ProgressBar progressBar;
 
-    public DetailProfileActivity() {
+    public ProfileActivity() {
     }
 
     @Override
@@ -72,21 +72,19 @@ public class DetailProfileActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(getString(R.string.profile));
         }
 
-        AdView adViewUnit = findViewById(R.id.adViewProfile);
+        AdView adViewProfile = findViewById(R.id.adViewProfile);
         AdRequest adRequest = new AdRequest.Builder().build();
-        adViewUnit.loadAd(adRequest);
+        adViewProfile.loadAd(adRequest);
 
-        storageReference = FirebaseStorage.getInstance().getReference(getString(R.string.valProfile));
+        storageReference = FirebaseStorage.getInstance().getReference("profile/user");
 
-        tiStudentName = findViewById(R.id.tiStudentNameProfile);
-        tiStudentIdNumber = findViewById(R.id.tiStudentIdNumberProfile);
-        tiPhoneNumber = findViewById(R.id.tiPhoneNumberProfile);
-        imgPictureProfile = findViewById(R.id.imgPictureProfile);
+        tiUserName = findViewById(R.id.tiUserName);
+        tiPhoneNumber = findViewById(R.id.tiPhoneNumber);
+        imgCoverProfile = findViewById(R.id.imgCoverProfile);
 
-        edtStudentName = findViewById(R.id.edtStudentNameProfile);
-        edtStudentIdNumber = findViewById(R.id.edtStudentIdNumberProfile);
-        edtPhoneNumber = findViewById(R.id.edtPhoneNumberProfile);
-        edtEmail = findViewById(R.id.edtEmailProfile);
+        edtUserName = findViewById(R.id.edtUserName);
+        edtPhoneNumber = findViewById(R.id.edtPhoneNumber);
+        edtEmail = findViewById(R.id.edtEmail);
 
         ImageButton btnAdd = findViewById(R.id.imgAddProfile);
         btnEdit = findViewById(R.id.btnEdit);
@@ -94,27 +92,26 @@ public class DetailProfileActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
 
-        reference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                DataModelProfileOrContact profile = snapshot.getValue(DataModelProfileOrContact.class);
+                ModelContactList profile = snapshot.getValue(ModelContactList.class);
                 assert profile !=null;
-                if (profile.getProfilePictureInTheURL().equals("nothing")) {
-                    imgPictureProfile.setImageResource(R.drawable.ic_baseline_account_circle);
+                if (profile.getProfilePicture().equals("nothing")) {
+                    imgCoverProfile.setImageResource(R.drawable.ic_baseline_account_circle);
                 } else {
                     Glide.with(getApplicationContext())
-                            .load(profile.getProfilePictureInTheURL())
+                            .load(profile.getProfilePicture())
                             .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                             .error(R.drawable.ic_error)
-                            .into(imgPictureProfile);
+                            .into(imgCoverProfile);
                 }
-                edtStudentName.setText(profile.getStudentName());
-                edtStudentIdNumber.setText(profile.getStudentIdNumber());
+                edtUserName.setText(profile.getUserName());
                 edtPhoneNumber.setText(profile.getPhoneNumber());
-                edtEmail.setText(user.getEmail());
+                edtEmail.setText(firebaseUser.getEmail());
             }
 
             @Override
@@ -133,8 +130,7 @@ public class DetailProfileActivity extends AppCompatActivity {
 
         btnEdit.setOnClickListener(v -> {
             if (haveNetwork()){
-                edtStudentName.setEnabled(true);
-                edtStudentIdNumber.setEnabled(true);
+                edtUserName.setEnabled(true);
                 edtPhoneNumber.setEnabled(true);
                 btnSave.setVisibility(View.VISIBLE);
                 btnEdit.setVisibility(View.INVISIBLE);
@@ -149,7 +145,7 @@ public class DetailProfileActivity extends AppCompatActivity {
 
     private boolean haveNetwork() {
         boolean haveConnection =false;
-        ConnectivityManager connectivityManager = (ConnectivityManager) DetailProfileActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) ProfileActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         if (activeNetworkInfo !=null && activeNetworkInfo.isConnected()){
             haveConnection=true;
@@ -173,7 +169,7 @@ public class DetailProfileActivity extends AppCompatActivity {
     private void uploadImage() {
         progressBar.setVisibility(View.VISIBLE);
         if (uriImage != null) {
-            final StorageReference fileReference = storageReference.child(user.getUid() + "." + getFileExtension(uriImage));
+            final StorageReference fileReference = storageReference.child(firebaseUser.getUid() + "." + getFileExtension(uriImage));
             taskUpload = fileReference.putFile(uriImage);
             taskUpload.continueWithTask(task -> {
                 if (!task.isSuccessful()) {
@@ -186,13 +182,13 @@ public class DetailProfileActivity extends AppCompatActivity {
                     assert downloadUri != null;
                     String myUri = downloadUri.toString();
 
-                    reference = FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put(getString(R.string.valProfilePictureInTheURL), myUri);
-                    reference.updateChildren(map);
+                    databaseReference = FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
+                    HashMap<String, Object> user = new HashMap<>();
+                    user.put("profilePicture", myUri);
+                    databaseReference.updateChildren(user);
                     progressBar.setVisibility(View.INVISIBLE);
                 } else {
-                    Toast.makeText(DetailProfileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
 
                 }
@@ -218,57 +214,41 @@ public class DetailProfileActivity extends AppCompatActivity {
     }
 
     private void validProfile(){
-        if (!validStudentName()|!validStudentIdNumber()|!validPhoneNumber()){
+        if (!validStudentName()|!validPhoneNumber()){
             return;
         }
-        studentName = Objects.requireNonNull(tiStudentName.getEditText()).getText().toString().trim();
-        studentIdNumber = Objects.requireNonNull(tiStudentIdNumber.getEditText()).getText().toString().trim();
+        userName = Objects.requireNonNull(tiUserName.getEditText()).getText().toString().trim();
         phoneNumber = Objects.requireNonNull(tiPhoneNumber.getEditText()).getText().toString().trim();
 
-        reference=FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
+        databaseReference=FirebaseDatabase.getInstance().getReference("user").child(firebaseUser.getUid());
 
         HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put(getString(R.string.valStudentName),studentName);
-        hashMap.put(getString(R.string.valStudentIdNumber),studentIdNumber);
-        hashMap.put(getString(R.string.valPhoneNumber),phoneNumber);
+        hashMap.put("userName",userName);
+        hashMap.put("phoneNumber",phoneNumber);
 
-        reference.updateChildren(hashMap).addOnCompleteListener(task -> {
+        databaseReference.updateChildren(hashMap).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(DetailProfileActivity.this, getString(R.string.saveSuccess), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, getString(R.string.saveSuccess), Toast.LENGTH_SHORT).show();
                 btnSave.setVisibility(View.INVISIBLE);
                 btnEdit.setVisibility(View.VISIBLE);
-                edtStudentName.setEnabled(false);
-                edtStudentIdNumber.setEnabled(false);
+                edtUserName.setEnabled(false);
                 edtPhoneNumber.setEnabled(false);
                 progressBar.setVisibility(View.INVISIBLE);
             }else {
-                Toast.makeText(DetailProfileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
 
     private boolean validStudentName(){
-        studentName = Objects.requireNonNull(tiStudentName.getEditText()).getText().toString().trim();
-        if (studentName.isEmpty()){
-            tiStudentName.setError(getText(R.string.notEmpty));
+        userName = Objects.requireNonNull(tiUserName.getEditText()).getText().toString().trim();
+        if (userName.isEmpty()){
+            tiUserName.setError(getText(R.string.notEmpty));
             progressBar.setVisibility(View.INVISIBLE);
             return false;
         }else {
-            tiStudentName.setError(null);
-            progressBar.setVisibility(View.VISIBLE);
-            return true;
-        }
-    }
-
-    private boolean validStudentIdNumber(){
-        studentIdNumber = Objects.requireNonNull(tiStudentIdNumber.getEditText()).getText().toString().trim();
-        if (studentIdNumber.isEmpty()){
-            tiStudentIdNumber.setError(getText(R.string.notEmpty));
-            progressBar.setVisibility(View.INVISIBLE);
-            return false;
-        }else {
-            tiStudentIdNumber.setError(null);
+            tiUserName.setError(null);
             progressBar.setVisibility(View.VISIBLE);
             return true;
         }

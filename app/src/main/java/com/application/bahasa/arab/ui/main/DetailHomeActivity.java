@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.application.bahasa.arab.R;
+import com.application.bahasa.arab.utils.ScrollHandle;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.util.FitPolicy;
 import com.google.android.gms.ads.AdRequest;

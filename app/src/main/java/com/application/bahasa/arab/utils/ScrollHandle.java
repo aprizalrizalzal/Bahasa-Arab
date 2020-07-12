@@ -1,4 +1,4 @@
-package com.application.bahasa.arab.ui.main;
+package com.application.bahasa.arab.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

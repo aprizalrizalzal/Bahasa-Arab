@@ -2,14 +2,14 @@ package com.application.bahasa.arab.ui.semester;
 
 import androidx.lifecycle.ViewModel;
 
-import com.application.bahasa.arab.data.home.DataModelSemester;
-import com.application.bahasa.arab.data.home.ListDataViewSemester;
+import com.application.bahasa.arab.data.home.ModelSemester;
+import com.application.bahasa.arab.data.home.ListDataSemester;
 
 import java.util.List;
 
 public class ListSemesterViewModel extends ViewModel {
 
-    List<DataModelSemester> dataModelSemesters(){
-        return ListDataViewSemester.listDataModelSemester();
+    List<ModelSemester> modelSemestersList(){
+        return ListDataSemester.listDataSemester();
     }
 }

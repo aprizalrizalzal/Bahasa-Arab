@@ -48,18 +48,13 @@ public class SignInActivity extends AppCompatActivity {
             finish();
         }
 
-        TextView tvStudentName = findViewById(R.id.tvStudentName);
-        tvStudentName.setVisibility(View.INVISIBLE);
-        TextView tvStudentIdNumber = findViewById(R.id.tvStudentIdNumber);
-        tvStudentIdNumber.setVisibility(View.GONE);
+        TextView tvUserName = findViewById(R.id.tvUserName);
+        tvUserName.setVisibility(View.INVISIBLE);
         tvPassword = findViewById(R.id.tvPassword);
         TextView tvConfirmPassword = findViewById(R.id.tvConfirmPassword);
         tvConfirmPassword.setVisibility(View.GONE);
-
-        TextInputLayout tiStudentName = findViewById(R.id.tiStudentName);
-        tiStudentName.setVisibility(View.GONE);
-        TextInputLayout tiStudentIdNumber = findViewById(R.id.tiStudentIdNumber);
-        tiStudentIdNumber.setVisibility(View.GONE);
+        TextInputLayout tiUserName = findViewById(R.id.tiUserName);
+        tiUserName.setVisibility(View.GONE);
         tiEmail = findViewById(R.id.tiEmail);
         tiPassword = findViewById(R.id.tiPassword);
         TextInputLayout tiConfirmPassword = findViewById(R.id.tiConfirmPassword);

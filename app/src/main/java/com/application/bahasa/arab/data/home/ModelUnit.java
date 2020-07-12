@@ -1,6 +1,6 @@
 package com.application.bahasa.arab.data.home;
 
-public class DataModelUnit {
+public class ModelUnit {
 
     private String unitTitle;
     private String unitPage;
@@ -8,7 +8,7 @@ public class DataModelUnit {
     private String unitLink;
     private String unitLinkMp3;
 
-    public DataModelUnit(String unitTitle, String unitPage, String unitCover, String unitLink, String unitLinkMp3) {
+    public ModelUnit(String unitTitle, String unitPage, String unitCover, String unitLink, String unitLinkMp3) {
         this.unitTitle = unitTitle;
         this.unitPage = unitPage;
         this.unitCover = unitCover;

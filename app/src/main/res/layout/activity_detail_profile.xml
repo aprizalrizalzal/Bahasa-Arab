@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context=".ui.main.DetailProfileActivity">
+    tools:context=".ui.main.ProfileActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/action_bar"
@@ -62,7 +62,7 @@
                 android:contentDescription="@string/profilePicture" >
 
                 <ImageView
-                    android:id="@+id/imgPictureProfile"
+                    android:id="@+id/imgCoverProfile"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:contentDescription="@string/profilePicture"
@@ -85,7 +85,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/card_cover" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiStudentNameProfile"
+                android:id="@+id/tiUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/studentName"
@@ -97,7 +97,7 @@
                 tools:srcCompat="@tools:sample/avatars">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtStudentNameProfile"
+                    android:id="@+id/edtUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
@@ -105,7 +105,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiStudentIdNumberProfile"
+                android:id="@+id/tiPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/studentName"
@@ -113,35 +113,13 @@
                 android:paddingStart="32dp"
                 android:paddingEnd="32dp"
 
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tiStudentNameProfile"
-                app:layout_constraintTop_toBottomOf="@id/tiStudentNameProfile"
+                app:layout_constraintEnd_toEndOf="@+id/tiUserName"
+                app:layout_constraintStart_toStartOf="@+id/tiUserName"
+                app:layout_constraintTop_toBottomOf="@id/tiUserName"
                 tools:srcCompat="@tools:sample/avatars">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtStudentIdNumberProfile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:hint="@string/profileStudentIdNumber" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiPhoneNumberProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/studentName"
-                android:paddingTop="16dp"
-                android:paddingStart="32dp"
-                android:paddingEnd="32dp"
-
-                app:layout_constraintEnd_toEndOf="@+id/tiStudentIdNumberProfile"
-                app:layout_constraintStart_toStartOf="@+id/tiStudentIdNumberProfile"
-                app:layout_constraintTop_toBottomOf="@id/tiStudentIdNumberProfile"
-                tools:srcCompat="@tools:sample/avatars">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtPhoneNumberProfile"
+                    android:id="@+id/edtPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
@@ -149,7 +127,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiEmailProfile"
+                android:id="@+id/tiEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/studentName"
@@ -159,12 +137,12 @@
                 android:paddingEnd="32dp"
 
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tiPhoneNumberProfile"
-                app:layout_constraintTop_toBottomOf="@id/tiPhoneNumberProfile"
+                app:layout_constraintStart_toStartOf="@+id/tiPhoneNumber"
+                app:layout_constraintTop_toBottomOf="@id/tiPhoneNumber"
                 tools:srcCompat="@tools:sample/avatars">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtEmailProfile"
+                    android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
@@ -180,9 +158,9 @@
                 android:contentDescription="@string/studentName"
                 android:text="@string/edit"
 
-                app:layout_constraintEnd_toEndOf="@+id/tiEmailProfile"
-                app:layout_constraintStart_toStartOf="@+id/tiEmailProfile"
-                app:layout_constraintTop_toBottomOf="@+id/tiEmailProfile" />
+                app:layout_constraintEnd_toEndOf="@+id/tiEmail"
+                app:layout_constraintStart_toStartOf="@+id/tiEmail"
+                app:layout_constraintTop_toBottomOf="@+id/tiEmail" />
 
             <Button
                 android:id="@+id/btnSave"
@@ -195,9 +173,9 @@
                 android:visibility="invisible"
 
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/tiEmailProfile"
-                app:layout_constraintStart_toStartOf="@+id/tiEmailProfile"
-                app:layout_constraintTop_toBottomOf="@+id/tiEmailProfile" />
+                app:layout_constraintEnd_toEndOf="@+id/tiEmail"
+                app:layout_constraintStart_toStartOf="@+id/tiEmail"
+                app:layout_constraintTop_toBottomOf="@+id/tiEmail" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
