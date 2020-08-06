@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.AppCompat.Button"
 
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginLeft="3dp"
-    android:layout_marginTop="1.5dp"
-    android:layout_marginRight="3dp"
-    android:layout_marginBottom="1.5dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginBottom="3dp"
     app:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,7 +96,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_baseline_book"
+            android:src="@drawable/ic_baseline_book_24"
             android:background="@android:color/transparent"
             android:visibility="invisible"
 

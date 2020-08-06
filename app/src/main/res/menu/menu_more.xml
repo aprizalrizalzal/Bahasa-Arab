@@ -13,13 +13,7 @@
         android:id="@+id/menuDownloadAudio"
         android:title="@string/download_audio"/>
     <item
-        android:id="@+id/menuSetting"
-        android:title="@string/setting"/>
-    <item
-        android:id="@+id/menuProfile"
-        android:title="@string/profile"/>
-    <item
-        android:id="@+id/menuSignOut"
-        android:title="@string/signOut"/>
+        android:id="@+id/menuAbout"
+        android:title="@string/about"/>
 
 </menu>

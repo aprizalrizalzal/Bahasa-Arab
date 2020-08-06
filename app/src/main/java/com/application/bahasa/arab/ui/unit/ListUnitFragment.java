@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.home.ModelUnit;
+import com.application.bahasa.arab.data.DataModelUnit;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -38,17 +38,17 @@ public class ListUnitFragment extends Fragment implements ListUnitFragmentCallba
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView rv_unit = view.findViewById(R.id.rvUnit);
+        RecyclerView rv_unit = view.findViewById(R.id.rv_unit);
         AdView adViewUnit =view.findViewById(R.id.adViewUnit);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adViewUnit.loadAd(adRequest);
 
         if (getActivity() !=null){
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adViewUnit.loadAd(adRequest);
 
             ListUnitViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(ListUnitViewModel.class);
-            List<ModelUnit> modelUnit = viewModel.modelUnitList();
+            List<DataModelUnit> dataModelTheories = viewModel.dataModelUnitList();
 
-            adapter.setModelUnitArrayList(modelUnit);
+            adapter.setDataModelUnitArrayList(dataModelTheories);
 
             rv_unit.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_unit.setHasFixedSize(true);
@@ -57,14 +57,14 @@ public class ListUnitFragment extends Fragment implements ListUnitFragmentCallba
     }
 
     @Override
-    public void onShareClick(ModelUnit modelUnit) {
+    public void onShareClick(DataModelUnit dataModelUnit) {
         if (getActivity() !=null){
             String mimeType = "text/plain";
             ShareCompat.IntentBuilder
                     .from(getActivity())
                     .setType(mimeType)
                     .setChooserTitle("Share")
-                    .setText(getResources().getString(R.string.share_text, modelUnit.getUnitTitle(), modelUnit.getUnitLink()))
+                    .setText(getResources().getString(R.string.share_text, dataModelUnit.getUnitTitle(), dataModelUnit.getUnitLink()))
                     .startChooser();
         }
     }

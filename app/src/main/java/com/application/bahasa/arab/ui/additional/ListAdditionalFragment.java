@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.home.ModelAdditional;
+import com.application.bahasa.arab.data.DataModelAdditional;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -38,33 +39,32 @@ public class ListAdditionalFragment extends Fragment implements ListAdditionalFr
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView rvAdditional = view.findViewById(R.id.rvAdditional);
+        RecyclerView rv_video = view.findViewById(R.id.rv_additional);
         AdView adViewAdditional =view.findViewById(R.id.adViewAdditional);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adViewAdditional.loadAd(adRequest);
 
         if (getActivity() !=null){
-
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adViewAdditional.loadAd(adRequest);
             ListAdditionalViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(ListAdditionalViewModel.class);
-            List<ModelAdditional> modelAdditional = viewModel.modelAdditionalList();
+            List<DataModelAdditional> dataModelAdditionals = viewModel.dataModelAdditionalList();
 
-            adapter.setModelAdditionalArrayList(modelAdditional);
+            adapter.setDataModelAdditionalArrayList(dataModelAdditionals);
 
-            rvAdditional.setLayoutManager(new LinearLayoutManager(getContext()));
-            rvAdditional.setHasFixedSize(true);
-            rvAdditional.setAdapter(adapter);
+            rv_video.setLayoutManager(new LinearLayoutManager(getContext()));
+            rv_video.setHasFixedSize(true);
+            rv_video.setAdapter(adapter);
         }
     }
 
     @Override
-    public void onShareClick(ModelAdditional modelAdditional) {
+    public void onShareClick(DataModelAdditional dataModelAdditional) {
         if (getActivity() !=null){
             String mimeType = "text/plain";
-            Toast.makeText(getActivity(), "Share " + modelAdditional.getAdditionalTitle(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Share " + dataModelAdditional.getAdditionalTitle(), Toast.LENGTH_SHORT).show();
             ShareCompat.IntentBuilder
                     .from(getActivity())
                     .setType(mimeType).setChooserTitle("Share")
-                    .setText(getResources().getString(R.string.share_text, modelAdditional.getAdditionalTitle(), modelAdditional.getAdditionalLink()))
+                    .setText(getResources().getString(R.string.share_text, dataModelAdditional.getAdditionalTitle(), dataModelAdditional.getAdditionalLink()))
                     .startChooser();
         }
     }

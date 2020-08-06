@@ -10,48 +10,26 @@
 
     <application
         android:allowBackup="false"
-        android:icon="@drawable/logo_bahasa_arab_beta"
+        android:icon="@drawable/logo_bahasa_arab"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logo_bahasa_arab_beta"
+        android:roundIcon="@drawable/logo_bahasa_arab"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".ui.main.MessageActivity"
-            android:label="@string/chatActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Sign">
-        </activity>
-        <activity
-            android:name=".ui.main.ProfileActivity"
-            android:label="@string/detailProfileActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Sign" />
-        <activity
-            android:name=".ui.ChatTabActivity"
-            android:label="@string/chatTabActivity"
-            android:theme="@style/AppTheme.Sign" />
-        <activity
-            android:name=".ui.sign.SignUpActivity"
-            android:label="@string/signActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Sign" />
-        <activity
-            android:name=".ui.sign.SignInActivity"
-            android:label="@string/signActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Sign" />
+
         <activity
             android:name=".ui.HomeTabActivity"
-            android:label="@string/homeTabActivity"
-            android:theme="@style/AppTheme" /> <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+            android:label="@string/title_activity_tabbed"
+            android:theme="@style/AppTheme">
+
+        </activity>
+        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3946611117968254~4667483765" />
 
         <activity
-            android:name=".ui.main.DetailHomeActivity"
-            android:label="@string/detailHomeActivity"
+            android:name=".ui.main.DetailActivity"
             android:parentActivityName=".ui.HomeTabActivity"
             android:screenOrientation="portrait">
             <meta-data

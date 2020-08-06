@@ -6,10 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="@android:color/white">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvUnit"
+        android:id="@+id/rv_unit"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"

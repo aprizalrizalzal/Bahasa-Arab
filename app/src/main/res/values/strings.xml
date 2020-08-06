@@ -1,90 +1,34 @@
 <resources>
-    <!-- Default -->
     <string name="app_name">Bahasa Arab UNU NTB</string>
-
-    <!-- SignActivity -->
-    <string name="signActivity">Sign Activity</string>
-    <string name="studentName">Nama Mahasiswa</string>
-    <string name="studentIdNumber">Nomor Induk Mahasiswa</string>
-    <string name="eMail">Email</string>
-    <string name="notEmail">Email Anda Tidak Terdaftar</string>
-    <string name="password">Kata Sandi</string>
-    <string name="confirmPassword">Konfirmasi Kata Sandi</string>
-    <string name="btnSignUp">Daftar</string>
-    <string name="btnSignIn">Masuk</string>
-    <string name="send">Kirim</string>
-    <string name="tvTermsAndConditions"><u>Syarat &amp; Ketentuan (Terms &amp; Conditions)</u></string>
-    <string name="tvSignIn">Sudah punya akun, <u>masuk aekarang</u></string>
-    <string name="forgotPassword"><u>Tidak ingat kata sandi?</u></string>
-    <string name="tvSignUp">Belum punya akun, <u>buat sekarang</u></string>
-
-    <!-- HomeTabActivity -->
-    <string name="homeTabActivity">Home Tab Activity</string>
+    <string name="title">Judul</string>
+    <string name="page">Halaman</string>
+    <string name="share">Bagikan</string>
+    <string name="share_text">Teori untuk %s ada di tautan %s</string>
     <string name="semester">Semester</string>
     <string name="theUnit">Unit</string>
     <string name="additional">Tambahan</string>
-
-    <!-- DetailHomeActivity -->
-    <string name="detailHomeActivity">Detail Home Activity</string>
     <string name="first">Sebelumnya </string>
     <string name="play">Main </string>
     <string name="pause">Jeda </string>
     <string name="last">Selanjutnya </string>
     <string name="stop">Berhenti </string>
-
-    <!-- DetailProfileActivity -->
-    <string name="detailProfileActivity">Detail Profile Activity</string>
-    <string name="profile">Profil</string>
-    <string name="profilePicture">Gambar Profil</string>
-    <string name="profileStudentName">Nama Mahasiswa</string>
-    <string name="profileStudentIdNumber">Nomor Induk Mahasiswa</string>
-    <string name="profilePhoneNumber">Nomor Ponsel</string>
-    <string name="profileEmail">Email</string>
-
-    <!-- ChatTabActivity -->
-    <string name="chatTabActivity">Detail Profile Activity</string>
-    <string name="chat">Obrolan</string>
-    <string name="contact">Kontak</string>
-
-    <!-- ChatActivity -->
-    <string name="chatActivity">Chat Activity</string>
-
-    <!-- ListFragment -->
-    <string name="title">Judul</string>
-    <string name="page">Halaman</string>
-    <string name="hiStudent">Hai mahasiswa</string>
-
-    <!-- Menu -->
-    <string name="search">Cari</string>
-    <string name="search_list">Cari materi</string>
-    <string name="search_pages">Cari halaman</string>
+    <string name="searchPage">Cari Halaman</string>
     <string name="setting">Pengaturan</string>
-    <string name="signOut">Keluar</string>
-
-    <!-- Notice -->
-    <string name="not_have_network">Periksa koneksi jaringan internet Anda BOSQUE!</string>
-    <string name="document_is_empty">Dokument masih kosong, Silahkan unduh dulu BOSQUE!</string>
-    <string name="media_is_empty">Audio masih kosong, silahkan unduh dulu BOSQUE!</string>
-    <string name="denied_message">Jika ingin unduh file, atur izin penyimpanan di \n[Setting] > [Permission] BOSQUE!</string>
-    <string name="download_document">Unduh dokument </string>
+    <string name="about">Tentang</string>
+    <string name="not_have_network">Periksa Koneksi Jaringan Internet Anda BOSQUE!</string>
+    <string name="denied_message">Jika Ingin Unduh File, Atur Izin Penyimpanan di \n[Setting] > [Permission] BOSQUE!</string>
+    <string name="denied_permission">Anda sudah menolak Izin Penyimpanan BOSQUE!</string>
+    <string name="download_document">Unduh Dokument </string>
+    <string name="download_success">Unduh Sukses </string>
+    <string name="download_failed">Unduh Gagal </string>
+    <string name="download_audio">Unduh Audio </string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="example">Masih Dalam Pengembangan</string>
+    <string name="search">Cari</string>
     <string name="book">Buku</string>
-    <string name="share">Bagikan BOSQUE!</string>
-    <string name="share_text">Teori untuk %s ada di tautan %s BOSQUE!</string>
-    <string name="download_audio">Unduh audio </string>
-    <string name="notEmpty">Tidak boleh kosong BOSQUE!</string>
-    <string name="notEqualsConfirm">Konfirmasi salah BOSQUE!</string>
-    <string name="isWrong">Email dan Kata sandi Anda salah!</string>
-    <string name="failed">Otentifikasi gagal, silahkan coba lagi BOSQUE!</string>
-    <string name="deniedPermission">Anda sudah menolak izin penyimpanan BOSQUE!</string>
-    <string name="saveSuccess">Pembaruan profil sukses BOSQUE!</string>
+    <string name="document_is_empty">Dokument Masih Kosong, Silahkan Unduh Dulu</string>
+    <string name="media_is_empty">Audio Masih Kosong, Silahkan Unduh Dulu</string>
+    <string name="search_pages">Cari Halaman</string>
+    <string name="search_list">Cari Materi</string>
 
-    <string name="example">Masih dalam pengembangan BOSQUE!</string>
-    <string name="cekYourEmail">Silahkan cek Email Anda BOSQUE!</string>
-    <string name="edit">Edit</string>
-    <string name="save">Simpan</string>
-    <string name="back">Back</string>
-    <string name="date_online_offline">Date online/offline</string>
-    <string name="write_message">Ketik Pesan</string>
-    <string name="image">Image</string>
-    <string name="notEmptyMessage">Anda tidak dapat mengirim pesan kosong</string>
 </resources>

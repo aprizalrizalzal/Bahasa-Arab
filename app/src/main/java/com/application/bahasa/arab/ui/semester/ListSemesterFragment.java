@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.home.ModelSemester;
+import com.application.bahasa.arab.data.DataModelSemester;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -38,17 +38,17 @@ public class ListSemesterFragment extends Fragment implements ListSemesterFragme
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView rv_semester = view.findViewById(R.id.rvSemester);
+        RecyclerView rv_semester = view.findViewById(R.id.rv_semester);
         AdView adViewUnit =view.findViewById(R.id.adViewSemester);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adViewUnit.loadAd(adRequest);
 
         if (getActivity() !=null){
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adViewUnit.loadAd(adRequest);
 
             ListSemesterViewModel viewModel = new ViewModelProvider(this,new ViewModelProvider.NewInstanceFactory()).get(ListSemesterViewModel.class);
-            List<ModelSemester> modelSemester = viewModel.modelSemestersList();
+            List<DataModelSemester> dataModelSemesters = viewModel.dataModelSemesters();
 
-            adapter.setModelSemesterArrayList(modelSemester);
+            adapter.setDataModelSemesterArrayList(dataModelSemesters);
 
             rv_semester.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_semester.setHasFixedSize(true);
@@ -57,14 +57,14 @@ public class ListSemesterFragment extends Fragment implements ListSemesterFragme
     }
 
     @Override
-    public void onShareClick(ModelSemester modelSemester) {
+    public void onShareClick(DataModelSemester dataModelSemester) {
         if (getActivity() !=null){
             String mimeType = "text/plain";
             ShareCompat.IntentBuilder
                     .from(getActivity())
                     .setType(mimeType)
                     .setChooserTitle("Share")
-                    .setText(getResources().getString(R.string.share_text, modelSemester.getSemesterTitle(), modelSemester.getSemesterLink()))
+                    .setText(getResources().getString(R.string.share_text, dataModelSemester.getSemesterTitle(), dataModelSemester.getSemesterLink()))
                     .startChooser();
         }
     }

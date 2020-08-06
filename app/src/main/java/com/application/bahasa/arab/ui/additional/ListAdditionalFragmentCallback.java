@@ -1,7 +1,7 @@
 package com.application.bahasa.arab.ui.additional;
 
-import com.application.bahasa.arab.data.home.ModelAdditional;
+import com.application.bahasa.arab.data.DataModelAdditional;
 
 public interface ListAdditionalFragmentCallback {
-    void onShareClick(ModelAdditional modelAdditional);
+    void onShareClick(DataModelAdditional dataModelAdditional);
 }

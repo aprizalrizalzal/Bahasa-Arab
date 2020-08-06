@@ -16,13 +16,15 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.home.ModelSemester;
-import com.application.bahasa.arab.ui.main.DetailHomeActivity;
+import com.application.bahasa.arab.data.DataModelSemester;
+import com.application.bahasa.arab.ui.HomeTabActivity;
+import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,6 +32,9 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,22 +42,22 @@ import java.util.List;
 public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapter.ViewHolder> implements Filterable {
 
     private final ListSemesterFragmentCallback callback;
-    private ArrayList<ModelSemester> modelSemesterArrayList = new ArrayList<>();
-    private ArrayList<ModelSemester> getModelSemesterArrayList = new ArrayList<>();
+    private ArrayList<DataModelSemester> dataModelSemesterArrayList = new ArrayList<>();
+    private ArrayList<DataModelSemester> getDataModelSemesterArrayList = new ArrayList<>();
 
     public ListSemesterAdapter(ListSemesterFragmentCallback callback) {
         this.callback = callback;
     }
 
-    public void setModelSemesterArrayList(List<ModelSemester> modelSemesters) {
+    public void setDataModelSemesterArrayList(List<DataModelSemester> dataModelSemesters) {
 
-        if (modelSemesterArrayList == null)return;
-        modelSemesterArrayList.clear();
-        modelSemesterArrayList.addAll(modelSemesters);
+        if (dataModelSemesterArrayList == null)return;
+        dataModelSemesterArrayList.clear();
+        dataModelSemesterArrayList.addAll(dataModelSemesters);
 
-        if (getModelSemesterArrayList == null)return;
-        getModelSemesterArrayList.clear();
-        getModelSemesterArrayList.addAll(modelSemesters);
+        if (getDataModelSemesterArrayList == null)return;
+        getDataModelSemesterArrayList.clear();
+        getDataModelSemesterArrayList.addAll(dataModelSemesters);
     }
 
     @NonNull
@@ -64,13 +69,13 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ModelSemester modelSemester = modelSemesterArrayList.get(position);
-        holder.bind(modelSemester);
+        DataModelSemester dataModelSemester = dataModelSemesterArrayList.get(position);
+        holder.bind(dataModelSemester);
     }
 
     @Override
     public int getItemCount() {
-        return modelSemesterArrayList.size();
+        return dataModelSemesterArrayList.size();
     }
 
     @Override
@@ -82,11 +87,11 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
 
-            ArrayList<ModelSemester> filterData = new ArrayList<>();
+            ArrayList<DataModelSemester> filterData = new ArrayList<>();
             if (charSequence.toString().isEmpty()){
-                filterData.addAll(getModelSemesterArrayList);
+                filterData.addAll(getDataModelSemesterArrayList);
             }else {
-                for (ModelSemester semester : getModelSemesterArrayList){
+                for (DataModelSemester semester : getDataModelSemesterArrayList){
                     if (semester.getSemesterTitle().toLowerCase().contains(charSequence.toString().toLowerCase())){
                         filterData.add(semester);
                     }
@@ -100,8 +105,8 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            modelSemesterArrayList.clear();
-            modelSemesterArrayList.addAll((Collection<? extends ModelSemester>) filterResults.values);
+            dataModelSemesterArrayList.clear();
+            dataModelSemesterArrayList.addAll((Collection<? extends DataModelSemester>) filterResults.values);
             notifyDataSetChanged();
         }
     };
@@ -121,39 +126,39 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
             shareSemester = itemView.findViewById(R.id.image_shareSemester);
         }
 
-        public void bind(ModelSemester modelSemester) {
+        public void bind(DataModelSemester dataModelSemester) {
 
             Glide.with(itemView.getContext())
-                    .load(modelSemester.getSemesterCover())
+                    .load(dataModelSemester.getSemesterCover())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                     .error(R.drawable.ic_error)
                     .into(imageCoverSemester);
-            titleSemester.setText(modelSemester.getSemesterTitle());
-            pageSemester.setText(modelSemester.getSemesterPage());
+            titleSemester.setText(dataModelSemester.getSemesterTitle());
+            pageSemester.setText(dataModelSemester.getSemesterPage());
 
-            File file = new File(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), modelSemester.getSemesterTitle());
+            File file = new File(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),dataModelSemester.getSemesterTitle());
             if (!file.exists()){
                 itemView.setOnClickListener(v -> Snackbar.make(v,v.getResources().getString( R.string.document_is_empty), Snackbar.LENGTH_LONG)
                         .setAction("Action", null)
                         .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
                         .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
                         .show());
-            }else {
+                }else {
                 downloadSemester.setVisibility(View.INVISIBLE);
                 bookSemester.setVisibility(View.VISIBLE);
                 itemView.setOnClickListener(v -> {
-                    Intent intent = new Intent(itemView.getContext(), DetailHomeActivity.class);
-                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, modelSemester.getSemesterTitle());
-                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, modelSemester.getSemesterLinkMp3());
+                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
+                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelSemester.getSemesterTitle());
                     itemView.getContext().startActivity(intent);
                 });
             }
 
             downloadSemester.setOnClickListener(v -> {
-                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(modelSemester.getSemesterLink()));
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelSemester.getSemesterLink()));
                 request.allowScanningByMediaScanner();
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setDestinationInExternalFilesDir(v.getContext(), Environment.DIRECTORY_DOCUMENTS, modelSemester.getSemesterTitle());
+                request.setDestinationInExternalFilesDir(v.getContext(), Environment.DIRECTORY_DOCUMENTS,dataModelSemester.getSemesterTitle());
 
                 DownloadManager downloadManager = (DownloadManager) v.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
                 request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
@@ -165,16 +170,16 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
                             downloadManager.enqueue(request);
                             downloadSemester.setVisibility(View.INVISIBLE);
                             bookSemester.setVisibility(View.VISIBLE);
-                            Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ modelSemester.getSemesterTitle(), Snackbar.LENGTH_LONG)
+                            Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ dataModelSemester.getSemesterTitle(), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null)
                                     .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
                                     .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
                                     .show();
                             if (bookSemester.isShown()){
                                 itemView.setOnClickListener(v -> {
-                                    Intent intent = new Intent(itemView.getContext(), DetailHomeActivity.class);
-                                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, modelSemester.getSemesterTitle());
-                                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, modelSemester.getSemesterLinkMp3());
+                                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelSemester.getSemesterTitle());
+                                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelSemester.getSemesterTitle());
                                     itemView.getContext().startActivity(intent);
                                 });
                             }
@@ -182,7 +187,7 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
 
                         @Override
                         public void onPermissionDenied(List<String> deniedPermissions) {
-                            Snackbar.make(v, v.getResources().getString( R.string.deniedPermission), Snackbar.LENGTH_LONG)
+                            Snackbar.make(v, v.getResources().getString( R.string.denied_permission), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null)
                                     .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
                                     .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
@@ -204,7 +209,9 @@ public class ListSemesterAdapter extends RecyclerView.Adapter<ListSemesterAdapte
                 }
             });
 
-            shareSemester.setOnClickListener(v -> callback.onShareClick(modelSemester));
+            shareSemester.setOnClickListener(v -> {
+                callback.onShareClick(dataModelSemester);
+            });
         }
 
         private boolean haveNetwork() {

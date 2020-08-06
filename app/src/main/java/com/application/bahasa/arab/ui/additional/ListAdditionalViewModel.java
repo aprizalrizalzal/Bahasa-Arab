@@ -2,14 +2,14 @@ package com.application.bahasa.arab.ui.additional;
 
 import androidx.lifecycle.ViewModel;
 
-import com.application.bahasa.arab.data.home.ModelAdditional;
-import com.application.bahasa.arab.data.home.ListDataAdditional;
+import com.application.bahasa.arab.data.DataModelAdditional;
+import com.application.bahasa.arab.data.ListDataViewAdditional;
 
 import java.util.List;
 
 public class ListAdditionalViewModel extends ViewModel {
 
-    List<ModelAdditional> modelAdditionalList(){
-        return ListDataAdditional.listModelAdditional();
+    List<DataModelAdditional> dataModelAdditionalList(){
+        return ListDataViewAdditional.listDataModelAdditionals();
     }
 }

@@ -1,42 +1,52 @@
 package com.application.bahasa.arab.ui.main;
 
-import androidx.annotation.NonNull;
+import android.content.Context;
+import android.widget.Filterable;
+
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import java.util.ArrayList;
+
+import com.application.bahasa.arab.R;
+import com.application.bahasa.arab.ui.additional.ListAdditionalFragment;
+import com.application.bahasa.arab.ui.semester.ListSemesterFragment;
+import com.application.bahasa.arab.ui.unit.ListUnitFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private ArrayList<Fragment> fragments;
-    private ArrayList<String> titles;
+    @StringRes
+    private static final int[] TAB_TITLES = new int[]{R.string.semester,R.string.theUnit,R.string.additional};
+    private final Context mContext;
 
-    public SectionsPagerAdapter(@NonNull FragmentManager fm) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
-        this.fragments = new ArrayList<>();
-        this.titles = new ArrayList<>();
+        mContext = context;
     }
 
-    @NonNull
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
-    }
-
-    public void addFragment(Fragment fragment , String title){
-        fragments.add(fragment);
-        titles.add(title);
+        switch ( position ){
+            case 0 :
+                return new ListSemesterFragment();
+            case 1 :
+                return new ListUnitFragment();
+            case 2 :
+                return new ListAdditionalFragment();
+            default:
+                return new Fragment();
+        }
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles.get(position);
+        return mContext.getResources().getString(TAB_TITLES[position]);
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return 3;
     }
 }

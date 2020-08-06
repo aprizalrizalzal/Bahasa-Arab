@@ -16,13 +16,14 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.bahasa.arab.R;
-import com.application.bahasa.arab.data.home.ModelUnit;
-import com.application.bahasa.arab.ui.main.DetailHomeActivity;
+import com.application.bahasa.arab.data.DataModelUnit;
+import com.application.bahasa.arab.ui.main.DetailActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
@@ -37,22 +38,22 @@ import java.util.List;
 public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHolder> implements Filterable {
 
     private final ListUnitFragmentCallback callback;
-    private ArrayList<ModelUnit> modelUnitArrayList = new ArrayList<>();
-    private ArrayList<ModelUnit> getModelUnitArrayList = new ArrayList<>();
+    private ArrayList<DataModelUnit> dataModelUnitArrayList = new ArrayList<>();
+    private ArrayList<DataModelUnit> getDataModelUnitArrayList = new ArrayList<>();
 
 
     ListUnitAdapter(ListUnitFragmentCallback callback) {
         this.callback = callback;
     }
 
-    public void setModelUnitArrayList(List<ModelUnit> modelUnit) {
-        if (modelUnitArrayList == null)return;
-        modelUnitArrayList.clear();
-        modelUnitArrayList.addAll(modelUnit);
+    public void setDataModelUnitArrayList(List<DataModelUnit> dataModelUnit) {
+        if (dataModelUnitArrayList == null)return;
+        dataModelUnitArrayList.clear();
+        dataModelUnitArrayList.addAll(dataModelUnit);
 
-        if (getModelUnitArrayList == null)return;
-        getModelUnitArrayList.clear();
-        getModelUnitArrayList.addAll(modelUnit);
+        if (getDataModelUnitArrayList == null)return;
+        getDataModelUnitArrayList.clear();
+        getDataModelUnitArrayList.addAll(dataModelUnit);
     }
 
     @NonNull
@@ -64,13 +65,13 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ModelUnit modelUnit = modelUnitArrayList.get(position);
-        holder.bind(modelUnit);
+        DataModelUnit dataModelUnit = dataModelUnitArrayList.get(position);
+        holder.bind(dataModelUnit);
     }
 
     @Override
     public int getItemCount() {
-        return modelUnitArrayList.size();
+        return dataModelUnitArrayList.size();
     }
 
     @Override
@@ -81,11 +82,11 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
     Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            ArrayList<ModelUnit> filterData = new ArrayList<>();
+            ArrayList<DataModelUnit> filterData = new ArrayList<>();
             if (charSequence.toString().isEmpty()){
-                filterData.addAll(getModelUnitArrayList);
+                filterData.addAll(getDataModelUnitArrayList);
             }else {
-                for (ModelUnit unit : getModelUnitArrayList){
+                for (DataModelUnit unit : getDataModelUnitArrayList){
                     if (unit.getUnitTitle().toLowerCase().contains(charSequence.toString().toLowerCase())){
                         filterData.add(unit);
                     }
@@ -99,8 +100,8 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            modelUnitArrayList.clear();
-            modelUnitArrayList.addAll((Collection<? extends ModelUnit>) filterResults.values);
+            dataModelUnitArrayList.clear();
+            dataModelUnitArrayList.addAll((Collection<? extends DataModelUnit>) filterResults.values);
             notifyDataSetChanged();
         }
     };
@@ -120,16 +121,16 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
 
         }
 
-        public void bind(ModelUnit modelUnit) {
+        public void bind(DataModelUnit dataModelUnit) {
             Glide.with(itemView.getContext())
-                    .load(modelUnit.getUnitCover())
+                    .load(dataModelUnit.getUnitCover())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                     .error(R.drawable.ic_error)
                     .into(imageCoverUnit);
-            titleUnit.setText(modelUnit.getUnitTitle());
-            pageUnit.setText(modelUnit.getUnitPage());
+            titleUnit.setText(dataModelUnit.getUnitTitle());
+            pageUnit.setText(dataModelUnit.getUnitPage());
 
-            File file = new File(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), modelUnit.getUnitTitle());
+            File file = new File(itemView.getContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),dataModelUnit.getUnitTitle());
             if (!file.exists()){
                 itemView.setOnClickListener(v -> Snackbar.make(v,v.getResources().getString( R.string.document_is_empty), Snackbar.LENGTH_LONG)
                         .setAction("Action", null)
@@ -140,18 +141,18 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
                 downloadUnit.setVisibility(View.INVISIBLE);
                 bookUnit.setVisibility(View.VISIBLE);
                 itemView.setOnClickListener(v -> {
-                    Intent intent = new Intent(itemView.getContext(), DetailHomeActivity.class);
-                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, modelUnit.getUnitTitle());
-                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, modelUnit.getUnitLinkMp3());
+                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelUnit.getUnitTitle());
+                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelUnit.getUnitTitle());
                     itemView.getContext().startActivity(intent);
                 });
             }
 
             downloadUnit.setOnClickListener(v -> {
-                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(modelUnit.getUnitLink()));
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(dataModelUnit.getUnitLink()));
                 request.allowScanningByMediaScanner();
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setDestinationInExternalFilesDir(v.getContext(), Environment.DIRECTORY_DOCUMENTS, modelUnit.getUnitTitle());
+                request.setDestinationInExternalFilesDir(v.getContext(), Environment.DIRECTORY_DOCUMENTS,dataModelUnit.getUnitTitle());
 
                 DownloadManager downloadManager = (DownloadManager)v.getContext().getSystemService(Context.DOWNLOAD_SERVICE);
                 request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
@@ -163,16 +164,16 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
                             downloadManager.enqueue(request);
                             downloadUnit.setVisibility(View.INVISIBLE);
                             bookUnit.setVisibility(View.VISIBLE);
-                            Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ modelUnit.getUnitTitle(), Snackbar.LENGTH_LONG)
+                            Snackbar.make(v,v.getResources().getString( R.string.download_document) +" "+ dataModelUnit.getUnitTitle(), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null)
                                     .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
                                     .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
                                     .show();
                             if (bookUnit.isShown()){
                                 itemView.setOnClickListener(v -> {
-                                    Intent intent = new Intent(itemView.getContext(), DetailHomeActivity.class);
-                                    intent.putExtra(DetailHomeActivity.EXTRA_TITLE, modelUnit.getUnitTitle());
-                                    intent.putExtra(DetailHomeActivity.EXTRA_LINK_MP3, modelUnit.getUnitLinkMp3());
+                                    Intent intent = new Intent(itemView.getContext(), DetailActivity.class);
+                                    intent.putExtra(DetailActivity.EXTRA_TITLE, dataModelUnit.getUnitTitle());
+                                    intent.putExtra(DetailActivity.EXTRA_LINK_MP3, dataModelUnit.getUnitTitle());
                                     itemView.getContext().startActivity(intent);
                                 });
                             }
@@ -180,7 +181,7 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
 
                         @Override
                         public void onPermissionDenied(List<String> deniedPermissions) {
-                            Snackbar.make(v, v.getResources().getString( R.string.deniedPermission) , Snackbar.LENGTH_LONG)
+                            Snackbar.make(v, v.getResources().getString( R.string.denied_permission) , Snackbar.LENGTH_LONG)
                                     .setAction("Action", null)
                                     .setTextColor(v.getResources().getColor(R.color.browser_actions_text_color))
                                     .setBackgroundTint(v.getResources().getColor(R.color.colorPrimary))
@@ -201,7 +202,7 @@ public class ListUnitAdapter extends RecyclerView.Adapter<ListUnitAdapter.ViewHo
                 }
             });
             shareUnit.setOnClickListener(v -> {
-                callback.onShareClick(modelUnit);
+                callback.onShareClick(dataModelUnit);
             });
         }
 
